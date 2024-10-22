@@ -63,11 +63,16 @@ const FeaturedCourses = () => {
   };
 
   return (
-    <section className="py-20  overflow-hidden">
+    <section className="py-20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pattern-grid opacity-5"></div>
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b "></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t "></div>
+
+      {/* Blob elements */}
+      <div className="absolute top-20 left-20 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="absolute top-20 right-20 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-blob animation-delay-2000"></div>
+      <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -180,6 +185,27 @@ const FeaturedCourses = () => {
           </button>
         </div>
       </div>
+
+      {/* Animation Keyframes */}
+      <style jsx>{`
+        @keyframes blob {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+        .animate-blob {
+          animation: blob 8s infinite ease-in-out;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     </section>
   );
 };

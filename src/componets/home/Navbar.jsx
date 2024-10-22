@@ -83,7 +83,7 @@ const Navbar = () => {
                 <Link
                   to={item.href}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1 group hover:bg-gray-100 ${
-                    item.isActive ? 'text-blue-600' : 'text-gray-700'
+                    item.isActive ? 'text-blue-600' : 'text-black'
                   }`}
                 >
                   <span>{item.label}</span>
