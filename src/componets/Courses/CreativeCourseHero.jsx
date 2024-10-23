@@ -3,7 +3,7 @@ import { Sparkles, Code, Rocket, Brain, Target } from 'lucide-react';
 
 const CreativeCourseHero = () => {
   return (
-    <div className="min-h-[80vh] bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center relative px-4 overflow-hidden">
+    <div className="min-h-[80vh] bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center relative px-4 overflow-hidden pt-16">
       {/* Animated background elements */}
       <div className="absolute inset-0" style={{ opacity: 0.1 }}>
         {[...Array(20)].map((_, i) => (
@@ -72,7 +72,7 @@ const CreativeCourseHero = () => {
             { icon: <Brain className="w-6 h-6" />, text: "Expert Mentorship" },
             { icon: <Target className="w-6 h-6" />, text: "Career Growth" }
           ].map((feature, index) => (
-            <div key={index} className="flex items-center gap-2 bg-white bg-opacity-90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-md hover:shadow-lg transition-all duration-300">
+            <div key={index} className="flex items-center gap-2 mb-2 bg-white bg-opacity-90 backdrop-blur-sm rounded-lg px-4 py-2 shadow-md hover:shadow-lg transition-all duration-300">
               <span className="text-blue-600">{feature.icon}</span>
               <span className="text-gray-700 font-medium">{feature.text}</span>
             </div>

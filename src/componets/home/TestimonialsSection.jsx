@@ -41,7 +41,7 @@ const TestimonialCard = ({ testimonial, isActive }) => (
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       
       {/* Quote Icon */}
-      <div className="absolute -top-4 -right-4 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+      <div className="absolute -top-0 -right-4 w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
         <Quote className="w-4 h-4 text-white" />
       </div>
 
@@ -120,9 +120,12 @@ const TestimonialsSection = () => {
     <section className="relative py-24 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-      
+
+      {/* Blob Elements */}
+      <div className="absolute top-1/4 left-0 w-36 h-36 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      <div className="absolute top-1/4 right-0 w-36 h-36 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-1/4 left-20 w-36 h-36 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+
       {/* Floating Icons */}
       <FloatingElement Icon={Users} className="top-1/4 left-1/4" />
       <FloatingElement Icon={MessageCircle} className="top-1/3 right-1/4" />
@@ -208,6 +211,23 @@ const TestimonialsSection = () => {
         }
         .animate-float {
           animation: float 10s infinite ease-in-out;
+        }
+        @keyframes blob {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-20px);
+          }
+        }
+        .animate-blob {
+          animation: blob 8s infinite ease-in-out;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
       `}</style>
     </section>

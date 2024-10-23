@@ -80,6 +80,9 @@ const BackgroundElements = () => (
     {/* Gradient Orbs */}
     <div className="absolute top-20 left-20 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl" />
     <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+    <div className="absolute bottom-10 left-1/3 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl" />
+    <div className="absolute top-20 left-1/2 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl" />
+    <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
     
     {/* Tech Pattern */}
     <div className="absolute inset-0 opacity-[0.03]">
@@ -177,7 +180,10 @@ const HowItWorks = () => {
             Follow our proven pathway to transform your career in technology, supported every step of the way.
           </p>
         </div>
-
+        <div className="absolute -top-0 -left-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div className="absolute -top-0 -right-10 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+        <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+        
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (

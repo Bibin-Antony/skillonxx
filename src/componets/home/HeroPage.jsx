@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, ArrowRight, BookOpen, Palette, Target } from 'lucide-react';
+import img1 from '../../assets/Courosal/webdev.png'
+import img2 from'../../assets/Courosal/grahicdesign.png'
+import img3 from '../../assets/Courosal/digitalmarketing.png'
 
 const HeroPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -13,7 +16,7 @@ const HeroPage = () => {
       subtitle: 'Master Full-Stack Development',
       description: 'Build powerful web applications from ground up. Learn modern frameworks, databases, and cloud deployment.',
       buttonText: 'Explore Course',
-      image: "/api/placeholder/800/600?text=Web+Development",
+      image: img1,
       icon: <BookOpen className="w-6 h-6" />,
       bgColor: 'from-blue-600 via-blue-700 to-indigo-800',
       accentColor: 'text-blue-400',
@@ -25,7 +28,7 @@ const HeroPage = () => {
       subtitle: 'Create Stunning Visuals',
       description: 'Master industry-standard design tools and principles. Create compelling visuals for print and digital media.',
       buttonText: 'Join Premium Course',
-      image: "/api/placeholder/800/600?text=Graphic+Design",
+      image: img2,
       icon: <Palette className="w-6 h-6" />,
       bgColor: 'from-emerald-600 via-emerald-700 to-green-800',
       accentColor: 'text-emerald-400',
@@ -37,7 +40,7 @@ const HeroPage = () => {
       subtitle: 'Master Online Marketing',
       description: 'Learn comprehensive digital marketing strategies. Excel in SEO, social media, and data-driven marketing.',
       buttonText: 'Start Learning',
-      image: "/api/placeholder/800/600?text=Digital+Marketing",
+      image: img3,
       icon: <Target className="w-6 h-6" />,
       bgColor: 'from-purple-600 via-purple-700 to-indigo-800',
       accentColor: 'text-purple-400',
@@ -81,7 +84,7 @@ const HeroPage = () => {
         <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
       </div>
 
-      <div className="max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10 ">
+      <div className="max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8 pb-14 relative z-10 ">
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-12 lg:gap-20 space-x-96">
           {/* Content Section */}
           <div className="lg:w-1/2 space-y-8">
