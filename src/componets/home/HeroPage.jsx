@@ -75,7 +75,7 @@ const HeroPage = () => {
 
   return (
     <div 
-      className={`relative min-h-[85vh] pt-44 overflow-hidden bg-gradient-to-br ${slides[currentSlide].bgColor} transition-all duration-700 ease-in-out flex items-center`}
+      className={`relative min-h-[85vh] pt-10 overflow-hidden bg-gradient-to-br ${slides[currentSlide].bgColor} transition-all duration-700 ease-in-out flex items-center`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
