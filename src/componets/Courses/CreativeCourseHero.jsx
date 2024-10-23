@@ -46,7 +46,7 @@ const CreativeCourseHero = () => {
 
         {/* Subtitle */}
         <p className="text-gray-700 text-xl max-w-2xl mx-auto leading-relaxed bg-white bg-opacity-90 backdrop-blur-sm rounded-xl p-6 shadow-lg ">
-          Embark on a journey of innovation and excellence. Our expert-led courses 
+          Embark on a journey of innovation and excellence. Our expert led courses 
           are designed to elevate your skills and accelerate your career growth.
           <span className="block mt-2 text-blue-600 font-semibold">Your future in tech starts here.</span>
         </p>
