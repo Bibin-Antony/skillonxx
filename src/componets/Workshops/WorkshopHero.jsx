@@ -1,7 +1,7 @@
 // src/components/Workshop/WorkshopHero.jsx
-import React from 'react';
-import { motion } from 'framer-motion';
-import { FaUniversity, FaCode, FaUsers, FaBook } from 'react-icons/fa';
+import React from "react";
+import { motion } from "framer-motion";
+import { FaUniversity, FaCode, FaUsers, FaBook } from "react-icons/fa";
 
 const WorkshopHero = () => {
   const workshopTypes = [
@@ -9,20 +9,20 @@ const WorkshopHero = () => {
       icon: <FaCode className="text-2xl" />,
       title: "Technical Workshops",
       description: "Front-end, React.js, python and other technologies",
-      duration: "1-3 Days"
+      duration: "1-3 Days",
     },
     {
       icon: <FaBook className="text-2xl" />,
       title: "Language & Communication Workshops",
       description: "Communication skills and language proficiency",
-      duration: "2-5 Days"
+      duration: "2-5 Days",
     },
     {
       icon: <FaUsers className="text-2xl" />,
       title: "Career Development Workshops",
       description: "Tailored to your institution's needs",
-      duration: "Flexible"
-    }
+      duration: "Flexible",
+    },
   ];
 
   return (
@@ -32,7 +32,7 @@ const WorkshopHero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="text-white space-y-6">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center gap-2 text-tertiary"
@@ -41,25 +41,26 @@ const WorkshopHero = () => {
               <span className="text-lg">For Colleges & Universities</span>
             </motion.div>
 
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-bold leading-tight"
             >
               Transform Your Students with Industry-Ready Skills
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
               className="text-lg md:text-xl text-tertiary"
             >
-              Expert-led workshops in Web Development, English Communication, and more. Custom-designed for your institution's needs.
+              Expert-led workshops in Web Development, English Communication,
+              and more. Custom-designed for your institution's needs.
             </motion.p>
 
             {/* CTA Buttons */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -74,7 +75,7 @@ const WorkshopHero = () => {
             </motion.div>
 
             {/* Quick Stats */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
@@ -113,9 +114,7 @@ const WorkshopHero = () => {
                     <h3 className="text-white text-lg font-semibold mb-1">
                       {workshop.title}
                     </h3>
-                    <p className="text-tertiary mb-2">
-                      {workshop.description}
-                    </p>
+                    <p className="text-tertiary mb-2">{workshop.description}</p>
                     <span className="text-white text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">
                       {workshop.duration}
                     </span>

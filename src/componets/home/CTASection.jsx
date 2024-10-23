@@ -1,12 +1,23 @@
-import React from 'react';
-import { ArrowRight, Code, Sparkles, Star, Trophy, Rocket, Globe, Users, Zap, Award } from 'lucide-react';
+import React from "react";
+import {
+  ArrowRight,
+  Code,
+  Sparkles,
+  Star,
+  Trophy,
+  Rocket,
+  Globe,
+  Users,
+  Zap,
+  Award,
+} from "lucide-react";
 
 const BackgroundElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {/* Gradient Orbs */}
     <div className="absolute top-0 right-1/3 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-3xl" />
     <div className="absolute bottom-0 left-1/3 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-3xl" />
-    
+
     {/* Grid Pattern */}
     <div className="absolute inset-0 opacity-[0.03]">
       <div className="h-full w-full">
@@ -26,14 +37,18 @@ const BackgroundElements = () => (
         style={{
           top: `${Math.random() * 100}%`,
           left: `${Math.random() * 100}%`,
-          animation: `float ${10 + Math.random() * 5}s infinite ease-in-out ${Math.random() * 5}s`
+          animation: `float ${10 + Math.random() * 5}s infinite ease-in-out ${
+            Math.random() * 5
+          }s`,
         }}
       >
-        {[Star, Trophy, Globe, Rocket, Users, Zap, Award, Sparkles][i] && 
-          React.createElement([Star, Trophy, Globe, Rocket, Users, Zap, Award, Sparkles][i], {
-            className: "w-6 h-6 text-blue-200/30"
-          })
-        }
+        {[Star, Trophy, Globe, Rocket, Users, Zap, Award, Sparkles][i] &&
+          React.createElement(
+            [Star, Trophy, Globe, Rocket, Users, Zap, Award, Sparkles][i],
+            {
+              className: "w-6 h-6 text-blue-200/30",
+            }
+          )}
       </div>
     ))}
   </div>
@@ -44,9 +59,9 @@ const Stats = () => (
     {[
       { label: "Active Students", value: "50K+" },
       { label: "Course Completion", value: "92%" },
-      { label: "Career Transition", value: "85%" }
+      { label: "Career Transition", value: "85%" },
     ].map((stat, index) => (
-      <div 
+      <div
         key={index}
         className="text-center px-6 py-3 bg-white/50 backdrop-blur-sm rounded-xl border border-blue-100/50"
       >
@@ -62,8 +77,8 @@ const Stats = () => (
 const CTASection = () => {
   return (
     <section className="relative py-32 overflow-hidden bg-gradient-to-b from-blue-50 via-white/50 to-purple-50">
-      <BackgroundElements />
-      
+      {/* <BackgroundElements /> */}
+
       <div className="relative z-10 container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
@@ -73,12 +88,13 @@ const CTASection = () => {
               Transform Your Tech Career
             </h2>
             <p className="relative text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Join thousands of successful graduates who've launched their tech careers through our comprehensive learning platform. Master in-demand skills with expert guidance.
+              Join thousands of successful graduates who've launched their tech
+              careers through our comprehensive learning platform. Master
+              in-demand skills with expert guidance.
             </p>
           </div>
 
           {/* Stats */}
-        
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
@@ -109,14 +125,18 @@ const CTASection = () => {
           </div>
 
           {/* Trust Badges */}
-         
         </div>
       </div>
 
       <style jsx>{`
         @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0); }
-          50% { transform: translateY(-20px) rotate(10deg); }
+          0%,
+          100% {
+            transform: translateY(0) rotate(0);
+          }
+          50% {
+            transform: translateY(-20px) rotate(10deg);
+          }
         }
         .animate-float {
           animation: float 10s infinite ease-in-out;

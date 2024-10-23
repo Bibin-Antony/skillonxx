@@ -1,14 +1,32 @@
-import React from 'react';
-import { Code, Book, Laptop, Compass, Lightbulb, Palette, Video, Briefcase } from 'lucide-react';
+import React, { useEffect } from "react";
+import {
+  Code,
+  Book,
+  Laptop,
+  Compass,
+  Lightbulb,
+  Palette,
+  Video,
+  Briefcase,
+} from "lucide-react";
 // import CreativeCourseHero from './CreativeCourseHero';
-import Navbar from '../home/navbar';
+import Navbar from "../home/navbar";
 
-import Footer from '../home/Footer';
-import ContactHero from './ContactHero';
-import QuickContactOptions from './QuickContactOptions';
+import Footer from "../home/Footer";
+import ContactHero from "./ContactHero";
+import QuickContactOptions from "./QuickContactOptions";
 
 // Course-themed icons
-const COURSE_ICONS = [Code, Book, Laptop, Compass, Lightbulb, Palette, Video, Briefcase];
+const COURSE_ICONS = [
+  Code,
+  Book,
+  Laptop,
+  Compass,
+  Lightbulb,
+  Palette,
+  Video,
+  Briefcase,
+];
 
 const AnimatedBackground = () => {
   return (
@@ -22,9 +40,9 @@ const AnimatedBackground = () => {
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              '--float-offset': `${Math.random() * 20}px`,
-              '--animation-delay': `${Math.random() * 5}s`,
-              '--rotation': `${Math.random() * 360}deg`,
+              "--float-offset": `${Math.random() * 20}px`,
+              "--animation-delay": `${Math.random() * 5}s`,
+              "--rotation": `${Math.random() * 360}deg`,
             }}
           >
             <Icon />
@@ -36,11 +54,15 @@ const AnimatedBackground = () => {
 };
 
 const Courses = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0); // Scroll to the top when the component is mounted
+  }, []);
+
   return (
     <div className="relative">
       {/* Animated Background */}
       <AnimatedBackground />
-      
+
       {/* Main content */}
       <div className="relative z-10">
         <Navbar />

@@ -1,11 +1,20 @@
-import React from 'react';
-import { Users, Calendar, ArrowRight, Clock, BookOpen, Trophy, Tag } from 'lucide-react';
+import React from "react";
+import {
+  Users,
+  Calendar,
+  ArrowRight,
+  Clock,
+  BookOpen,
+  Trophy,
+  Tag,
+} from "lucide-react";
 
 const courses = [
   {
     id: 1,
     title: "Full-Stack Web Development Bootcamp",
-    description: "Master modern web development with MERN stack and cloud technologies",
+    description:
+      "Master modern web development with MERN stack and cloud technologies",
     startDate: "2024-11-01",
     maxStudents: 50,
     enrolledStudents: 38,
@@ -13,12 +22,13 @@ const courses = [
     price: "$999",
     duration: "12 weeks",
     image: "/api/placeholder/300/200?text=Web+Dev+Bootcamp",
-    highlights: ["Live Projects", "Industry Mentors", "Job Assistance"]
+    highlights: ["Live Projects", "Industry Mentors", "Job Assistance"],
   },
   {
     id: 2,
     title: "Data Science and Machine Learning",
-    description: "Dive deep into data analysis, ML algorithms, and AI applications",
+    description:
+      "Dive deep into data analysis, ML algorithms, and AI applications",
     startDate: "2024-10-25",
     maxStudents: 40,
     enrolledStudents: 35,
@@ -26,7 +36,7 @@ const courses = [
     price: "$1199",
     duration: "16 weeks",
     image: "/api/placeholder/300/200?text=Data+Science+Course",
-    highlights: ["Real Datasets", "ML Projects", "Industry Tools"]
+    highlights: ["Real Datasets", "ML Projects", "Industry Tools"],
   },
   {
     id: 3,
@@ -39,16 +49,16 @@ const courses = [
     price: "$799",
     duration: "8 weeks",
     image: "/api/placeholder/300/200?text=UI/UX+Design+Course",
-    highlights: ["Design Portfolio", "UX Research", "Client Projects"]
+    highlights: ["Design Portfolio", "UX Research", "Client Projects"],
   },
 ];
 
 const FeaturedCourses = () => {
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'long',
-      day: 'numeric',
-      year: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
     });
   };
 
@@ -56,9 +66,12 @@ const FeaturedCourses = () => {
     const percentageFilled = (enrolled / max) * 100;
     return {
       width: `${percentageFilled}%`,
-      color: percentageFilled > 80 ? 'bg-gradient-to-r from-red-500 to-red-600' : 
-             percentageFilled > 50 ? 'bg-gradient-to-r from-yellow-500 to-yellow-600' : 
-             'bg-gradient-to-r from-green-500 to-green-600'
+      color:
+        percentageFilled > 80
+          ? "bg-gradient-to-r from-red-500 to-red-600"
+          : percentageFilled > 50
+          ? "bg-gradient-to-r from-yellow-500 to-yellow-600"
+          : "bg-gradient-to-r from-green-500 to-green-600",
     };
   };
 
@@ -70,9 +83,9 @@ const FeaturedCourses = () => {
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t "></div>
 
       {/* Blob elements */}
-      <div className="absolute top-20 left-20 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+      {/* <div className="absolute top-20 left-20 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
       <div className="absolute top-20 right-20 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+      <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div> */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -80,21 +93,28 @@ const FeaturedCourses = () => {
             Featured Courses
           </h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Transform your career with our industry-aligned courses. Learn from experts and build real-world projects.
+            Transform your career with our industry-aligned courses. Learn from
+            experts and build real-world projects.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course) => {
-            const enrollmentStatus = getEnrollmentStatus(course.enrolledStudents, course.maxStudents);
-            
+            const enrollmentStatus = getEnrollmentStatus(
+              course.enrolledStudents,
+              course.maxStudents
+            );
+
             return (
-              <div key={course.id} className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100">
+              <div
+                key={course.id}
+                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100"
+              >
                 {/* Course Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={course.image} 
-                    alt={course.title} 
+                  <img
+                    src={course.image}
+                    alt={course.title}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
@@ -120,7 +140,7 @@ const FeaturedCourses = () => {
                   <h3 className="font-bold text-xl mb-2 text-gray-800 line-clamp-2">
                     {course.title}
                   </h3>
-                  
+
                   <p className="text-gray-600 text-sm mb-4 line-clamp-2">
                     {course.description}
                   </p>
@@ -128,7 +148,7 @@ const FeaturedCourses = () => {
                   {/* Course Highlights */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {course.highlights.map((highlight, index) => (
-                      <span 
+                      <span
                         key={index}
                         className="bg-blue-50 text-blue-600 text-xs px-2 py-1 rounded-full"
                       >
@@ -142,29 +162,35 @@ const FeaturedCourses = () => {
                       <Calendar className="w-5 h-5 mr-2 text-blue-600" />
                       <span>Starts {formatDate(course.startDate)}</span>
                     </div>
-                    
+
                     <div className="space-y-2">
                       <div className="flex items-center justify-between text-gray-600">
                         <span className="flex items-center">
                           <Users className="w-5 h-5 mr-2 text-blue-600" />
-                          <span className="text-sm">{course.enrolledStudents} / {course.maxStudents} enrolled</span>
+                          <span className="text-sm">
+                            {course.enrolledStudents} / {course.maxStudents}{" "}
+                            enrolled
+                          </span>
                         </span>
                         <span className="text-sm font-medium text-blue-600">
-                          {Math.round((course.enrolledStudents / course.maxStudents) * 100)}% filled
+                          {Math.round(
+                            (course.enrolledStudents / course.maxStudents) * 100
+                          )}
+                          % filled
                         </span>
                       </div>
                       <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
-                        <div 
-                          className={`h-full rounded-full ${enrollmentStatus.color}`} 
-                          style={{ 
+                        <div
+                          className={`h-full rounded-full ${enrollmentStatus.color}`}
+                          style={{
                             width: enrollmentStatus.width,
-                            transition: 'width 1s ease-in-out'
+                            transition: "width 1s ease-in-out",
                           }}
                         ></div>
                       </div>
                     </div>
                   </div>
-                  
+
                   <button className="mt-auto w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition duration-300 flex items-center justify-center group">
                     <span>Enroll Now</span>
                     <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
@@ -174,7 +200,7 @@ const FeaturedCourses = () => {
             );
           })}
         </div>
-        
+
         <div className="text-center mt-16">
           <button className="group relative px-8 py-4 rounded-xl text-lg font-semibold">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur group-hover:blur-lg transition-all duration-300"></div>
@@ -189,7 +215,8 @@ const FeaturedCourses = () => {
       {/* Animation Keyframes */}
       <style jsx>{`
         @keyframes blob {
-          0%, 100% {
+          0%,
+          100% {
             transform: translateY(0);
           }
           50% {

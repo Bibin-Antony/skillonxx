@@ -1,52 +1,52 @@
-import React from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { Globe, Award, ChevronRight } from 'lucide-react';
+import React from "react";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Globe, Award, ChevronRight } from "lucide-react";
 
 const partners = [
   {
-    name: 'Google',
-    category: 'Tech Giant',
-    description: 'Cloud & AI Partnership',
-    image: "/api/placeholder/150/80?text=Google"
+    name: "Google",
+    category: "Tech Giant",
+    description: "Cloud & AI Partnership",
+    image: "/api/placeholder/150/80?text=Google",
   },
   {
-    name: 'Microsoft',
-    category: 'Technology',
-    description: 'Azure Cloud Partner',
-    image: "/api/placeholder/150/80?text=Microsoft"
+    name: "Microsoft",
+    category: "Technology",
+    description: "Azure Cloud Partner",
+    image: "/api/placeholder/150/80?text=Microsoft",
   },
   {
-    name: 'Amazon Web Services',
-    category: 'Cloud Computing',
-    description: 'AWS Education Partner',
-    image: "/api/placeholder/150/80?text=AWS"
+    name: "Amazon Web Services",
+    category: "Cloud Computing",
+    description: "AWS Education Partner",
+    image: "/api/placeholder/150/80?text=AWS",
   },
   {
-    name: 'Facebook',
-    category: 'Social Media',
-    description: 'Meta Developer Partner',
-    image: "/api/placeholder/150/80?text=Meta"
+    name: "Facebook",
+    category: "Social Media",
+    description: "Meta Developer Partner",
+    image: "/api/placeholder/150/80?text=Meta",
   },
   {
-    name: 'IBM',
-    category: 'Enterprise',
-    description: 'AI Research Partner',
-    image: "/api/placeholder/150/80?text=IBM"
+    name: "IBM",
+    category: "Enterprise",
+    description: "AI Research Partner",
+    image: "/api/placeholder/150/80?text=IBM",
   },
   {
-    name: 'Oracle',
-    category: 'Database',
-    description: 'Database Technology Partner',
-    image: "/api/placeholder/150/80?text=Oracle"
+    name: "Oracle",
+    category: "Database",
+    description: "Database Technology Partner",
+    image: "/api/placeholder/150/80?text=Oracle",
   },
   {
-    name: 'Cisco',
-    category: 'Networking',
-    description: 'Network Security Partner',
-    image: "/api/placeholder/150/80?text=Cisco"
-  }
+    name: "Cisco",
+    category: "Networking",
+    description: "Network Security Partner",
+    image: "/api/placeholder/150/80?text=Cisco",
+  },
 ];
 
 const TechPartnersSlider = () => {
@@ -65,31 +65,33 @@ const TechPartnersSlider = () => {
         breakpoint: 1280,
         settings: {
           slidesToShow: 4,
-        }
+        },
       },
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-        }
+        },
       },
       {
         breakpoint: 640,
         settings: {
           slidesToShow: 2,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+    <section className="py-20 bg-white relative overflow-hidden">
       {/* Background Decoration */}
       <div className="absolute inset-0">
-        <div className="absolute inset-0 opacity-5" 
-          style={{ 
-            backgroundImage: 'radial-gradient(circle at 1px 1px, black 1px, transparent 0)',
-            backgroundSize: '40px 40px'
+        <div
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, black 1px, transparent 0)",
+            backgroundSize: "40px 40px",
           }}
         />
       </div>
@@ -107,7 +109,8 @@ const TechPartnersSlider = () => {
             Partnering with Industry Leaders
           </h3>
           <p className="text-gray-600">
-            We collaborate with top tech companies to provide our students with industry-relevant skills and opportunities.
+            We collaborate with top tech companies to provide our students with
+            industry-relevant skills and opportunities.
           </p>
         </div>
 
@@ -117,7 +120,7 @@ const TechPartnersSlider = () => {
           <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent z-10" />
           <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent z-10" />
 
-          <Slider {...settings} className="partner-slider">
+          {/* <Slider {...settings} className="partner-slider">
             {partners.map((partner, index) => (
               <div key={index} className="px-4 outline-none">
                 <div className="bg-white rounded-xl p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg border border-gray-100">
@@ -139,7 +142,7 @@ const TechPartnersSlider = () => {
                 </div>
               </div>
             ))}
-          </Slider>
+          </Slider> */}
         </div>
 
         {/* Bottom CTA */}

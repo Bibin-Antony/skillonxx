@@ -1,8 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, ArrowRight, BookOpen, Palette, Target } from 'lucide-react';
-import img1 from '../../assets/Courosal/webdev.png'
-import img2 from'../../assets/Courosal/grahicdesign.png'
-import img3 from '../../assets/Courosal/digitalmarketing.png'
+import React, { useState, useEffect } from "react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  BookOpen,
+  Palette,
+  Target,
+} from "lucide-react";
+import img1 from "../../assets/Courosal/webdev.png";
+import img2 from "../../assets/Courosal/grahicdesign.png";
+import img3 from "../../assets/Courosal/digitalmarketing.png";
 
 const HeroPage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -11,41 +18,44 @@ const HeroPage = () => {
 
   const slides = [
     {
-      number: '01',
-      title: 'Web Development',
-      subtitle: 'Master Full-Stack Development',
-      description: 'Build powerful web applications from ground up. Learn modern frameworks, databases, and cloud deployment.',
-      buttonText: 'Explore Course',
+      number: "01",
+      title: "Web Development",
+      subtitle: "Master Full-Stack Development",
+      description:
+        "Build powerful web applications from ground up. Learn modern frameworks, databases, and cloud deployment.",
+      buttonText: "Explore Course",
       image: img1,
       icon: <BookOpen className="w-6 h-6" />,
-      bgColor: 'from-blue-600 via-blue-700 to-indigo-800',
-      accentColor: 'text-blue-400',
-      features: ['React & Node.js', 'Cloud Deployment', 'Real Projects']
+      bgColor: "from-blue-600 via-blue-700 to-indigo-800",
+      accentColor: "text-blue-400",
+      features: ["React & Node.js", "Cloud Deployment", "Real Projects"],
     },
     {
-      number: '02',
-      title: 'Graphic Design',
-      subtitle: 'Create Stunning Visuals',
-      description: 'Master industry-standard design tools and principles. Create compelling visuals for print and digital media.',
-      buttonText: 'Join Premium Course',
+      number: "02",
+      title: "Graphic Design",
+      subtitle: "Create Stunning Visuals",
+      description:
+        "Master industry-standard design tools and principles. Create compelling visuals for print and digital media.",
+      buttonText: "Join Premium Course",
       image: img2,
       icon: <Palette className="w-6 h-6" />,
-      bgColor: 'from-emerald-600 via-emerald-700 to-green-800',
-      accentColor: 'text-emerald-400',
-      features: ['Adobe Suite', 'UI/UX Design', 'Portfolio Building']
+      bgColor: "from-emerald-600 via-emerald-700 to-green-800",
+      accentColor: "text-emerald-400",
+      features: ["Adobe Suite", "UI/UX Design", "Portfolio Building"],
     },
     {
-      number: '03',
-      title: 'Digital Marketing',
-      subtitle: 'Master Online Marketing',
-      description: 'Learn comprehensive digital marketing strategies. Excel in SEO, social media, and data-driven marketing.',
-      buttonText: 'Start Learning',
+      number: "03",
+      title: "Digital Marketing",
+      subtitle: "Master Online Marketing",
+      description:
+        "Learn comprehensive digital marketing strategies. Excel in SEO, social media, and data-driven marketing.",
+      buttonText: "Start Learning",
       image: img3,
       icon: <Target className="w-6 h-6" />,
-      bgColor: 'from-purple-600 via-purple-700 to-indigo-800',
-      accentColor: 'text-purple-400',
-      features: ['SEO Mastery', 'Social Media', 'Analytics']
-    }
+      bgColor: "from-purple-600 via-purple-700 to-indigo-800",
+      accentColor: "text-purple-400",
+      features: ["SEO Mastery", "Social Media", "Analytics"],
+    },
   ];
 
   useEffect(() => {
@@ -74,14 +84,21 @@ const HeroPage = () => {
   };
 
   return (
-    <div 
-      className={`relative min-h-[85vh] pt-10 overflow-hidden bg-gradient-to-br ${slides[currentSlide].bgColor} transition-all duration-700 ease-in-out flex items-center`}
+    <div
+      className={`relative min-h-[100vh] pt-20 overflow-hidden bg-gradient-to-br ${slides[currentSlide].bgColor} transition-all duration-700 ease-in-out flex items-center`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Animated background patterns */}
       <div className="absolute inset-0 bg-gradient-to-br from-black/50 to-black/20">
-        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 2px 2px, rgba(255,255,255,0.1) 1px, transparent 0)",
+            backgroundSize: "40px 40px",
+          }}
+        ></div>
       </div>
 
       <div className="max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8 pb-14 relative z-10 ">
@@ -91,10 +108,14 @@ const HeroPage = () => {
             {/* Number and Title */}
             <div className="space-y-4">
               <div className="flex items-center space-x-4">
-                <span className={`text-5xl font-bold ${slides[currentSlide].accentColor} font-mono`}>
+                <span
+                  className={`text-5xl font-bold ${slides[currentSlide].accentColor} font-mono`}
+                >
                   {slides[currentSlide].number}
                 </span>
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center ${slides[currentSlide].accentColor} bg-white/10 backdrop-blur-sm`}>
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center ${slides[currentSlide].accentColor} bg-white/10 backdrop-blur-sm`}
+                >
                   {slides[currentSlide].icon}
                 </div>
               </div>
@@ -116,7 +137,7 @@ const HeroPage = () => {
             {/* Features */}
             <div className="flex flex-wrap gap-3">
               {slides[currentSlide].features.map((feature, index) => (
-                <span 
+                <span
                   key={index}
                   className="px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white text-sm border border-white/20"
                 >
@@ -168,9 +189,9 @@ const HeroPage = () => {
                 key={index}
                 onClick={() => setCurrentSlide(index)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  currentSlide === index 
-                    ? 'w-8 bg-white' 
-                    : 'w-2 bg-white/50 hover:bg-white/75'
+                  currentSlide === index
+                    ? "w-8 bg-white"
+                    : "w-2 bg-white/50 hover:bg-white/75"
                 }`}
               />
             ))}
