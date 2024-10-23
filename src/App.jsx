@@ -2,8 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Code, Brain, Target, Rocket } from 'lucide-react';
 import './App.css';
-import Home from './componets/home/home';
+import Home from './componets/home/Home';
 import Courses from './componets/Courses/Courses';
+import Workshops from './componets/Workshops/Workshops';
+import Internship from './componets/Internship/Internship';
+import AboutUs from './componets/AboutUs/AboutUs';
+import ContactUs from './componets/ContactUs/ContactUs';
 
 // Animated Background Component
 const AnimatedBackground = () => {
@@ -47,6 +51,10 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/courses" element={<Courses />} />
+          <Route path="/Workshops" element={<Workshops />} />
+          <Route path="/Internship" element={<Internship />} />
+          <Route path="/AboutUs" element={<AboutUs />} />
+          <Route path="/contactus" element={<ContactUs />} />
         </Routes>
       </Layout>
     </Router>
