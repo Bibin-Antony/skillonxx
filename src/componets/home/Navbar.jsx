@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, User, Menu, X, ChevronDown, Bell, BookOpen, Rocket, Award } from 'lucide-react';
 
+import logo from "../../assets/logo/logo.png"
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,8 +29,8 @@ const Navbar = () => {
     },
     { label: "Workshops", href: "/workshops" },
     { label: "Internship", href: "/internship" },
-    { label: "About Us", href: "/about-us" },
-    { label: "Contact Us", href: "/contact-us" }
+    { label: "About Us", href: "/AboutUs" },
+    { label: "Contact Us", href: "/contactus" }
   ];
 
   useEffect(() => {
@@ -62,10 +64,10 @@ const Navbar = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link 
-            to="/" 
+            to="/home" 
             className="flex items-center space-x-2 group"
           >
-            <img src="/api/placeholder/40/40" alt="Logo" className="h-10 w-auto transform group-hover:scale-105 transition-transform duration-200" />
+            <img src={logo} alt="Logo" className="h-10 w-auto transform group-hover:scale-105 transition-transform duration-200" />
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
               SKILLONX
             </span>
@@ -83,7 +85,7 @@ const Navbar = () => {
                 <Link
                   to={item.href}
                   className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1 group hover:bg-gray-100 ${
-                    item.isActive ? 'text-blue-600' : 'text-black'
+                    item.isActive ? 'text-blue-600' : isScrolled ? "text-black":"text-white"
                   }`}
                 >
                   <span>{item.label}</span>
