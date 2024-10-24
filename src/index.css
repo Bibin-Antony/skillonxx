@@ -1,0 +1,201 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'room';
+  src: url('./fonts/room/Room-Black.woff1') format('woff2'),
+       url('./fonts/room/Room-Black.woff2') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Animated Background Styles */
+.animated-background {
+  position: fixed;
+  inset: 0;
+  opacity: 0.1;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.floating-item {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+}
+
+.floating-item:nth-child(even) {
+  color: #60A5FA; /* blue-400 */
+}
+
+.floating-item:nth-child(odd) {
+  color: #A78BFA; /* purple-400 */
+}
+
+.floating-item:nth-child(4n + 1) {
+  animation: floatAnimation1 4s infinite;
+}
+
+.floating-item:nth-child(4n + 2) {
+  animation: floatAnimation2 3.5s infinite;
+}
+
+.floating-item:nth-child(4n + 3) {
+  animation: floatAnimation3 5s infinite;
+}
+
+.floating-item:nth-child(4n + 4) {
+  animation: floatAnimation4 4.5s infinite;
+}
+
+@keyframes floatAnimation1 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) rotate(10deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes floatAnimation2 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateY(20px) rotate(-10deg);
+    opacity: 0.8;
+  }
+}
+
+@keyframes floatAnimation3 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-15px) rotate(15deg);
+    opacity: 0.6;
+  }
+}
+
+@keyframes floatAnimation4 {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(15px) rotate(-15deg);
+    opacity: 0.9;
+  }
+}
+
+/* Additional styles for Courses page background */
+.courses-theme {
+    /* Different gradient for courses page */
+    background: linear-gradient(
+      to bottom right,
+      rgba(96, 165, 250, 0.03),
+      rgba(167, 139, 250, 0.03),
+      rgba(52, 211, 153, 0.03)
+    );
+  }
+  
+  .courses-theme .floating-item {
+    opacity: 0.08; /* Slightly different opacity for courses page */
+  }
+  
+  /* Course-specific color variations */
+  .courses-theme .floating-item:nth-child(6n) {
+    color: #60A5FA; /* blue-400 */
+  }
+  
+  .courses-theme .floating-item:nth-child(6n + 1) {
+    color: #A78BFA; /* purple-400 */
+  }
+  
+  .courses-theme .floating-item:nth-child(6n + 2) {
+    color: #34D399; /* emerald-400 */
+  }
+  
+  .courses-theme .floating-item:nth-child(6n + 3) {
+    color: #F472B6; /* pink-400 */
+  }
+  
+  .courses-theme .floating-item:nth-child(6n + 4) {
+    color: #FBBF24; /* amber-400 */
+  }
+  
+  .courses-theme .floating-item:nth-child(6n + 5) {
+    color: #6EE7B7; /* teal-400 */
+  }
+  
+  /* Unique animation for courses page */
+  .courses-theme .floating-item {
+    animation: floatCourses 12s infinite;
+    animation-delay: var(--animation-delay, 0s);
+  }
+  
+  @keyframes floatCourses {
+    0%, 100% {
+      transform: translateY(0) rotate(var(--rotation));
+      opacity: 0.2;
+    }
+    50% {
+      transform: 
+        translateY(var(--float-offset, -20px)) 
+        rotate(calc(var(--rotation) + 15deg)) 
+        scale(1.05);
+      opacity: 0.5;
+    }
+  }
+  
+  /* Optional: Add a subtle pattern overlay specific to courses */
+  .courses-theme::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(circle at center, rgba(96, 165, 250, 0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+  
+  /* Optional: Add a different gradient overlay for courses */
+  .courses-theme::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 70% 30%,
+      transparent 0%,
+      rgba(255, 255, 255, 0.9) 100%
+    );
+    pointer-events: none;
+  }
+  
+  /* Ensure smooth transitions when switching routes */
+  .animated-background {
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  /* Optional: Add a subtle glow effect for course icons */
+  .courses-theme .floating-item {
+    filter: drop-shadow(0 0 8px rgba(var(--color-primary), 0.2));
+  }
+  
+  /* Responsive adjustments for courses background */
+  @media (max-width: 768px) {
+    .courses-theme .floating-item {
+      --float-offset: 15px; /* Smaller float distance on mobile */
+    }
+    
+    .courses-theme::before {
+      background-size: 30px 30px; /* Smaller pattern on mobile */
+    }
+  }
