@@ -36,11 +36,11 @@ const HeroPage = () => {
       subtitle: "Create Stunning Visuals",
       description:
         "Master industry-standard design tools and principles. Create compelling visuals for print and digital media.",
-      buttonText: "Join Premium Course",
+      buttonText: "Explore Course",
       image: img2,
       icon: <Palette className="w-6 h-6" />,
-      bgColor: "from-emerald-600 via-emerald-700 to-green-800",
-      accentColor: "text-emerald-400",
+      bgColor: "from-purple-600 via-purple-700 to-indigo-800",
+      accentColor: "text-purple-400",
       features: ["Adobe Suite", "UI/UX Design", "Portfolio Building"],
     },
     {
@@ -49,11 +49,11 @@ const HeroPage = () => {
       subtitle: "Master Online Marketing",
       description:
         "Learn comprehensive digital marketing strategies. Excel in SEO, social media, and data-driven marketing.",
-      buttonText: "Start Learning",
+      buttonText: "Explore Course",
       image: img3,
       icon: <Target className="w-6 h-6" />,
-      bgColor: "from-purple-600 via-purple-700 to-indigo-800",
-      accentColor: "text-purple-400",
+      bgColor: " from-emerald-600 via-emerald-700 to-green-800",
+      accentColor: "text-emerald-400",
       features: ["SEO Mastery", "Social Media", "Analytics"],
     },
   ];
@@ -85,7 +85,7 @@ const HeroPage = () => {
 
   return (
     <div
-      className={`relative min-h-[100vh] pt-20 overflow-hidden bg-gradient-to-br ${slides[currentSlide].bgColor} transition-all duration-700 ease-in-out flex items-center`}
+      className={`relative min-h-[100vh] pt-28 overflow-hidden bg-gradient-to-br ${slides[currentSlide].bgColor} transition-all duration-700 ease-in-out flex items-center`}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
@@ -147,37 +147,41 @@ const HeroPage = () => {
             </div>
 
             {/* CTA Button */}
-            <button className="group relative px-8 py-4 rounded-xl text-lg font-semibold">
-              <div className="absolute inset-0 bg-white rounded-xl blur group-hover:blur-lg transition-all duration-300"></div>
+            <button 
+              onClick={() => window.location.href = '/courses'}
+              className="group relative px-8 py-4 rounded-xl text-sm md:text-lg font-semibold"
+              >
+              <div className="absolute inset-0 bg-white rounded-xl transition-all duration-300"></div>
               <span className="relative flex items-center justify-center gap-2 text-blue-900 font-semibold">
                 {slides[currentSlide].buttonText}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
               </span>
-            </button>
+           </button>
           </div>
 
           {/* Image Section */}
-          <div className="lg:w-1/2">
-            <div className="relative">
+          <div className=" w-10 md:w-1/2">
+            <div className="">
               {/* Background decoration */}
-              <div className="absolute -inset-4 bg-white/10 rounded-2xl blur-xl transform rotate-6"></div>
-              <div className="relative overflow-hidden rounded-2xl border border-white/20 backdrop-blur-sm">
+              <div className="absolute"></div>
+              <div className="relative ">
                 <img
-                  className="w-full h-[500px] object-cover transform hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 hidden md:block"
                   src={slides[currentSlide].image}
                   alt={slides[currentSlide].title}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+                <div className="absolute "></div>
               </div>
             </div>
           </div>
         </div>
 
         {/* Navigation Controls */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center gap-4">
+        <div className="absolute bottom-7 md:bottom-[-75px] left-1/2 transform -translate-x-1/2 flex items-center gap-4  ">
+        
           <button
             onClick={prevSlide}
-            className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 text-white border border-white/20"
+            className="p-1 md:p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 text-white border border-white/20"
           >
             <ChevronLeft size={24} />
           </button>
@@ -188,7 +192,7 @@ const HeroPage = () => {
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`h-1 md:h-2 rounded-full transition-all duration-300 ${
                   currentSlide === index
                     ? "w-8 bg-white"
                     : "w-2 bg-white/50 hover:bg-white/75"
@@ -199,7 +203,7 @@ const HeroPage = () => {
 
           <button
             onClick={nextSlide}
-            className="p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 text-white border border-white/20"
+            className="p-1 md:p-3 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all duration-300 text-white border border-white/20"
           >
             <ChevronRight size={24} />
           </button>

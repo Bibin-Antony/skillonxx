@@ -13,6 +13,7 @@ import {
   Clock,
 } from "lucide-react";
 import Logo from "../../assets/logo/logo.png";
+import logo2 from "../../assets/logo/logo2.png";
 // Sample notification data
 const notifications = [
   {
@@ -208,29 +209,29 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 backdrop-blur-lg shadow-lg shadow-black/5"
+          ? "bg-white/80 backdrop-blur-lg shadow-lg shadow-blue-900/50"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" md:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/home" className="flex items-center space-x-2 group">
-            <img
-              src={Logo}
-              alt="Logo"
-              className="h-10 w-auto transform group-hover:scale-105 transition-transform duration-200"
-            />
-            <span
-              className="text-xl font-bold text-black"
-              style={{ fontFamily: "room" }}
-            >
-              SKILLONX
-            </span>
+          <Link to="/Home" className="flex items-center">
+           {
+            !isScrolled ?  <img
+            src={Logo}
+            alt="Logo"
+            className="h-7 md:h-10 w-auto "
+          />: <img
+          src={logo2}
+          alt="Logo"
+          className="h-7 md:h-10 w-auto "
+        />
+           }
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1 ">
             {navItems.map((item, index) => (
               <div
                 key={index}
@@ -242,11 +243,11 @@ const Navbar = () => {
               >
                 <Link
                   to={item.href}
-                  className={`px-4 py-2 hover:text-black rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1 group hover:bg-gray-100 ${
+                  className={`px-5 py-2 hover:text-black rounded-lg text-sm font-room font-medium tracking-wider transition-all duration-200 flex items-center space-x-1 group hover:bg-gray-100  ${
                     item.isActive
-                      ? "text-blue-600"
+                      ? " border-4 text-blue-400 font-medium border-blue-500"
                       : isScrolled
-                      ? "text-black"
+                      ? "text-black "
                       : "text-white"
                   }`}
                 >
@@ -335,7 +336,7 @@ const Navbar = () => {
               {isMenuOpen ? (
                 <X className="w-5 h-5 text-gray-800" />
               ) : (
-                <Menu className="w-5 h-5 text-white" />
+                <Menu className={`w-5 h-5  ${!isScrolled? "text-white" : "text-black"}`} />
               )}
             </button>
           </div>
@@ -364,18 +365,46 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden mt-4 flex flex-col space-y-2">
-            {navItems.map((item, index) => (
-              <Link
-                key={index}
-                to={item.href}
-                className="block px-4 py-2 rounded-lg text-sm font-medium text-gray-800 bg-gray-100"
-              >
-                {item.label}
+        <div className="fixed inset-0 bg-white z-50 lg:hidden h-[100vh]">
+          <div className="flex flex-col h-full">
+            <div className="flex justify-between items-center p-4 border-b">
+              <Link to="/" className="flex items-center space-x-2">
+                <img src={logo2} alt="Logo" className="h-8 w-auto" />
               </Link>
-            ))}
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="flex-1 overflow-y-auto py-8 px-4">
+              <div className="flex flex-col space-y-4">
+                {navItems.map((item, index) => (
+                  <Link
+                    key={index}
+                    to={item.href}
+                    className="px-4 py-3 rounded-lg text-lg font-medium text-gray-800 hover:bg-gray-100 transition-colors duration-200"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <div className="p-4 border-t">
+              <Link
+                to="/sign-in"
+                className="flex items-center justify-center space-x-2 w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <User className="w-5 h-5" />
+                <span className="font-medium">Sign in</span>
+              </Link>
+            </div>
           </div>
-        )}
+        </div>
+      )}
       </div>
 
       {/* Notification Panel */}

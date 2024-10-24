@@ -13,48 +13,53 @@ import {
 
 const teamMembers = [
   {
-    name: "Alex Johnson",
+    name: "Leelavathi Yogapa",
     role: "Founder & CEO",
     image: "/api/placeholder/150/150?text=AJ",
-    linkedin: "https://linkedin.com/in/alexjohnson",
-    twitter: "https://twitter.com/alexjohnson",
-    github: "https://github.com/alexjohnson",
   },
   {
-    name: "Samantha Lee",
-    role: "Chief Technology Officer",
+    name: "Momal P Chauhan",
+    role: "Co-Founder",
     image: "/api/placeholder/150/150?text=SL",
     linkedin: "https://linkedin.com/in/samanthalee",
     twitter: "https://twitter.com/samanthalee",
     github: "https://github.com/samanthalee",
   },
   {
-    name: "Michael Chen",
-    role: "Head of Curriculum",
+    name: "Lakshmi P",
+    role: "Chief Financial Officer",
     image: "/api/placeholder/150/150?text=MC",
     linkedin: "https://linkedin.com/in/michaelchen",
     twitter: "https://twitter.com/michaelchen",
     github: "https://github.com/michaelchen",
   },
   {
-    name: "Emily Rodriguez",
-    role: "Lead UX/UI Instructor",
+    name: "Bibin Antony k",
+    role: "Product Head",
     image: "/api/placeholder/150/150?text=ER",
     linkedin: "https://linkedin.com/in/emilyrodriguez",
     twitter: "https://twitter.com/emilyrodriguez",
     github: "https://github.com/emilyrodriguez",
   },
   {
-    name: "David Kim",
-    role: "Full Stack Development Lead",
+    name: "Sudarshan Mohan",
+    role: "Chief marketing officer",
     image: "/api/placeholder/150/150?text=DK",
     linkedin: "https://linkedin.com/in/davidkim",
     twitter: "https://twitter.com/davidkim",
     github: "https://github.com/davidkim",
   },
   {
-    name: "Sarah Patel",
-    role: "Career Services Director",
+    name: "Albert Augustin KT",
+    role: "Creative Head",
+    image: "/api/placeholder/150/150?text=SP",
+    linkedin: "https://linkedin.com/in/sarahpatel",
+    twitter: "https://twitter.com/sarahpatel",
+    github: "https://github.com/sarahpatel",
+  },
+  {
+    name: "Hemashree M",
+    role: "Human Resourses",
     image: "/api/placeholder/150/150?text=SP",
     linkedin: "https://linkedin.com/in/sarahpatel",
     twitter: "https://twitter.com/sarahpatel",
@@ -197,7 +202,7 @@ const OurTeamSection = () => {
       <div className="absolute -top-0 -right-10 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 md:max-w-[85vw]  mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl blur-3xl transform -rotate-3" />
           <h2 className="relative text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white bg-clip-text">
@@ -208,7 +213,7 @@ const OurTeamSection = () => {
           </p>
         </div>
 
-        <div className="relative overflow-hidden">
+        <div className="relative overflow-hidden cursor-pointer">
           <div
             ref={scrollRef}
             className="flex gap-6 overflow-x-hidden py-4"
