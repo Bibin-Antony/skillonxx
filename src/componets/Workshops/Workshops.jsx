@@ -63,12 +63,10 @@ const Home = () => {
       <AnimatedBackground />
 
       <div className="relative z-10">
-        <Navbar />
         <WorkshopHero />
         <WorkshopListing />
         <WorkshopProcess />
         <WorkshopBenefits />
-        <Footer />
       </div>
     </div>
   );

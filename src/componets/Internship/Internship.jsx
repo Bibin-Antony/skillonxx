@@ -65,13 +65,11 @@ const Home = () => {
       <AnimatedBackground />
 
       <div className="relative z-10">
-        <Navbar />
         <InternshipHero />
         <TrackComparison />
         <ApplicationProcess />
         <CurrentOpenings />
         <CTASection />
-        <Footer />
       </div>
     </div>
   );

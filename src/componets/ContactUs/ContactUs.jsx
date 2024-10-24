@@ -65,10 +65,8 @@ const Courses = () => {
 
       {/* Main content */}
       <div className="relative z-10">
-        <Navbar />
         <ContactHero />
         <QuickContactOptions />
-        <Footer />
       </div>
     </div>
   );
