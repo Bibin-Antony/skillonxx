@@ -9,48 +9,47 @@ import {
   Tag,
 } from "lucide-react";
 
+import frontend from "../../assets/Images/frontend.jpg";
+import python from "../../assets/Images/python.jpg";
+import english from "../../assets/Images/english.jpg";
+
 const courses = [
   {
     id: 1,
-    title: "Full-Stack Web Development Bootcamp",
-    description:
-      "Master modern web development with MERN stack and cloud technologies",
+    title: "Front End Development Bootcamp", 
+    description: "Master modern front-end development with React and contemporary web technologies",
     startDate: "2024-11-01",
-    maxStudents: 50,
-    enrolledStudents: 38,
+    maxStudents: 10,
+    enrolledStudents: 6,
     status: "Filling Fast",
-    price: "$999",
     duration: "12 weeks",
-    image: "/api/placeholder/300/200?text=Web+Dev+Bootcamp",
-    highlights: ["Live Projects", "Industry Mentors", "Job Assistance"],
-  },
+    image: frontend,
+    highlights: ["React Development", "Industry Projects", "Portfolio Building"]
+   },
   {
     id: 2,
-    title: "Data Science and Machine Learning",
-    description:
-      "Dive deep into data analysis, ML algorithms, and AI applications",
+    title: "Python Programming",
+    description: "Learn Python fundamentals, data structures, OOP, and build real-world applications",
     startDate: "2024-10-25",
-    maxStudents: 40,
-    enrolledStudents: 35,
-    status: "Almost Full",
-    price: "$1199",
+    maxStudents: 10,
+    enrolledStudents: 4,
+    status: "Starting Soon",
     duration: "16 weeks",
-    image: "/api/placeholder/300/200?text=Data+Science+Course",
-    highlights: ["Real Datasets", "ML Projects", "Industry Tools"],
+    image: python,
+    highlights: ["Core Python", "Web Development", "Automation Scripts"]
   },
   {
     id: 3,
-    title: "UI/UX Design Masterclass",
-    description: "Create stunning user interfaces and seamless experiences",
+    title: "English Language Mastery",
+    description: "Master business English and professional communication skills",
     startDate: "2024-11-15",
-    maxStudents: 45,
-    enrolledStudents: 12,
+    maxStudents: 10,
+    enrolledStudents: 0,
     status: "Open for Enrollment",
-    price: "$799",
-    duration: "8 weeks",
-    image: "/api/placeholder/300/200?text=UI/UX+Design+Course",
-    highlights: ["Design Portfolio", "UX Research", "Client Projects"],
-  },
+    duration: "3 weeks",
+    image: english,
+    highlights: ["Business Communication", "IELTS Preparation", "Interview Skills"]
+   },
 ];
 
 const FeaturedCourses = () => {
@@ -108,10 +107,10 @@ const FeaturedCourses = () => {
             return (
               <div
                 key={course.id}
-                className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100"
+                className="group relative bg-white rounded-2xl shadow-blue-300/50 shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden border border-gray-100"
               >
                 {/* Course Image */}
-                <div className="relative h-48 overflow-hidden">
+                <div className="relative h-48 overflow-hidden ">
                   <img
                     src={course.image}
                     alt={course.title}
@@ -128,10 +127,7 @@ const FeaturedCourses = () => {
                       <Clock className="w-4 h-4" />
                       <span className="text-sm">{course.duration}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-white">
-                      <Tag className="w-4 h-4" />
-                      <span className="text-sm">{course.price}</span>
-                    </div>
+                    
                   </div>
                 </div>
 
@@ -202,9 +198,9 @@ const FeaturedCourses = () => {
         </div>
 
         <div className="text-center mt-16">
-          <button className="group relative px-8 py-4 rounded-xl text-lg font-semibold">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl blur group-hover:blur-lg transition-all duration-300"></div>
-            <span className="relative flex items-center justify-center gap-2 text-white">
+          <button className="group relative px-8 py-4 rounded-xl text-lg font-semibold shadow-lg shadow-blue-600 ">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl   transition-all duration-300 "></div>
+            <span className="relative flex items-center justify-center gap-2 text-white ">
               Explore All Courses
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
             </span>

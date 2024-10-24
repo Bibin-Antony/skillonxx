@@ -91,50 +91,11 @@ const benefits = [
   },
 ];
 
-const BackgroundElements = () => (
-  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Gradient Orbs */}
-    <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
-    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-
-    {/* Tech Pattern Grid */}
-    <div className="absolute inset-0 opacity-[0.02]">
-      <div className="h-full w-full">
-        <div className="grid grid-cols-8 h-full">
-          {[...Array(32)].map((_, i) => (
-            <div key={i} className="border-r border-b border-gray-900/10" />
-          ))}
-        </div>
-      </div>
-    </div>
-
-    {/* Floating Icons */}
-    {[...Array(6)].map((_, i) => (
-      <div
-        key={i}
-        className="absolute animate-float"
-        style={{
-          top: `${Math.random() * 100}%`,
-          left: `${Math.random() * 100}%`,
-          animationDelay: `${i * 1.5}s`,
-        }}
-      >
-        {i % 3 === 0 ? (
-          <Sparkles className="w-6 h-6 text-blue-200/20" />
-        ) : i % 3 === 1 ? (
-          <Gem className="w-6 h-6 text-purple-200/20" />
-        ) : (
-          <Shield className="w-6 h-6 text-emerald-200/20" />
-        )}
-      </div>
-    ))}
-  </div>
-);
 
 const BenefitCard = ({ benefit, index }) => (
-  <div className="group relative">
+  <div className="group relative ">
     {/* Card */}
-    <div className="h-full bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100/50">
+    <div className="h-full bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg shadow-blue-400 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 border border-gray-100/50">
       {/* Icon */}
       <div
         className={`w-14 h-14 rounded-xl bg-gradient-to-br ${benefit.color} p-3 mb-6 flex-shrink-0 relative group-hover:scale-110 transition-transform duration-300`}
@@ -166,14 +127,10 @@ const BenefitCard = ({ benefit, index }) => (
 
 const BenefitsSection = () => {
   return (
-    <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
-      <BackgroundElements />
-      <div className="absolute bottom-20 right-20 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-10 left-1/3 w-72 h-72 bg-pink-500/20 rounded-full blur-3xl" />
-      <div className="absolute top-20 left-1/2 w-56 h-56 bg-blue-500/20 rounded-full blur-3xl" />
-      <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl" />
+    <section className="py-24 relative overflow-hidden bg-gradient-to-r from-blue-200 to-white">
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div className="relative z-10 max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl blur-3xl transform -rotate-3" />
@@ -185,19 +142,17 @@ const BenefitsSection = () => {
             through our comprehensive learning platform
           </p>
         </div>
-        <div className="absolute -top-0 -left-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -top-0 -right-10 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
+       
 
         {/* Benefits Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 cursor-pointer ">
           {benefits.map((benefit, index) => (
             <BenefitCard key={index} benefit={benefit} index={index} />
           ))}
         </div>
 
         {/* CTA Section */}
-        <div className="mt-20 text-center relative">
+        <div className="mt-20 text-center relative ">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
           <div className="relative">
             <div className="inline-block p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600">
@@ -211,7 +166,7 @@ const BenefitsSection = () => {
           </div>
 
           <p className="mt-4 text-gray-500 relative">
-            Join 50,000+ professionals advancing their careers with SkillonX
+            Join our professionals advancing their careers with SkillonX
           </p>
         </div>
       </div>

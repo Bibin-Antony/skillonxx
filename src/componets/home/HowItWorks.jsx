@@ -179,14 +179,14 @@ const HowItWorks = () => {
     <section className="py-24 relative overflow-hidden bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-800">
       {/* <BackgroundElements /> */}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 md:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl blur-3xl transform rotate-6" />
-          <h2 className="relative text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white bg-clip-text">
+          <h2 className="relative text-2xl md:text-4xl font-bold mb-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white bg-clip-text">
             Your Journey to Tech Success
           </h2>
-          <p className="relative text-white text-lg">
+          <p className="relative text-white md:text-lg">
             Follow our proven pathway to transform your career in technology,
             supported every step of the way.
           </p>
@@ -196,7 +196,7 @@ const HowItWorks = () => {
         <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div> */}
 
         {/* Steps Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 cursor-pointer">
           {steps.map((step, index) => (
             <StepCard
               key={index}
@@ -212,17 +212,20 @@ const HowItWorks = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
           <div className="relative">
             <div className="inline-block p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600">
-              <button className="group relative px-8 py-4 bg-white rounded-2xl text-lg font-semibold transition-all duration-300 hover:bg-transparent">
+            <button 
+                onClick={() => window.location.href = '/courses'}
+                className="group relative px-8 py-4 bg-white rounded-2xl text-lg font-semibold transition-all duration-300 hover:bg-transparent"
+                >
                 <span className="relative bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:text-white flex items-center gap-2">
                   Begin Your Journey
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </span>
-              </button>
+            </button>
             </div>
           </div>
 
           <p className="mt-4 text-white relative">
-            Join 10,000+ students who have transformed their careers with
+            Join our students who have transformed their careers with
             SkillonX
           </p>
         </div>

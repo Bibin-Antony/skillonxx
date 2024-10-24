@@ -3,9 +3,12 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'room';
+  font-family: 'room-bold';
   src: url('./fonts/room/Room-Black.woff1') format('woff2'),
-       url('./fonts/room/Room-Black.woff2') format('woff');
+       url('./fonts/room/Room-Black.ttf') format('ttf');
+  font-family: 'room-thin';
+  src: url('./fonts/room/Room-Thin.woff') format('woff'),
+       url('./fonts/room/Room-Thin.ttf') format('ttf');
   font-weight: normal;
   font-style: normal;
 }
