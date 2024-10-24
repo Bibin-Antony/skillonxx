@@ -115,7 +115,7 @@ const WorkshopBenefits = () => {
 
   return (
     <div className="bg-tertiary py-16 bg-gradient-to-br from-primary via-custom to-secondary">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 md:w-[1300px]">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
@@ -125,6 +125,7 @@ const WorkshopBenefits = () => {
             Delivering value to institutions, students, and faculty through
             industry-aligned technical training
           </p>
+          Transform Your Students with Industry-Ready Skills
         </div>
 
         {/* Stats Section */}

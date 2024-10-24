@@ -65,12 +65,10 @@ const Home = () => {
 
       {/* Main content container with proper z-index */}
       <div className="relative z-10">
-        <Navbar />
         <AboutUsHero />
         <BusinessPartners />
         <OurApproach />
         <OurApproachSection />
-        <Footer />
       </div>
     </div>
   );

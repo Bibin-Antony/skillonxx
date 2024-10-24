@@ -1,18 +1,20 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Code, Brain, Target, Rocket } from 'lucide-react';
-import './App.css';
-import Home from './componets/home/Home';
-import Courses from './componets/Courses/Courses';
-import Workshops from './componets/Workshops/Workshops';
-import Internship from './componets/Internship/Internship';
-import AboutUs from './componets/AboutUs/AboutUs';
-import ContactUs from './componets/ContactUs/ContactUs';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Code, Brain, Target, Rocket } from "lucide-react";
+import "./App.css";
+import Home from "./componets/home/Home";
+import Courses from "./componets/Courses/Courses";
+import Workshops from "./componets/Workshops/Workshops";
+import Internship from "./componets/Internship/Internship";
+import AboutUs from "./componets/AboutUs/AboutUs";
+import ContactUs from "./componets/ContactUs/ContactUs";
+import Navbar from "./componets/home/navbar";
+import Footer from "./componets/home/Footer";
 
 // Animated Background Component
 const AnimatedBackground = () => {
   const icons = [Code, Brain, Target, Rocket];
-  
+
   return (
     <div className="animated-background">
       {[...Array(20)].map((_, i) => {
@@ -47,6 +49,7 @@ const Layout = ({ children }) => {
 const App = () => {
   return (
     <Router>
+      <Navbar />
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -57,6 +60,7 @@ const App = () => {
           <Route path="/contactus" element={<ContactUs />} />
         </Routes>
       </Layout>
+      <Footer />
     </Router>
   );
 };

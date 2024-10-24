@@ -28,7 +28,7 @@ const WorkshopHero = () => {
   return (
     <div className="relative overflow-hidden bg-gradient-to-br from-primary via-custom to-secondary">
       {/* Main Hero Section */}
-      <div className="container mx-auto px-4 pt-44 pb-44">
+      <div className="container mx-auto px-4 pt-44 pb-44 md:w-[1300px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Text Content */}
           <div className="text-white space-y-6">

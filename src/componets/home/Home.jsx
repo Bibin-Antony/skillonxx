@@ -72,7 +72,7 @@ const Home = () => {
       <div className="relative z-10">
         <Navbar />
         <HeroPage />
-        <TechPartnersSlider />
+        {/* <TechPartnersSlider /> */}
         <HowItWorks />
         <BenefitsSection />
         <OurTeamSection />

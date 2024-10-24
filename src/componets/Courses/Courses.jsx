@@ -65,12 +65,10 @@ const Courses = () => {
 
       {/* Main content */}
       <div className="relative z-10">
-        <Navbar />
         <CreativeCourseHero />
         <FeaturedCourses />
         <CTASectionCourses />
         <BrowseCategories />
-        <Footer />
       </div>
     </div>
   );

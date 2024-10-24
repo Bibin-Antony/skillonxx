@@ -221,7 +221,10 @@ const Navbar = () => {
               alt="Logo"
               className="h-10 w-auto transform group-hover:scale-105 transition-transform duration-200"
             />
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+            <span
+              className="text-xl font-bold text-black"
+              style={{ fontFamily: "room" }}
+            >
               SKILLONX
             </span>
           </Link>

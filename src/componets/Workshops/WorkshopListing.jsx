@@ -315,8 +315,8 @@ const WorkshopListing = () => {
   });
 
   return (
-    <div className="min-h-screen bg-tertiary py-12">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen bg-tertiary py-12 ">
+      <div className="container mx-auto px-4 md:w-[1300px]">
         <h1 className="text-4xl font-bold text-center text-font mb-2">
           College Workshops
         </h1>
