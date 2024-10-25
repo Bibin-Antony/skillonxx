@@ -198,13 +198,16 @@ const FeaturedCourses = () => {
         </div>
 
         <div className="text-center mt-16">
-          <button className="group relative px-8 py-4 rounded-xl text-lg font-semibold shadow-lg shadow-blue-600 ">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl   transition-all duration-300 "></div>
-            <span className="relative flex items-center justify-center gap-2 text-white ">
-              Explore All Courses
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-            </span>
-          </button>
+        <button 
+          onClick={() => window.location.href = '/courses'}
+          className="group relative px-8 py-4 rounded-xl text-lg font-semibold shadow-lg shadow-blue-600"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl transition-all duration-300"></div>
+          <span className="relative flex items-center justify-center gap-2 text-white">
+            Explore All Courses
+            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+          </span>
+        </button>
         </div>
       </div>
 

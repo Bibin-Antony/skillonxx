@@ -15,7 +15,7 @@ import {
 const BackgroundElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     {/* Gradient Orbs */}
-    <div className="absolute top-0 right-1/3 w-[500px] h-[500px] bg-blue-500/20 rounded-full blur-3xl" />
+    <div className="absolute top-0 right-1/3 w-[500px] h-[500px] bg-white rounded-full blur-3xl" />
     <div className="absolute bottom-0 left-1/3 w-[500px] h-[500px] bg-purple-500/20 rounded-full blur-3xl" />
 
     {/* Grid Pattern */}
@@ -65,7 +65,7 @@ const Stats = () => (
         key={index}
         className="text-center px-6 py-3 bg-white/50 backdrop-blur-sm rounded-xl border border-blue-100/50"
       >
-        <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
+        <div className="text-2xl font-bold bg-white text-transparent bg-clip-text">
           {stat.value}
         </div>
         <div className="text-sm text-gray-600">{stat.label}</div>
@@ -76,11 +76,11 @@ const Stats = () => (
 
 const CTASection = () => {
   return (
-    <section className="relative py-32 overflow-hidden bg-gradient-to-b from-blue-50 via-white/50 to-purple-50">
+    <section className="relative py-32 overflow-hidden bg-white">
       {/* <BackgroundElements /> */}
 
       <div className="relative z-10 container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12 relative">
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-3xl blur-3xl transform -rotate-3" />
@@ -102,7 +102,7 @@ const CTASection = () => {
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-200" />
               <a
-                href="/signup"
+                href="/courses"
                 className="relative flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-lg font-semibold text-white transform hover:scale-[1.02] transition-all duration-200"
               >
                 <span className="flex items-center gap-2">

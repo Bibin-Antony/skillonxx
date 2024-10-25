@@ -116,7 +116,7 @@ const AboutUsHero = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -138,7 +138,7 @@ const AboutUsHero = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

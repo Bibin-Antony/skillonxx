@@ -1,74 +1,83 @@
-import React, { useEffect } from "react";
-import {
-  Code,
-  Book,
-  Laptop,
-  Compass,
-  Lightbulb,
-  Palette,
-  Video,
-  Briefcase,
-} from "lucide-react";
-import CreativeCourseHero from "./CreativeCourseHero";
-import Navbar from "../home/navbar";
-import BrowseCategories from "./BrowseCategories";
-import FeaturedCourses from "../home/FeaturedCourses";
-import CTASectionCourses from "./CTASectionCourses";
-import Footer from "../home/Footer";
+import React, { useEffect, useRef, Suspense } from "react";
 
-// Course-themed icons
-const COURSE_ICONS = [
-  Code,
-  Book,
-  Laptop,
-  Compass,
-  Lightbulb,
-  Palette,
-  Video,
-  Briefcase,
-];
+// Lazy load components
+const CreativeCourseHero = React.lazy(() => import("./CreativeCourseHero"));
+const BrowseCategories = React.lazy(() => import("./BrowseCategories"));
+const FeaturedCourses = React.lazy(() => import("../home/FeaturedCourses"));
+const CTASectionCourses = React.lazy(() => import("./CTASectionCourses"));
 
-const AnimatedBackground = () => {
+
+// Intersection Observer for lazy loading
+const LazySection = ({ children }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="animated-background courses-theme">
-      {[...Array(24)].map((_, i) => {
-        const Icon = COURSE_ICONS[i % COURSE_ICONS.length];
-        return (
-          <div
-            key={i}
-            className="floating-item"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              "--float-offset": `${Math.random() * 20}px`,
-              "--animation-delay": `${Math.random() * 5}s`,
-              "--rotation": `${Math.random() * 360}deg`,
-            }}
-          >
-            <Icon />
+    <div ref={sectionRef}>
+      {isVisible ? (
+        <Suspense fallback={
+          <div className="h-32 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
-        );
-      })}
+        }>
+          {children}
+        </Suspense>
+      ) : (
+        <div className="h-32" /> // Placeholder height
+      )}
     </div>
   );
 };
 
 const Courses = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top when the component is mounted
+    // Smooth scroll polyfill
+    document.documentElement.style.scrollBehavior = 'smooth';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
   }, []);
 
   return (
     <div className="relative">
-      {/* Animated Background */}
-      <AnimatedBackground />
+      <div className="relative">
+        {/* Critical components loaded immediately */}
+        <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
+          <CreativeCourseHero />
+        </Suspense>
 
-      {/* Main content */}
-      <div className="relative z-10">
-        <CreativeCourseHero />
-        <FeaturedCourses />
-        <CTASectionCourses />
-        <BrowseCategories />
+        {/* Other sections lazy loaded as user scrolls */}
+        <LazySection>
+          <FeaturedCourses />
+        </LazySection>
+
+        <LazySection>
+          <CTASectionCourses />
+        </LazySection>
+
+        <LazySection>
+          <BrowseCategories />
+        </LazySection>
       </div>
     </div>
   );

@@ -14,56 +14,66 @@ import {
 
 const faqs = [
   {
-    category: "Getting Started",
+    category: "About SkillonX",
     icon: Zap,
     items: [
       {
         question: "What is SkillonX?",
-        answer:
-          "SkillonX is an online platform dedicated to providing accessible, high-quality education in various tech skills. We connect learners worldwide with industry experts and experienced instructors, offering a range of courses on programming, data science, web development, and more.",
-        tag: "Platform Overview",
+        answer: "SkillonX is a premier skill development institute based in Bogadi, Mysore. We specialize in providing hands-on training in web development, graphics, and digital marketing for students, graduates, and professionals looking to upskill. Our unique approach combines theoretical knowledge with practical projects and guaranteed internship opportunities.",
+        tag: "Company Overview",
       },
       {
-        question: "How do I sign up for SkillonX?",
-        answer:
-          "Signing up for SkillonX is easy! Click the 'Get Started' button at the top of the page, fill in your details, and choose a learning plan that suits your goals. Once registered, you'll have immediate access to our extensive library of tech courses.",
-        tag: "Registration",
+        question: "What makes SkillonX different?",
+        answer: "What sets us apart is our three-pillar approach to learning: comprehensive course content, hands-on industry-standard projects, and a compulsory 3-6 month internship with our partner companies. This ensures our students gain real-world experience and are job-ready upon completion.",
+        tag: "Our Advantage",
       },
     ],
   },
   {
-    category: "Courses & Learning",
+    category: "Courses & Training",
     icon: Book,
     items: [
       {
-        question: "What types of courses are available?",
-        answer:
-          "SkillonX offers a diverse range of courses covering various tech topics. These include Web Development, Data Science, Machine Learning, UX/UI Design, Cloud Computing, and more. We have courses suitable for beginners to advanced learners in each field.",
+        question: "What courses do you offer?",
+        answer: "We offer specialized courses in: Web Development (including front-end and full-stack development), Graphics Design, UI/UX Design, and Digital Marketing. Each course includes at least two industry-standard projects, such as developing your own component library in our web development course.",
         tag: "Course Catalog",
       },
       {
-        question: "Can I interact with instructors and other students?",
-        answer:
-          "Absolutely! SkillonX fosters a vibrant learning community. We provide interactive features such as live Q&A sessions with instructors, discussion forums for each course, and a messaging system to connect with mentors and fellow students, enhancing your learning experience.",
-        tag: "Community",
+        question: "Do you offer courses for college students?",
+        answer: "Yes! We conduct specialized workshops and training programs directly at universities and colleges. These programs cover web development, graphics, digital marketing, and more, tailored to meet the specific needs of college students.",
+        tag: "College Programs",
       },
     ],
   },
   {
-    category: "Pricing & Plans",
+    category: "Internship & Projects",
+    icon: Users,
+    items: [
+      {
+        question: "Tell me about the internship program",
+        answer: "Every student who completes our course is guaranteed a 3-6 month internship with our partner companies. This internship provides invaluable real-world project experience and often leads to job opportunities. During the internship, students work on actual industry projects under professional guidance.",
+        tag: "Internships",
+      },
+      {
+        question: "What kind of projects will I work on?",
+        answer: "During your course, you'll complete at least two industry-standard projects. For example, web development students create their own component library, UI/UX students work on real product designs, and digital marketing students develop comprehensive marketing campaigns. These projects form a strong portfolio for your job applications.",
+        tag: "Projects",
+      },
+    ],
+  },
+  {
+    category: "Career Support",
     icon: Star,
     items: [
       {
-        question: "How does the subscription model work?",
-        answer:
-          "We offer various subscription plans to accommodate different learning needs and budgets. All plans provide access to our full library of recorded courses. Higher-tier plans include additional benefits like live coding sessions, one-on-one mentorship, and special certification options.",
-        tag: "Subscription",
+        question: "What career support do you provide?",
+        answer: "Our career support includes resume building, interview preparation, and direct connections with industry partners through our internship program. The combination of our course completion certificate, project portfolio, and internship experience gives our students a significant advantage in the job market.",
+        tag: "Career Services",
       },
       {
-        question: "Is there a mobile app available?",
-        answer:
-          "Yes, SkillonX has a mobile app for both iOS and Android devices. You can download it from the App Store or Google Play Store to access your courses on the go.",
-        tag: "Mobile Access",
+        question: "How does the placement process work?",
+        answer: "After completing both the course and internship, students receive support in finding full-time positions. Our strong industry connections and the practical experience gained through our program make our students attractive candidates for employers.",
+        tag: "Placements",
       },
     ],
   },

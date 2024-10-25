@@ -315,14 +315,24 @@ const WorkshopListing = () => {
   });
 
   return (
-    <div className="min-h-screen bg-tertiary py-12 ">
-      <div className="container mx-auto px-4 md:w-[1300px]">
-        <h1 className="text-4xl font-bold text-center text-font mb-2">
-          College Workshops
-        </h1>
-        <p className="text-center text-gray-600 mb-8">
-          Transform your students with industry-relevant skills
-        </p>
+    <div className="min-h-screen relative overflow-hidden py-12 bg-gradient-to-br from-blue-50 via-white to-blue-50">
+    {/* Decorative background elements */}
+    <div className="absolute inset-0">
+      <div className="absolute -top-40 right-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl" />
+      <div className="absolute top-1/3 -left-20 w-72 h-72 bg-sky-200/40 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl" />
+      <div className="absolute inset-0 bg-grid-blue-500/[0.03] bg-[size:20px]" />
+    </div>
+  
+    {/* Content container */}
+    <div className="relative container mx-auto px-4 md:w-[75vw]">
+      {/* Rest of your content remains the same */}
+      <h1 className="text-4xl font-bold text-center text-gray-800 mb-2">
+        College Workshops
+      </h1>
+      <p className="text-center text-gray-600 mb-8">
+        Transform your students with industry-relevant skills
+      </p>
 
         {/* Search and Filters Section */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">

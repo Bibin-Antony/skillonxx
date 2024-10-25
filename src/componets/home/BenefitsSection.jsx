@@ -156,12 +156,16 @@ const BenefitsSection = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 rounded-full blur-3xl" />
           <div className="relative">
             <div className="inline-block p-[2px] rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600">
-              <button className="group relative px-8 py-4 bg-white rounded-2xl text-lg font-semibold transition-all duration-300 hover:bg-transparent">
-                <span className="relative bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent group-hover:text-white flex items-center gap-2">
-                  Start Learning Today
-                  <ArrowRight className="w-5 h-5 text-purple-600 group-hover:text-white group-hover:translate-x-1 transition-transform duration-300" />
-                </span>
-              </button>
+            <button 
+              onClick={() => window.location.href = '/courses'}
+              className="group relative px-8 py-4 rounded-xl text-lg font-semibold shadow-lg shadow-blue-600"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl transition-all duration-300"></div>
+              <span className="relative flex items-center justify-center gap-2 text-white">
+                Start Learning today 
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+              </span>
+            </button>
             </div>
           </div>
 
