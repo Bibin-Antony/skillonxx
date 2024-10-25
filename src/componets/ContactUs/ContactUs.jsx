@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, Suspense } from "react";
+import Breadcrumb from "../common/BreadCrumb";
 
 // Lazy load components
 const Navbar = React.lazy(() => import("../home/navbar"));
@@ -64,7 +65,7 @@ const Contact = () => {
         <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
           <ContactHero />
         </Suspense>
-
+        <Breadcrumb/>
         {/* Contact options lazy loaded */}
         <LazySection>
           <QuickContactOptions />

@@ -4,7 +4,7 @@ import { Code, Brain, Target, Rocket } from "lucide-react";
 import "./App.css";
 import Navbar from "./componets/home/navbar";
 import Footer from "./componets/home/Footer";
-
+import BreadCrumb from './componets/common/BreadCrumb'
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -50,6 +50,7 @@ const Layout = ({ children }) => {
   return (
     <div className="relative min-h-screen">
       <AnimatedBackground />
+      {/* <BreadCrumb/> */}
       {children}
     </div>
   );

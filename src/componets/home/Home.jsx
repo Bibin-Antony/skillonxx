@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, Suspense } from "react";
-
+import BreadCrumb from "../common/BreadCrumb";
 // Lazy load components with prefetching
 const Navbar = React.lazy(() => import("./navbar"));
 const HeroPage = React.lazy(() => import("./Heropage"));
@@ -11,6 +11,7 @@ const TestimonialsSection = React.lazy(() => import("./TestimonialsSection"));
 const FAQSection = React.lazy(() => import("./FAQSection"));
 const Footer = React.lazy(() => import("./Footer"));
 const OurTeamSection = React.lazy(() => import("./OurTeamSection"));
+
 
 // Intersection Observer for lazy loading
 const LazySection = ({ children }) => {
@@ -74,7 +75,7 @@ const Home = () => {
         <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
           <HeroPage />
         </Suspense>
-
+        <BreadCrumb/>
         {/* Other sections lazy loaded as user scrolls */}
         <LazySection>
           <HowItWorks />
@@ -107,7 +108,7 @@ const Home = () => {
         </LazySection>
 
         <LazySection>
-          <Footer />
+          {/* <Footer /> */}
         </LazySection>
       </div>
     </div>

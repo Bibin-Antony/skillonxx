@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, Suspense } from "react";
+import Breadcrumb from "../common/BreadCrumb";
 
 // Lazy load components
 const BusinessPartners = React.lazy(() => import("./BusinessPartners"));
@@ -64,7 +65,7 @@ const AboutUs = () => {
         <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
           <AboutUsHero />
         </Suspense>
-
+        <Breadcrumb/>
         {/* Other sections lazy loaded as user scrolls */}
         <LazySection>
           <BusinessPartners />
