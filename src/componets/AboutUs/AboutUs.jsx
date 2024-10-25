@@ -1,77 +1,85 @@
-import React, { useEffect } from "react";
-import {
-  Code,
-  Brain,
-  Target,
-  Rocket,
-  Laptop,
-  Database,
-  Cloud,
-  Workflow,
-} from "lucide-react";
-import Navbar from "../home/Navbar";
-import BusinessPartners from "./BusinessPartners";
-import Footer from "../home/Footer";
-import AboutUsHero from "./AboutUsHero";
-import OurApproach from "./OurApproach";
-import OurApproachSection from "./OurApproachSection";
+import React, { useEffect, useRef, Suspense } from "react";
 
-// More varied icons for a tech education theme
-const TECH_ICONS = [
-  Code,
-  Brain,
-  Target,
-  Rocket,
-  Laptop,
-  Database,
-  Cloud,
-  Workflow,
-];
+// Lazy load components
+const BusinessPartners = React.lazy(() => import("./BusinessPartners"));
+const AboutUsHero = React.lazy(() => import("./AboutUsHero"));
+const OurApproach = React.lazy(() => import("./OurApproach"));
+const OurApproachSection = React.lazy(() => import("./OurApproachSection"));
 
-const AnimatedBackground = () => {
+// Intersection Observer for lazy loading
+const LazySection = ({ children }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="animated-background">
-      {[...Array(24)].map((_, i) => {
-        const Icon = TECH_ICONS[i % TECH_ICONS.length];
-        return (
-          <div
-            key={i}
-            className="floating-item"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              // Using CSS variables for dynamic positioning and animation
-              "--float-offset": `${Math.random() * 20}px`,
-              "--animation-delay": `${Math.random() * 5}s`,
-              "--rotation": `${Math.random() * 360}deg`,
-            }}
-          >
-            <Icon />
+    <div ref={sectionRef}>
+      {isVisible ? (
+        <Suspense fallback={
+          <div className="h-32 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
-        );
-      })}
+        }>
+          {children}
+        </Suspense>
+      ) : (
+        <div className="h-32" /> // Placeholder height
+      )}
     </div>
   );
 };
 
-const Home = () => {
+const AboutUs = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top when the component is mounted
+    // Smooth scroll polyfill
+    document.documentElement.style.scrollBehavior = 'smooth';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
   }, []);
+
   return (
     <div className="relative">
-      {/* Animated Background stays fixed while content scrolls */}
-      <AnimatedBackground />
+      <div className="relative">
+        {/* Critical components loaded immediately */}
+        <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
+          <AboutUsHero />
+        </Suspense>
 
-      {/* Main content container with proper z-index */}
-      <div className="relative z-10">
-        <AboutUsHero />
-        <BusinessPartners />
-        <OurApproach />
-        <OurApproachSection />
+        {/* Other sections lazy loaded as user scrolls */}
+        <LazySection>
+          <BusinessPartners />
+        </LazySection>
+
+        <LazySection>
+          <OurApproach />
+        </LazySection>
+
+        <LazySection>
+          <OurApproachSection />
+        </LazySection>
       </div>
     </div>
   );
 };
 
-export default Home;
+export default AboutUs;

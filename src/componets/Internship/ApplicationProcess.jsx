@@ -90,24 +90,41 @@ const ApplicationProcess = () => {
   };
 
   return (
-    <div className="py-16 px-4 bg-white">
-      <div className="max-w-6xl mx-auto">
+    <div className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 py-16 px-4">
+      {/* Decorative Background */}
+      <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px]" />
+
+      <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Your Path to Success</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-4xl font-bold mb-4 text-white"
+          >
+            Your Path to <span className="text-blue-400">Success</span>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-gray-300 max-w-2xl mx-auto"
+          >
             Clear steps from application to internship completion
-          </p>
+          </motion.p>
         </div>
 
         {/* Track Toggle */}
         <div className="flex justify-center mb-12">
-          <div className="bg-gray-100 p-1 rounded-lg inline-flex">
+          <motion.div 
+            className="bg-white/5 backdrop-blur-sm p-1 rounded-lg inline-flex"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
             <button
               onClick={() => setSelectedTrack('direct')}
               className={`px-6 py-2 rounded-md transition-all ${
                 selectedTrack === 'direct'
-                  ? 'bg-blue-600 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-blue-500 text-white'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5'
               }`}
             >
               Direct Track
@@ -116,21 +133,21 @@ const ApplicationProcess = () => {
               onClick={() => setSelectedTrack('postCourse')}
               className={`px-6 py-2 rounded-md transition-all ${
                 selectedTrack === 'postCourse'
-                  ? 'bg-indigo-600 text-white shadow-lg'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-blue-500 text-white'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5'
               }`}
             >
               Post-Course Track
             </button>
-          </div>
+          </motion.div>
         </div>
 
         {/* Steps Timeline */}
         <div className="relative">
-          {/* Connection Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gray-200 hidden md:block" />
+          {/* Center Timeline Line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-400/20 hidden md:block" />
 
-          {/* Steps */}
+          {/* Steps Grid */}
           <div className="grid md:grid-cols-2 gap-8">
             {tracks[selectedTrack].steps.map((step, index) => (
               <motion.div
@@ -140,40 +157,28 @@ const ApplicationProcess = () => {
                 transition={{ delay: index * 0.1 }}
                 className={`relative ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}
               >
-                <div className="bg-white rounded-xl shadow-lg h-full">
-                  {/* Card Content */}
+                {/* Timeline Dot and Connector Line */}
+              
+
+                {/* Content Card */}
+                <motion.div 
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl h-full"
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <div className="p-6 flex flex-col h-[200px]">
                     <div className="flex items-center gap-4 mb-4">
-                      <span className={`p-3 rounded-lg flex-shrink-0 ${
-                        selectedTrack === 'direct' 
-                          ? 'bg-blue-100 text-blue-600' 
-                          : 'bg-indigo-100 text-indigo-600'
-                      }`}>
+                      <span className="p-3 rounded-lg bg-blue-500/20 text-blue-400">
                         <step.icon className="w-6 h-6" />
                       </span>
                       <div>
-                        <span className="text-sm text-gray-500">Step {index + 1}</span>
-                        <h3 className="text-xl font-semibold">{step.title}</h3>
+                        <span className="text-sm text-gray-400">Step {index + 1}</span>
+                        <h3 className="text-xl font-semibold text-white">{step.title}</h3>
                       </div>
                     </div>
-                    <p className="text-gray-600 flex-grow">{step.description}</p>
+                    <p className="text-gray-300">{step.description}</p>
                   </div>
-                </div>
-
-                {/* Timeline Connector */}
-                <div className="absolute top-1/2 hidden md:block">
-                  {index % 2 === 0 ? (
-                    <div className="right-0 transform translate-x-1/2 -translate-y-1/2">
-                      <div className="w-4 h-4 rounded-full bg-white border-4 border-blue-600" />
-                      <div className="w-12 h-1 bg-gray-200 absolute top-1/2 -translate-y-1/2 right-4" />
-                    </div>
-                  ) : (
-                    <div className="left-0 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className="w-4 h-4 rounded-full bg-white border-4 border-blue-600" />
-                      <div className="w-12 h-1 bg-gray-200 absolute top-1/2 -translate-y-1/2 left-4" />
-                    </div>
-                  )}
-                </div>
+                </motion.div>
               </motion.div>
             ))}
           </div>

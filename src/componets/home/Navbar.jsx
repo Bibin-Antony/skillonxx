@@ -216,7 +216,7 @@ const Navbar = () => {
       <div className=" md:max-w-[85vw] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/Home" className="flex items-center">
+          <Link to="/" className="flex items-center">
            {
             !isScrolled ?  <img
             src={Logo}

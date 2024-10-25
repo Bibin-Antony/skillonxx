@@ -1,86 +1,114 @@
-import React, { useEffect } from "react";
-import {
-  Code,
-  Brain,
-  Target,
-  Rocket,
-  Laptop,
-  Database,
-  Cloud,
-  Workflow,
-} from "lucide-react";
-import Navbar from "./navbar";
-import HeroPage from "./Heropage";
-import FeaturedCourses from "./FeaturedCourses";
-import TechPartnersSlider from "./TechPartnersSlider";
-import HowItWorks from "./HowItWorks";
-import CTASection from "./CTASection";
-import BenefitsSection from "./BenefitsSection";
-import TestimonialsSection from "./TestimonialsSection";
-import FAQSection from "./FAQSection";
-import Footer from "./Footer";
-import OurTeamSection from "./OurTeamSection";
+import React, { useEffect, useRef, Suspense } from "react";
 
-// More varied icons for a tech education theme
-const TECH_ICONS = [
-  Code,
-  Brain,
-  Target,
-  Rocket,
-  Laptop,
-  Database,
-  Cloud,
-  Workflow,
-];
+// Lazy load components with prefetching
+const Navbar = React.lazy(() => import("./navbar"));
+const HeroPage = React.lazy(() => import("./Heropage"));
+const FeaturedCourses = React.lazy(() => import("./FeaturedCourses"));
+const HowItWorks = React.lazy(() => import("./HowItWorks"));
+const CTASection = React.lazy(() => import("./CTASection"));
+const BenefitsSection = React.lazy(() => import("./BenefitsSection"));
+const TestimonialsSection = React.lazy(() => import("./TestimonialsSection"));
+const FAQSection = React.lazy(() => import("./FAQSection"));
+const Footer = React.lazy(() => import("./Footer"));
+const OurTeamSection = React.lazy(() => import("./OurTeamSection"));
 
-const AnimatedBackground = () => {
+// Intersection Observer for lazy loading
+const LazySection = ({ children }) => {
+  const [isVisible, setIsVisible] = React.useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "100px" }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <div className="animated-background">
-      {[...Array(24)].map((_, i) => {
-        const Icon = TECH_ICONS[i % TECH_ICONS.length];
-        return (
-          <div
-            key={i}
-            className="floating-item"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              // Using CSS variables for dynamic positioning and animation
-              "--float-offset": `${Math.random() * 20}px`,
-              "--animation-delay": `${Math.random() * 5}s`,
-              "--rotation": `${Math.random() * 360}deg`,
-            }}
-          >
-            <Icon />
+    <div ref={sectionRef}>
+      {isVisible ? (
+        <Suspense fallback={
+          <div className="h-32 flex items-center justify-center">
+            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
           </div>
-        );
-      })}
+        }>
+          {children}
+        </Suspense>
+      ) : (
+        <div className="h-32" /> // Placeholder height
+      )}
     </div>
   );
 };
 
 const Home = () => {
   useEffect(() => {
-    window.scrollTo(0, 0); // Scroll to the top when the component is mounted
+    // Smooth scroll polyfill
+    document.documentElement.style.scrollBehavior = 'smooth';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    return () => {
+      document.documentElement.style.scrollBehavior = 'auto';
+    };
   }, []);
+
   return (
     <div className="relative">
-      {/* Animated Background stays fixed while content scrolls */}
-      <AnimatedBackground />
+      <div className="relative">
+        {/* Critical components loaded immediately */}
+        <Suspense fallback={<div className="h-16 bg-white" />}>
+          <Navbar />
+        </Suspense>
 
-      {/* Main content container with proper z-index */}
-      <div className="relative z-10">
-        <Navbar />
-        <HeroPage />
-        {/* <TechPartnersSlider /> */}
-        <HowItWorks />
-        <BenefitsSection />
-        <OurTeamSection />
-        <FeaturedCourses />
-        <TestimonialsSection />
-        <CTASection />
-        <FAQSection />
-        <Footer />
+        <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
+          <HeroPage />
+        </Suspense>
+
+        {/* Other sections lazy loaded as user scrolls */}
+        <LazySection>
+          <HowItWorks />
+        </LazySection>
+
+        <LazySection>
+          <BenefitsSection />
+        </LazySection>
+
+        <LazySection>
+          <CTASection />
+        </LazySection>
+        
+        <LazySection>
+          <OurTeamSection />
+        </LazySection>
+
+        <LazySection>
+          <FeaturedCourses />
+        </LazySection>
+
+        {/* <LazySection>
+          <TestimonialsSection />
+        </LazySection> */}
+
+        
+
+        <LazySection>
+          <FAQSection />
+        </LazySection>
+
+        <LazySection>
+          <Footer />
+        </LazySection>
       </div>
     </div>
   );
