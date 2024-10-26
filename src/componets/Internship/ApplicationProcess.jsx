@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   FileText,
@@ -17,6 +17,24 @@ import 'react-vertical-timeline-component/style.min.css';
 
 const ApplicationProcess = () => {
   const [selectedTrack, setSelectedTrack] = useState('direct');
+  const [iconPadding, setIconPadding] = useState({ paddingBottom: '22px', paddingRight: '22px' });
+
+  useEffect(() => {
+    const updateIconPadding = () => {
+      if (window.innerWidth < 768) {
+        setIconPadding({ padding: '12px' });
+      } else {
+        setIconPadding({ paddingBottom: '22px', paddingRight: '22px' });
+      }
+    };
+
+    updateIconPadding();
+    window.addEventListener('resize', updateIconPadding);
+
+    return () => {
+      window.removeEventListener('resize', updateIconPadding);
+    };
+  }, []);
 
   const tracks = {
     direct: {
@@ -159,8 +177,7 @@ const ApplicationProcess = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                paddingBottom: "22px",
-                paddingRight:"22px",
+                ...iconPadding,
                 borderRadius: "50%",
               }}
               icon={<step.icon className="text-blue-400 w-8 h-8" />}
