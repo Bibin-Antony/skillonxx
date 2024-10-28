@@ -320,13 +320,13 @@ const Navbar = () => {
             </button>
 
             {/* User */}
-            <button className="p-2 rounded-lg hover:bg-gray-100 transition-all duration-200">
+            <Link className="p-2 rounded-lg hover:bg-gray-100 hover:text-gray-800 transition-all duration-200" to="/LoginPage">
               <User
                 className={`w-5 h-5 hover:text-black ${
                   isScrolled ? "text-gray-800" : "text-white"
                 }`}
               />
-            </button>
+            </Link>
 
             {/* Mobile Menu Toggle */}
             <button
@@ -394,7 +394,7 @@ const Navbar = () => {
             </div>
             <div className="p-4 border-t">
               <Link
-                to="/sign-in"
+                to="/LoginPage"
                 className="flex items-center justify-center space-x-2 w-full py-3 rounded-lg bg-gradient-to-r from-blue-600 to-purple-600 text-white"
                 onClick={() => setIsMenuOpen(false)}
               >

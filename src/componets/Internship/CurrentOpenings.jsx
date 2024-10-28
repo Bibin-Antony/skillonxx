@@ -32,7 +32,7 @@ const CurrentOpenings = () => {
       location: 'Mysore',
       type: 'Full-time',
       duration: '6 months',
-      stipend: '₹15,000 - ₹25,000',
+      // stipend: '₹15,000 - ₹25,000',
       description: 'Join our dynamic team as a Frontend Development Intern and work on exciting projects using modern web technologies.',
       skills: ['React', 'JavaScript', 'HTML/CSS', 'Git'],
       responsibilities: [
@@ -49,7 +49,7 @@ const CurrentOpenings = () => {
       location: 'Mysore',
       type: 'Full-time',
       duration: '6 months',
-      stipend: '₹12,000 - ₹20,000',
+      // stipend: '₹12,000 - ₹20,000',
       description: 'Create engaging user interfaces and enhance user experiences for our web and mobile applications.',
       skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research'],
       responsibilities: [
@@ -66,7 +66,7 @@ const CurrentOpenings = () => {
       location: 'Mysore',
       type: 'Full-time',
       duration: '3 months',
-      stipend: '₹10,000 - ₹15,000',
+      // stipend: '₹10,000 - ₹15,000',
       description: 'Join our content team to create engaging and informative content for our digital platforms.',
       skills: ['Content Writing', 'SEO', 'Research', 'Editing'],
       responsibilities: [
@@ -153,10 +153,10 @@ const CurrentOpenings = () => {
                         <Clock className="w-4 h-4" />
                         {job.duration}
                       </span>
-                      <span className="flex items-center gap-1">
+                      {/* <span className="flex items-center gap-1">
                         <DollarSign className="w-4 h-4" />
                         {job.stipend}
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                   <button className="p-2">
