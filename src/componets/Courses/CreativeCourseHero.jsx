@@ -21,12 +21,12 @@ const CreativeCourseHero = () => {
           </div>
           <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg transform hover:scale-105 transition-all duration-300 border-t border-l border-r border-4 border-purple-600 shadow-purple-600 cursor-pointer">
             <span className="bg-gradient-to-r from-purple-600 to-pink-600 text-transparent bg-clip-text">
-              tech skills
+              Tech skills
             </span>
           </div>
           <div className="bg-white bg-opacity-90 backdrop-blur-sm rounded-2xl px-8 py-4 shadow-lg transform hover:scale-105 transition-all duration-300 border-t border-l border-blue-600 border-4 shadow-blue-600 cursor-pointer">
             <span className="bg-gradient-to-r from-pink-600 to-blue-600 text-transparent bg-clip-text">
-              transform
+              Transform
             </span>
           </div>
         </div>
