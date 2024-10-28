@@ -75,7 +75,7 @@ const Home = () => {
         <Suspense fallback={<div className="h-screen animate-pulse bg-gray-100" />}>
           <HeroPage />
         </Suspense>
-        <BreadCrumb/>
+        {/* <BreadCrumb/> */}
         {/* Other sections lazy loaded as user scrolls */}
         <LazySection>
           <HowItWorks />

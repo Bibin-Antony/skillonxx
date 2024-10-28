@@ -5,7 +5,7 @@ const CreativeCourseHero = React.lazy(() => import("./CreativeCourseHero"));
 const BrowseCategories = React.lazy(() => import("./BrowseCategories"));
 const FeaturedCourses = React.lazy(() => import("../home/FeaturedCourses"));
 const CTASectionCourses = React.lazy(() => import("./CTASectionCourses"));
-
+const CourseListing = React.lazy(() => import("./CourseListing"));
 
 // Intersection Observer for lazy loading
 const LazySection = ({ children }) => {
@@ -72,12 +72,16 @@ const Courses = () => {
         </LazySection>
 
         <LazySection>
-          <CTASectionCourses />
+          <CourseListing />
         </LazySection>
 
         <LazySection>
-          <BrowseCategories />
+          <CTASectionCourses />
         </LazySection>
+
+        {/* <LazySection>
+          <BrowseCategories />
+        </LazySection> */}
       </div>
     </div>
   );

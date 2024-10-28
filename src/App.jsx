@@ -5,6 +5,7 @@ import "./App.css";
 import Navbar from "./componets/home/navbar";
 import Footer from "./componets/home/Footer";
 import BreadCrumb from './componets/common/BreadCrumb'
+
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -12,6 +13,9 @@ const Workshops = React.lazy(() => import("./componets/Workshops/Workshops"));
 const Internship = React.lazy(() => import("./componets/Internship/Internship"));
 const AboutUs = React.lazy(() => import("./componets/AboutUs/AboutUs"));
 const ContactUs = React.lazy(() => import("./componets/ContactUs/ContactUs"));
+const LoginPage = React.lazy(() => import("./componets/LoginSignup/LoginPage"));
+const SignupPage = React.lazy(() => import("./componets/LoginSignup/SignupPage"));
+
 
 // Loading spinner component
 const LoadingSpinner = () => (
@@ -69,6 +73,8 @@ const App = () => {
             <Route path="/Internship" element={<Internship />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/LoginPage" element={<LoginPage />} />
+            <Route path="/SignupPage" element={<SignupPage />} />
           </Routes>
         </Suspense>
       </Layout>
