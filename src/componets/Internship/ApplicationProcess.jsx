@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import {
   FileText,
@@ -12,9 +12,29 @@ import {
   BookOpen,
   UserCheck
 } from 'lucide-react';
+import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
+import 'react-vertical-timeline-component/style.min.css';
 
 const ApplicationProcess = () => {
   const [selectedTrack, setSelectedTrack] = useState('direct');
+  const [iconPadding, setIconPadding] = useState({ paddingBottom: '22px', paddingRight: '22px' });
+
+  useEffect(() => {
+    const updateIconPadding = () => {
+      if (window.innerWidth < 768) {
+        setIconPadding({ padding: '12px' });
+      } else {
+        setIconPadding({ paddingBottom: '22px', paddingRight: '22px' });
+      }
+    };
+
+    updateIconPadding();
+    window.addEventListener('resize', updateIconPadding);
+
+    return () => {
+      window.removeEventListener('resize', updateIconPadding);
+    };
+  }, []);
 
   const tracks = {
     direct: {
@@ -91,9 +111,6 @@ const ApplicationProcess = () => {
 
   return (
     <div className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 py-16 px-4">
-      {/* Decorative Background */}
-      <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px]" />
-
       <div className="relative max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <motion.h2
@@ -112,7 +129,6 @@ const ApplicationProcess = () => {
           </motion.p>
         </div>
 
-        {/* Track Toggle */}
         <div className="flex justify-center mb-12">
           <motion.div 
             className="bg-white/5 backdrop-blur-sm p-1 rounded-lg inline-flex"
@@ -143,46 +159,37 @@ const ApplicationProcess = () => {
         </div>
 
         {/* Steps Timeline */}
-        <div className="relative">
-          {/* Center Timeline Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-blue-400/20 hidden md:block" />
-
-          {/* Steps Grid */}
-          <div className="grid md:grid-cols-2 gap-8">
-            {tracks[selectedTrack].steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={`relative ${index % 2 === 0 ? 'md:pr-12' : 'md:pl-12'}`}
-              >
-                {/* Timeline Dot and Connector Line */}
-              
-
-                {/* Content Card */}
-                <motion.div 
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl h-full"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="p-6 flex flex-col h-[200px]">
-                    <div className="flex items-center gap-4 mb-4">
-                      <span className="p-3 rounded-lg bg-blue-500/20 text-blue-400">
-                        <step.icon className="w-6 h-6" />
-                      </span>
-                      <div>
-                        <span className="text-sm text-gray-400">Step {index + 1}</span>
-                        <h3 className="text-xl font-semibold text-white">{step.title}</h3>
-                      </div>
-                    </div>
-                    <p className="text-gray-300">{step.description}</p>
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+        <VerticalTimeline lineColor="rgba(96, 165, 250, 0.2)">
+          {tracks[selectedTrack].steps.map((step, index) => (
+            <VerticalTimelineElement
+              key={step.title}
+              contentStyle={{
+                background: "rgba(255, 255, 255, 0.05)",
+                backdropFilter: "blur(10px)",
+                border: "1px solid rgba(255, 255, 255, 0.1)",
+                color: "white",
+                borderRadius: "12px",
+              }}
+              contentArrowStyle={{ borderRight: "7px solid rgba(255, 255, 255, 0.05)" }}
+              iconStyle={{
+                background: "rgba(96, 165, 250, 0.2)",
+                color: "#1D4ED8",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                ...iconPadding,
+                borderRadius: "50%",
+              }}
+              icon={<step.icon className="text-blue-400 w-8 h-8" />}
+            >
+              <div className="p-4">
+                <span className='text-gray-400'>Step {index+1}</span>
+                <h3 className="text-xl font-semibold text-white">{step.title}</h3>
+                <p className="text-gray-300">{step.description}</p>
+              </div>
+            </VerticalTimelineElement>
+          ))}
+        </VerticalTimeline>
       </div>
     </div>
   );

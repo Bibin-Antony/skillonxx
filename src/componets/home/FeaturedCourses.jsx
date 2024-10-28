@@ -142,7 +142,7 @@ const FeaturedCourses = () => {
                   </p>
 
                   {/* Course Highlights */}
-                  <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex flex-wrap gap-1 mb-4">
                     {course.highlights.map((highlight, index) => (
                       <span
                         key={index}

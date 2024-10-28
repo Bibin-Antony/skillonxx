@@ -295,7 +295,7 @@ const Navbar = () => {
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
               <Search
-                className={`w-5 hover:text-black h-5 ${
+                className={`w-5 hover:text-black h-5  ${
                   isScrolled ? "text-gray-800" : "text-white"
                 }`}
               />
@@ -346,7 +346,7 @@ const Navbar = () => {
         {isSearchOpen && (
           <form
             onSubmit={handleSearchSubmit}
-            className="mt-4 flex items-center space-x-3"
+            className="mt-4 flex items-center space-x-3 pb-2"
           >
             <input
               ref={searchInputRef}

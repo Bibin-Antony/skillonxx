@@ -11,7 +11,16 @@ import {
   Building,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import wevdevelopment from '../../assets/Images/wevdevelopment.jpg'
+import advreact from '../../assets/Images/Advance-React.jpg'
+import englishcomm from '../../assets/Images/english-comm.jpg'
+import uiux from '../../assets/Images/ui-ux.jpg'
+import frontenddev from '../../assets/Images/frontenddev.jpg'
+import github from '../../assets/Images/github.jpg'
+import technical from '../../assets/Images/technical.jpg'
+import careerdev from '../../assets/Images/careerdev.jpg'
+import fullstack from '../../assets/Images/fullstack.jpg'
+import responsiveweb from '../../assets/Images/responsiveweb.jpg'
 // Filter Component
 const WorkshopFilter = ({ label, options, value, onChange }) => {
   return (
@@ -126,7 +135,7 @@ const WorkshopListing = () => {
       title: "Modern Web Development Fundamentals",
       description:
         "A comprehensive workshop covering HTML5, CSS3, and JavaScript basics. Students will build responsive websites and learn modern web development practices.",
-      image: "/api/placeholder/400/300?text=Web+Development",
+      image: wevdevelopment,
       category: "Web Development",
       level: "Beginner",
       duration: "3 Days",
@@ -144,7 +153,7 @@ const WorkshopListing = () => {
       title: "Advanced React.js Development",
       description:
         "Deep dive into modern React.js development. Learn component architecture, hooks, state management, and build full-featured applications.",
-      image: "/api/placeholder/400/300?text=React+Development",
+      image: advreact,
       category: "Web Development",
       level: "Advanced",
       duration: "4 Days",
@@ -162,7 +171,7 @@ const WorkshopListing = () => {
       title: "Professional English Communication",
       description:
         "Enhance English communication skills with focus on professional contexts, presentations, and business communication.",
-      image: "/api/placeholder/400/300?text=English+Communication",
+      image: englishcomm,
       category: "English Communication",
       level: "Intermediate",
       duration: "2 Days",
@@ -180,7 +189,7 @@ const WorkshopListing = () => {
       title: "UI/UX Design Workshop",
       description:
         "Master the fundamentals of UI/UX design, including user research, wireframing, prototyping, and modern design principles.",
-      image: "/api/placeholder/400/300?text=UI+UX+Design",
+      image: uiux,
       category: "UI/UX Design",
       level: "Beginner",
       duration: "3 Days",
@@ -198,7 +207,7 @@ const WorkshopListing = () => {
       title: "Frontend Development with JavaScript",
       description:
         "Comprehensive JavaScript training focusing on modern ES6+ features, DOM manipulation, and building interactive web applications.",
-      image: "/api/placeholder/400/300?text=JavaScript",
+      image: frontenddev,
       category: "Web Development",
       level: "Intermediate",
       duration: "3 Days",
@@ -216,7 +225,7 @@ const WorkshopListing = () => {
       title: "Git & Version Control Essentials",
       description:
         "Learn professional version control with Git, including branching strategies, collaboration workflows, and best practices.",
-      image: "/api/placeholder/400/300?text=Git+Workshop",
+      image: github,
       category: "Version Control",
       level: "Beginner",
       duration: "1 Day",
@@ -234,7 +243,7 @@ const WorkshopListing = () => {
       title: "Technical Writing Workshop",
       description:
         "Develop technical writing skills for documentation, reports, and professional communication in the tech industry.",
-      image: "/api/placeholder/400/300?text=Technical+Writing",
+      image: technical,
       category: "English Communication",
       level: "Intermediate",
       duration: "2 Days",
@@ -252,7 +261,7 @@ const WorkshopListing = () => {
       title: "Career Development & Industry Readiness",
       description:
         "Prepare students for industry with resume building, interview preparation, and professional networking skills.",
-      image: "/api/placeholder/400/300?text=Career+Development",
+      image: careerdev,
       category: "Career Development",
       level: "Beginner",
       duration: "2 Days",
@@ -270,7 +279,7 @@ const WorkshopListing = () => {
       title: "Full Stack Development Overview",
       description:
         "Introduction to full stack development covering both frontend and backend technologies with practical examples.",
-      image: "/api/placeholder/400/300?text=Full+Stack",
+      image: fullstack,
       category: "Web Development",
       level: "Intermediate",
       duration: "5 Days",
@@ -288,7 +297,7 @@ const WorkshopListing = () => {
       title: "Responsive Web Design Masterclass",
       description:
         "Master the art of creating responsive websites using modern CSS frameworks and design principles.",
-      image: "/api/placeholder/400/300?text=Responsive+Design",
+      image: responsiveweb,
       category: "Web Development",
       level: "Intermediate",
       duration: "2 Days",

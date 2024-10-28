@@ -68,7 +68,6 @@ const BackgroundElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
     <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
     <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-    
     <div className="absolute inset-0 opacity-[0.02]">
       <div className="grid grid-cols-8 h-full">
         {[...Array(32)].map((_, i) => (
@@ -76,7 +75,6 @@ const BackgroundElements = () => (
         ))}
       </div>
     </div>
-
     {[...Array(6)].map((_, i) => (
       <div
         key={i}
@@ -100,7 +98,6 @@ const PartnerCard = ({ partner }) => {
     <div className="group relative flex-shrink-0 w-64">
       <div className="h-[280px] relative bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100/50">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
         <div className="relative z-10 flex flex-col items-center h-full">
           <div className="relative w-24 h-24 mb-4">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full blur opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -110,12 +107,10 @@ const PartnerCard = ({ partner }) => {
               className="relative w-full h-full rounded-full object-cover border-2 border-white"
             />
           </div>
-
           <h3 className="text-lg font-bold text-gray-800 mb-2 text-center group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600 group-hover:text-transparent group-hover:bg-clip-text transition-colors duration-300">
             {partner.name}
           </h3>
           <p className="text-blue-600 font-medium mb-4 text-center">{partner.type}</p>
-
           <div className="flex flex-col items-center gap-2 mt-auto">
             <div className="flex items-center gap-2">
               <Users className="w-4 h-4 text-blue-500" />
@@ -135,45 +130,36 @@ const PartnerCard = ({ partner }) => {
 const BusinessPartnersSection = () => {
   const scrollRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
+  let scrollInterval;
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     if (!scrollContainer) return;
 
-    const itemWidth = 280;
-    const scrollSpeed = 1;
-    let scrollPos = 0;
-    let requestId;
+    const itemWidth = 280; // Width of each card including margin
+    const scrollSpeed = 1; // Speed at which the auto-scroll moves
 
-    const scroll = () => {
-      if (isHovered) {
-        requestId = requestAnimationFrame(scroll);
-        return;
-      }
-
-      scrollPos += scrollSpeed;
-      
-      if (scrollPos >= itemWidth * partners.length) {
-        scrollPos = 0;
-        scrollContainer.scrollLeft = 0;
-      } else {
-        scrollContainer.scrollLeft = scrollPos;
-      }
-
-      requestId = requestAnimationFrame(scroll);
+    // Automatic scrolling function
+    const startAutoScroll = () => {
+      scrollInterval = setInterval(() => {
+        if (!isHovered) { // Scroll only if not hovered
+          scrollContainer.scrollLeft += scrollSpeed;
+          if (scrollContainer.scrollLeft >= itemWidth * partners.length) {
+            scrollContainer.scrollLeft = 0; // Reset scroll when reaching the end
+          }
+        }
+      }, 20); // Smooth auto-scroll with interval
     };
 
-    requestId = requestAnimationFrame(scroll);
+    // Start automatic scrolling
+    startAutoScroll();
 
-    return () => {
-      cancelAnimationFrame(requestId);
-    };
+    return () => clearInterval(scrollInterval); // Cleanup on component unmount
   }, [isHovered]);
 
   return (
     <section className="py-24 relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
       <BackgroundElements />
-
       <div className="absolute -top-0 -left-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
       <div className="absolute -top-0 -right-10 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
       <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div>
@@ -189,13 +175,13 @@ const BusinessPartnersSection = () => {
           </p>
         </div>
 
-        <div className="relative overflow-hidden">
-          <div
-            ref={scrollRef}
-            className="flex gap-6 overflow-x-hidden py-4"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-          >
+        <div 
+          className="relative overflow-x-scroll hide-scrollbar"
+          ref={scrollRef}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
+          <div className="flex gap-6 py-4">
             {partners.map((partner, index) => (
               <PartnerCard key={index} partner={partner} />
             ))}
@@ -207,6 +193,13 @@ const BusinessPartnersSection = () => {
       </div>
 
       <style jsx>{`
+         .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+       
+        .hide-scrollbar {
+          scrollbar-width: none; /* Firefox */
+        }
         @keyframes float {
           0%, 100% { transform: translateY(0) rotate(0); }
           50% { transform: translateY(-20px) rotate(10deg); }
@@ -227,6 +220,7 @@ const BusinessPartnersSection = () => {
         .animation-delay-4000 {
           animation-delay: 4s;
         }
+
       `}</style>
     </section>
   );

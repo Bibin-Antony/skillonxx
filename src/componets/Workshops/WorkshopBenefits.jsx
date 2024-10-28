@@ -129,11 +129,11 @@ const WorkshopBenefits = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
           {stats.map((stat, index) => (
             <StatCard key={index} {...stat} />
           ))}
-        </div>
+        </div> */}
 
         {/* Benefits Grid */}
         <div className="space-y-16">
