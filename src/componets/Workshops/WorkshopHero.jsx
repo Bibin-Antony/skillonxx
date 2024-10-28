@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { MapPin, Calendar, Users, Award, BookOpen, Code, MessageSquare } from 'lucide-react';
+import { Link } from "react-router-dom";
 
 const WorkshopHero = () => {
   const workshopTypes = [
@@ -119,9 +120,9 @@ const WorkshopHero = () => {
                 Now Booking Workshops for the Upcoming Academic Season!
               </p>
             </div>
-            <button className="text-blue-400 hover:text-blue-300 transition-colors">
+            <Link to='/contactus' className="text-blue-400 hover:text-blue-300 transition-colors">
               Contact Us →
-            </button>
+            </Link>
           </div>
         </div>
       </div>

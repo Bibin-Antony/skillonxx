@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Search,
   User,
@@ -155,7 +155,7 @@ const Navbar = () => {
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const searchInputRef = useRef(null);
-
+  const location = useLocation();
   const navItems = [
     { label: "Home", href: "/", isActive: true },
     {
@@ -193,6 +193,14 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  const getLinkClass = (href) => {
+    // Apply blue border and text if the current route matches
+    return location.pathname === href
+      ? "border-4 text-blue-400 font-medium border-blue-500  hover:text-black"
+      : isScrolled
+      ? "text-black  hover:text-black"
+      : "text-white  hover:text-black";
+  };
 
   useEffect(() => {
     if (isSearchOpen && searchInputRef.current) {
@@ -241,15 +249,11 @@ const Navbar = () => {
                 }
                 onMouseLeave={() => setActiveDropdown(null)}
               >
-                <Link
+                 <Link
                   to={item.href}
-                  className={`px-5 py-2 hover:text-black rounded-lg text-sm font-room font-medium tracking-wider transition-all duration-200 flex items-center space-x-1 group hover:bg-gray-100  ${
-                    item.isActive
-                      ? " border-4 text-blue-400 font-medium border-blue-500"
-                      : isScrolled
-                      ? "text-black "
-                      : "text-white"
-                  }`}
+                  className={`px-5 py-2 rounded-lg text-sm font-room font-medium tracking-wider transition-all duration-200 flex items-center space-x-1 group hover:bg-gray-100 ${getLinkClass(
+                    item.href
+                  )}`}
                 >
                   <span>{item.label}</span>
                   {item.hasDropdown && (
@@ -264,7 +268,8 @@ const Navbar = () => {
                 {/* Dropdown Menu */}
                 {item.hasDropdown && activeDropdown === index && (
                   <div className="absolute top-full left-0 w-64 mt-2 p-2 bg-white shadow-lg rounded-lg z-10 space-y-2">
-                    {item.dropdownItems.map((dropdownItem, idx) => (
+                    
+                    {/* {item.dropdownItems.map((dropdownItem, idx) => (
                       <Link
                         to="#"
                         key={idx}
@@ -280,7 +285,27 @@ const Navbar = () => {
                           </p>
                         </div>
                       </Link>
+                    ))} */}
+                    {item.dropdownItems.map((dropdownItem, idx) => (
+
+                      <Link
+                        to="/courses"
+                        key={idx}
+                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-50 transition-all duration-200"
+
+                      >
+                        {dropdownItem.icon}
+                        <div>
+                          <p className="text-sm font-medium text-gray-900">
+                            {dropdownItem.label}
+                          </p>
+                          <p className="text-xs text-gray-500">
+                            {dropdownItem.description}
+                          </p>
+                        </div>
+                      </Link>
                     ))}
+
                   </div>
                 )}
               </div>
