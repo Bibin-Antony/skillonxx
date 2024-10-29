@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Users,
   Calendar,
@@ -7,6 +7,7 @@ import {
   BookOpen,
   Trophy,
   Tag,
+   X, Mail, Phone, User, GraduationCap,Book
 } from "lucide-react";
 
 import frontend from "../../assets/Images/frontend.jpg";
@@ -51,8 +52,145 @@ const courses = [
     highlights: ["Business Communication", "IELTS Preparation", "Interview Skills"]
    },
 ];
+const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
+  if (!isVisible) return null;
 
+  return (
+    <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 animate-fadeIn">
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-md z-[1040]" onClick={onClose} />
+
+      {/* Modal with margin from top and bottom padding for better visibility */}
+      <div className="relative w-full max-w-md mt-12 mb-8 transform transition-all animate-slideUp z-[1051]">
+        <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto">
+          {/* Decorative header background */}
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+
+          {/* Header */}
+          <div className="relative px-6 pt-6 pb-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-xl">
+                  <GraduationCap className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">Course Enrollment</h3>
+                  <p className="text-sm text-gray-500 mt-0.5">Fill in your details to enroll</p>
+                </div>
+              </div>
+              <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-100 transition-colors">
+                <X size={20} className="text-gray-500" />
+              </button>
+            </div>
+          </div>
+
+          {/* Form */}
+          <form className="px-6 pb-8 space-y-5">
+            {/* Name Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <div className="relative">
+                <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter your name"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Email Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Phone Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <div className="relative">
+                <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input
+                  type="tel"
+                  required
+                  placeholder="Enter your phone number"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Education Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Education</label>
+              <div className="relative">
+                <Book className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input
+                  type="text"
+                  required
+                  placeholder="Enter your education level"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Featured Course Field */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Featured Course</label>
+              <input
+                type="text"
+                value={courseName}
+                disabled
+                className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl bg-gray-100 focus:outline-none"
+              />
+            </div>
+
+            {/* Terms and Conditions */}
+            <div className="flex items-start gap-2">
+              <input
+                type="checkbox"
+                required
+                id="terms"
+                className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              />
+              <label htmlFor="terms" className="text-sm text-gray-600">
+                I agree to the terms and conditions and authorize the institute to contact me regarding the course.
+              </label>
+            </div>
+
+            {/* Buttons */}
+            <div className="flex gap-3 pt-4">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 font-medium transition-all transform hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Enroll Now
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
 const FeaturedCourses = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState("");
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("en-US", {
       month: "long",
@@ -73,7 +211,10 @@ const FeaturedCourses = () => {
           : "bg-gradient-to-r from-green-500 to-green-600",
     };
   };
-
+  const handleEnrollClick = (courseTitle) => {
+    setSelectedCourse(courseTitle);
+    setModalVisible(true);
+  };
   return (
     <section className="py-20 relative overflow-hidden">
       {/* Background decoration */}
@@ -187,7 +328,7 @@ const FeaturedCourses = () => {
                     </div>
                   </div>
 
-                  <button className="mt-auto w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition duration-300 flex items-center justify-center group">
+                  <button className="mt-auto w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-4 rounded-xl hover:from-blue-700 hover:to-purple-700 transition duration-300 flex items-center justify-center group" onClick={() => handleEnrollClick(course.title)}>
                     <span>Enroll Now</span>
                     <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
                   </button>
@@ -195,6 +336,11 @@ const FeaturedCourses = () => {
               </div>
             );
           })}
+          <FeaturedCoursesEnrollmentModal
+        isVisible={isModalVisible}
+        onClose={() => setModalVisible(false)}
+        courseName={selectedCourse}
+      />
         </div>
 
         <div className="text-center mt-16">

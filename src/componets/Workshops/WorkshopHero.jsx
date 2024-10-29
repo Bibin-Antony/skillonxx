@@ -1,9 +1,108 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Calendar, Users, Award, BookOpen, Code, MessageSquare } from 'lucide-react';
+import { MapPin, Code, MessageSquare, Users, GraduationCap, X, Mail, Phone, User } from "lucide-react";
+
 import { Link } from "react-router-dom";
 
+// Form Modal Component
+// Workshop Enrollment Modal Component
+const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
+  if (!isVisible) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose} />
+
+      <div className="relative w-full max-w-md transform transition-all animate-slideUp">
+        <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+
+          <div className="relative px-6 pt-6 pb-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-xl">
+                  <GraduationCap className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">Schedule a Workshop Enrollment</h3>
+                  <p className="text-sm text-gray-500 mt-0.5">Fill in your details to enroll</p>
+                </div>
+              </div>
+              <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-100 transition-colors">
+                <X size={20} className="text-gray-500" />
+              </button>
+            </div>
+          </div>
+
+          <form className="px-6 pb-6 space-y-5">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">University/Organization</label>
+              <div className="relative">
+                <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input type="text" required placeholder="Enter name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Email Address</label>
+              <div className="relative">
+                <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input type="email" required placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+              <div className="relative">
+                <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input type="tel" required placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Type of Workshop</label>
+              <select className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white" required>
+                <option value="">Select a workshop</option>
+                <option>Web Development</option>
+                <option>React.js</option>
+                <option>Frontend Development</option>
+                <option>UI/UX Design</option>
+                <option>English Communication</option>
+                <option>Technical Writing</option>
+                <option>Career Development</option>
+                <option>Git & Version Control</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Preferred Date</label>
+              <input type="date" className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Batch Size</label>
+              <input type="number" required placeholder="Enter batch size" className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors">
+                Cancel
+              </button>
+              <button type="submit" className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 font-medium transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                Schedule Workshop
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main Hero Component
 const WorkshopHero = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const workshopTypes = [
     {
       icon: Code,
@@ -27,108 +126,49 @@ const WorkshopHero = () => {
 
   return (
     <div className="relative pt-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 min-h-[80vh]">
-      <div className="absolute inset-0 bg-grid-white/[0.05] bg-[size:32px]" />
-      
-      <div className="relative">
-        <div className="max-w-[85vw] mx-auto px-4 pt-24 pb-16">
-          {/* Left aligned content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="text-left">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-2 text-blue-400 mb-8"
-              >
-                <MapPin className="w-4 h-4" />
-                <span>For Colleges & Universities</span>
-              </motion.div>
+      <div className="relative max-w-[85vw] mx-auto px-4 pt-24 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div>
+            <motion.h1 className="text-4xl font-bold text-white mb-6">
+              Transform Your Students with <span className="text-blue-400">Industry-Ready Skills</span>
+            </motion.h1>
+            <motion.p className="text-gray-300 text-lg mb-8">
+              Expert-led workshops in Web Development, English Communication, and more.
+            </motion.p>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight"
+            <div className="flex gap-4">
+              <button
+                onClick={() => setModalVisible(true)}
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg"
               >
-                Transform Your Students with
-                <span className="text-blue-400 block">Industry-Ready Skills</span>
-              </motion.h1>
-              
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="text-gray-300 text-lg mb-8"
-              >
-                Expert-led workshops in Web Development, English Communication,
-                and more. Custom-designed for your institution's needs.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="flex gap-4 mb-16"
-              >
-                <div className="flex gap-4 items-center justify-center flex-wrap">
-                <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors shadow-lg">
-                  Schedule a Workshop
-                </button>
-                <button className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg transition-colors shadow-lg backdrop-blur-sm">
-                  View Workshop Details
-                </button>
-              </div>
-
-              </motion.div>
+                Schedule a Workshop
+              </button>
+              <button className="bg-white/10 text-white px-6 py-3 rounded-lg">
+                View Workshop Details
+              </button>
             </div>
+          </div>
 
-            {/* Right aligned workshop types */}
-            <div className="space-y-6">
-              {workshopTypes.map((workshop, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6"
-                >
-                  <div className="flex items-start gap-4">
-                    <span className="p-3 rounded-lg bg-blue-500/20">
-                      <workshop.icon className="w-6 h-6 text-blue-400" />
+          <div className="space-y-6">
+            {workshopTypes.map((workshop, index) => (
+              <div key={index} className="bg-white/5 p-6 rounded-xl">
+                <div className="flex items-start gap-4">
+                  <workshop.icon className="w-6 h-6 text-blue-400" />
+                  <div>
+                    <h3 className="text-xl font-semibold text-white">{workshop.title}</h3>
+                    <p className="text-gray-300">{workshop.description}</p>
+                    <span className="text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full">
+                      {workshop.duration}
                     </span>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">
-                        {workshop.title}
-                      </h3>
-                      <p className="text-gray-300 mb-3">
-                        {workshop.description}
-                      </p>
-                      <span className="text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full">
-                        {workshop.duration}
-                      </span>
-                    </div>
                   </div>
-                </motion.div>
-              ))}
-            </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      <div className="bg-white/5 backdrop-blur-sm border-t border-white/10">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex flex-wrap items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-              <p className="text-gray-300">
-                Now Booking Workshops for the Upcoming Academic Season!
-              </p>
-            </div>
-            <Link to='/contactus' className="text-blue-400 hover:text-blue-300 transition-colors">
-              Contact Us →
-            </Link>
-          </div>
-        </div>
-      </div>
+      <WorkshopEnrollmentModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
     </div>
   );
 };
