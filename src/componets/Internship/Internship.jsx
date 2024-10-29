@@ -52,8 +52,8 @@ const LazySection = ({ children }) => {
 const Internship = () => {
   useEffect(() => {
     // Smooth scroll polyfill
-    document.documentElement.style.scrollBehavior = 'smooth';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+;
+    window.scrollTo({ top: 0});
 
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';

@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Code, MessageSquare, Users, GraduationCap, X, Mail, Phone, User } from "lucide-react";
-
 import { Link } from "react-router-dom";
 
-// Form Modal Component
-// Workshop Enrollment Modal Component
+// Workshop Enrollment Modal Component remains unchanged
 const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
 
@@ -125,39 +123,51 @@ const WorkshopHero = () => {
   ];
 
   return (
-    <div className="relative pt-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 min-h-[80vh]">
-      <div className="relative max-w-[85vw] mx-auto px-4 pt-24 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
-            <motion.h1 className="text-4xl font-bold text-white mb-6">
-              Transform Your Students with <span className="text-blue-400">Industry-Ready Skills</span>
-            </motion.h1>
-            <motion.p className="text-gray-300 text-lg mb-8">
-              Expert-led workshops in Web Development, English Communication, and more.
-            </motion.p>
+    <div className="relative bg-gradient-to-br from-blue-950 to-blue-900 pt-5 md:pt-16 md:max-h-[85vh]">
+      <div className="relative max-w-[85vw] mx-auto px-4 py-16">
+        {/* For Colleges & Universities Tag */}
+        \
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="space-y-8">
+            <div className="space-y-6">
+            <div className="flex items-center gap-2 text-blue-300 ">
+          <MapPin className="w-4 h-4" />
+          <span className="text-sm">For Colleges & Universities</span>
+        </div>
+              <motion.h1 className="text-xl md:text-5xl font-bold text-white leading-tight">
+                Transform Your Students with{" "}
+                <span className="block text-blue-400">Industry-Ready Skills</span>
+              </motion.h1>
+              <motion.p className="md:text-lg text-gray-300">
+                Expert-led workshops in Web Development, English Communication, and more. Custom-designed for your institution's needs.
+              </motion.p>
+            </div>
 
             <div className="flex gap-4">
               <button
                 onClick={() => setModalVisible(true)}
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg"
+                className="bg-blue-500 hover:bg-blue-600 text-white  px-6 py-3 rounded-lg transition-colors"
               >
                 Schedule a Workshop
               </button>
-              <button className="bg-white/10 text-white px-6 py-3 rounded-lg">
+              <button className="bg-blue-800/30 hover:bg-blue-800/50 text-white px-6 py-3 rounded-lg transition-colors">
                 View Workshop Details
               </button>
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {workshopTypes.map((workshop, index) => (
-              <div key={index} className="bg-white/5 p-6 rounded-xl">
+              <div key={index} className="bg-blue-800/20 hover:bg-blue-800/30 p-6 rounded-2xl transition-all">
                 <div className="flex items-start gap-4">
-                  <workshop.icon className="w-6 h-6 text-blue-400" />
-                  <div>
+                  <div className="p-2 bg-blue-500/20 rounded-lg">
+                    <workshop.icon className="w-6 h-6 text-blue-400" />
+                  </div>
+                  <div className="space-y-2">
                     <h3 className="text-xl font-semibold text-white">{workshop.title}</h3>
                     <p className="text-gray-300">{workshop.description}</p>
-                    <span className="text-sm bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full">
+                    <span className="inline-block text-sm bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full">
                       {workshop.duration}
                     </span>
                   </div>

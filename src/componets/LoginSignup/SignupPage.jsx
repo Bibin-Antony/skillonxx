@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/logo.png";
-import signupimage from "../../assets/illustrations/loginimage.png";
+import Signup from "../../assets/illustrations/loginimage.png";
 
 import { 
   CircleDot, 
@@ -53,14 +53,13 @@ const SignupPage = () => {
 
   useEffect(() => {
     // Smooth scroll polyfill
-    document.documentElement.style.scrollBehavior = 'smooth';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+;
+    window.scrollTo({ top: 0});
 
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
-
   const FloatingElement = ({ children, className }) => (
     <div className={`absolute hidden lg:block ${className}`}>
       {children}
@@ -104,16 +103,16 @@ const SignupPage = () => {
 
         {/* Main Container */}
         <div className="flex min-h-screen items-center justify-center">
-          <div className="w-full max-w-5xl bg-[#112240]/30 backdrop-blur-lg rounded-xl shadow-2xl border border-blue-300/10 overflow-hidden">
+          <div className="w-full max-w-7xl bg-[#112240]/30 backdrop-blur-lg rounded-xl shadow-2xl border border-blue-300/10 overflow-hidden">
             <div className="flex flex-col lg:flex-row w-full h-[80vh]">
               {/* Image Section */}
               <div className="hidden lg:block lg:w-5/12 relative">
-                <div className="absolute inset-0 bg-blue-900/20">
-                  <img
-                    src="/api/placeholder/400/800"
+              <div className="absolute inset-0 bg-blue-900/20 flex items-center">
+                <img
+                    src={Signup}
                     alt="Signup visual"
-                    className="w-full h-full object-cover"
-                  />
+                    className="w-auto h-full object-contain"
+                />
                 </div>
               </div>
 
@@ -390,7 +389,7 @@ const SignupPage = () => {
         </div>
 
         {/* Mobile Bottom Navigation */}
-        <div className="fixed bottom-0 left-0 right-0 bg-[#0a192f]/95 backdrop-blur-lg p-4 lg:hidden border-t border-blue-300/10">
+        {/* <div className="fixed bottom-0 left-0 right-0 bg-[#0a192f]/95 backdrop-blur-lg p-4 lg:hidden border-t border-blue-300/10">
           <div className="flex justify-between items-center max-w-md mx-auto">
             <button 
               type="button"
@@ -417,7 +416,7 @@ const SignupPage = () => {
               <span className="mt-1">Help</span>
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
