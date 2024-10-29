@@ -1,5 +1,5 @@
 // src/components/Workshop/WorkshopListing.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Search,
   ChevronDown,
@@ -499,6 +499,15 @@ const WorkshopListing = () => {
   const [isListView, setIsListView] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedWorkshop, setSelectedWorkshop] = useState("");
+  const[isDestop,setIsDesktop] = useState(window.innerWidth>=768);
+  useEffect(()=>{
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth>=768);
+      if(window.innerWidth<768) return setIsListView(false)
+      }
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  },[])
   const handleScheduleNowClick = (workshopName) => {
     setSelectedWorkshop(workshopName);
     setModalVisible(true);
@@ -810,14 +819,15 @@ const WorkshopListing = () => {
             >
               <Grid className="h-5 w-5" />
             </button>
-            <button
+            {isDestop && <button
               onClick={() => setIsListView(true)}
               className={`p-2 rounded-lg ${
                 isListView ? "bg-primary text-white" : "bg-gray-200"
               }`}
             >
               <List className="h-5 w-5" />
-            </button>
+            </button> }
+            
           </div>
         </div>
 
