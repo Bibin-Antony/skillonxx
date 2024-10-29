@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 const LoginPage = () => {
   useEffect(() => {
     // Smooth scroll polyfill
-    document.documentElement.style.scrollBehavior = 'smooth';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+;
+    window.scrollTo({ top: 0});
 
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';
@@ -24,7 +24,7 @@ const LoginPage = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f] flex items-center justify-center relative overflow-hidden px-4">
+    <div className="min-h-screen pt-10 md:pt-0 bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f] flex items-center justify-center relative overflow-hidden px-4">
       {/* Expanded animated background elements */}
       <FloatingElement className="top-20 left-20 text-blue-300/20 animate-bounce">
         <CircleDot size={24} />
@@ -53,9 +53,9 @@ const LoginPage = () => {
 
       {/* Main container with darker glassmorphism effect */}
       <div className="bg-[#112240]/30 backdrop-blur-lg rounded-xl p-8 w-full max-w-4xl mx-auto shadow-2xl border border-blue-300/10">
-        <div className="flex flex-col md:flex-row gap-8">
+        <div className="flex flex-col md:flex-row gap-8 ">
           {/* Left side - Image placeholder */}
-          <div className="flex-1 rounded-lg overflow-hidden flex items-center justify-center">
+          <div className="flex-1 hidden  rounded-lg  overflow-hidden md:flex items-center justify-center">
             <img
               src={loginimage}
               alt="Login visual"

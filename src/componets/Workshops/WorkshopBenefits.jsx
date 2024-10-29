@@ -1,19 +1,12 @@
-// src/components/Workshop/WorkshopBenefits.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
-  GraduationCap,
-  Target,
-  Users,
-  Building,
-  Briefcase,
-  Code,
-  BookOpen,
-  Award,
-  Calendar,
-  Laptop,
-  MessageSquare, CheckCircle, X, Mail, Phone, User
+  GraduationCap, Target, Users, Building, Briefcase, 
+  Code, BookOpen, Award, Calendar, Laptop, MessageSquare, 
+  CheckCircle, X, Mail, Phone, User, ArrowRight
 } from "lucide-react";
+
+// Modal component remains same as before
 const WorkShopBenefitModal = ({ isVisible, onClose }) => {
   if (!isVisible) return null;
 
@@ -90,36 +83,76 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
     </div>
   );
 };
-const BenefitCard = ({ icon: Icon, title, description }) => {
+
+const BenefitCard = ({ icon: Icon, title, description, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+      className="relative group"
     >
-      <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-        <Icon className="w-6 h-6 text-custom" />
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-2xl transform group-hover:scale-105 transition-all duration-300" />
+      <div className="relative bg-blue-950/40 backdrop-blur-sm border border-blue-800/30 p-8 rounded-2xl hover:shadow-2xl transition-all duration-300">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl" />
+        
+        <div className="relative">
+          <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+            <Icon className="w-7 h-7 text-white" />
+          </div>
+          
+          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
+            {title}
+          </h3>
+          
+          <p className="text-blue-100/70">
+            {description}
+          </p>
+          
+          <div className="mt-6 flex items-center text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
+            <span className="text-sm font-semibold">Learn more</span>
+            <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          </div>
+        </div>
       </div>
-      <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
     </motion.div>
   );
 };
 
-const StatCard = ({ value, label }) => {
+const StatCard = ({ value, label, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="text-center"
+      className="relative group"
     >
-      <h4 className="text-4xl font-bold text-white mb-2">{value}</h4>
-      <p className="text-white">{label}</p>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-xl transform group-hover:scale-105 transition-all duration-300" />
+      <div className="relative bg-blue-950/40 backdrop-blur-sm border border-blue-800/30 p-6 rounded-xl text-center">
+        <h4 className="text-5xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent mb-2">
+          {value}
+        </h4>
+        <p className="text-blue-100/70 font-medium">{label}</p>
+      </div>
     </motion.div>
   );
 };
+
+const SectionTitle = ({ children, subtitle }) => (
+  <div className="relative">
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl" />
+    <h3 className="relative text-2xl font-bold text-white mb-2 text-center">
+      {children}
+    </h3>
+    {subtitle && (
+      <p className="text-blue-100/70 text-center max-w-lg mx-auto text-sm">
+        {subtitle}
+      </p>
+    )}
+  </div>
+);
 
 const WorkshopBenefits = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -185,84 +218,108 @@ const WorkshopBenefits = () => {
     ],
   };
 
-  const stats = [
-    { value: "20+", label: "Partner Institutions" },
-    { value: "50+", label: "Workshops Conducted" },
-    { value: "5000+", label: "Students Trained" },
-    { value: "90%", label: "Positive Feedback" },
-  ];
+  // const stats = [
+  //   { value: "20+", label: "Partner Institutions" },
+  //   { value: "50+", label: "Workshops Conducted" },
+  //   { value: "5000+", label: "Students Trained" },
+  //   { value: "90%", label: "Positive Feedback" },
+  // ];
 
   return (
-    <div className="bg-tertiary py-16 bg-gradient-to-br from-primary via-custom to-secondary">
-      <div className="container mx-auto px-4 md:w-[1300px]">
+    <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-950 py-24 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative container mx-auto px-4 md:max-w-6xl">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Workshop Benefits & Impact
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
+          <div className="inline-block mb-4 px-4 py-1 rounded-full bg-blue-500/10 border border-blue-400/20 text-blue-400 text-sm">
+            Benefits & Impact
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            Transforming Education Through
+            <span className="block mt-2 bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              Industry-Ready Training
+            </span>
           </h2>
-          <p className="text-white max-w-2xl mx-auto">
-            Delivering value to institutions, students, and faculty through
-            industry-aligned technical training
+          <p className="text-blue-100/70 max-w-2xl mx-auto text-lg">
+            Empowering institutions, students, and faculty with cutting-edge technical education
           </p>
-          Transform Your Students with Industry-Ready Skills
-        </div>
+        </motion.div>
 
         {/* Stats Section */}
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
+        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
           {stats.map((stat, index) => (
-            <StatCard key={index} {...stat} />
+            <StatCard key={index} {...stat} index={index} />
           ))}
         </div> */}
 
         {/* Benefits Grid */}
-        <div className="space-y-16">
+        <div className="space-y-24">
           {/* For Institutions */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">
+            <SectionTitle subtitle="Enhance your academic offerings and improve student outcomes">
               For Institutions
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            </SectionTitle>
+            <div className="grid md:grid-cols-3 gap-6 mt-12 cursor-pointer">
               {benefits.institution.map((benefit, index) => (
-                <BenefitCard key={index} {...benefit} />
+                <BenefitCard key={index} {...benefit} index={index} />
               ))}
             </div>
           </div>
 
           {/* For Students */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">
+            <SectionTitle subtitle="Build practical skills and prepare for your career">
               For Students
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            </SectionTitle>
+            <div className="grid md:grid-cols-3 gap-6 mt-12 cursor-pointer">
               {benefits.students.map((benefit, index) => (
-                <BenefitCard key={index} {...benefit} />
+                <BenefitCard key={index} {...benefit} index={index} />
               ))}
             </div>
           </div>
 
           {/* For Faculty */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">
+            <SectionTitle subtitle="Stay updated with industry trends and enhance teaching methods">
               For Faculty
-            </h3>
-            <div className="grid md:grid-cols-3 gap-6">
+            </SectionTitle>
+            <div className="grid md:grid-cols-3 gap-6 mt-12 cursor-pointer">
               {benefits.faculty.map((benefit, index) => (
-                <BenefitCard key={index} {...benefit} />
+                <BenefitCard key={index} {...benefit} index={index} />
               ))}
             </div>
           </div>
         </div>
 
         {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <h3 className="text-2xl font-bold text-white mb-6">
-            Transform Your Institution's Technical Training
-          </h3>
-          <button className="bg-gradient-to-br from-primary via-custom to-blue-600 active:scale-90 transition-all duration-300 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:via-custom hover:to-primary" onClick={() => setModalVisible(true)}>
-            Schedule a Free Consultation
-          </button>
-        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-24 text-center"
+        >
+          <div className="relative inline-block">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-500 blur-xl opacity-30" />
+            <button
+              onClick={() => setModalVisible(true)}
+              className="relative px-8 py-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-xl font-semibold text-white hover:shadow-xl hover:shadow-blue-500/20 transform hover:scale-105 active:scale-95 transition-all duration-300"
+            >
+              Schedule a Free Consultation
+            </button>
+          </div>
+        </motion.div>
       </div>
+
       <WorkShopBenefitModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
     </div>
   );
