@@ -2,7 +2,7 @@ import React, { useEffect, useRef, Suspense } from "react";
 import BreadCrumb from "../common/BreadCrumb";
 // Lazy load components with prefetching
 const Navbar = React.lazy(() => import("./Navbar.jsx"));
-const HeroPage = React.lazy(() => import("./Heropage.jsx"));
+const HeroPage = React.lazy(() => import("./HeroPage.jsx"));
 const FeaturedCourses = React.lazy(() => import("./FeaturedCourses.jsx"));
 const HowItWorks = React.lazy(() => import("./HowItWorks.jsx"));
 const CTASection = React.lazy(() => import("./CTASection.jsx"));
