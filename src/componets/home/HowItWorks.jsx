@@ -135,13 +135,13 @@ const BackgroundElements = () => (
 const StepCard = ({ step, index, isLast }) => (
   <div className="group relative h-full">
     {/* Connector Lines */}
-    {!isLast && index % 4 !== 3 && (
+    {/* {!isLast && index % 4 !== 3 && (
       <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-gray-200 to-transparent z-0">
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
           <ChevronRight className="w-4 h-4 text-gray-400" />
         </div>
       </div>
-    )}
+    )} */}
 
     {/* Card */}
     <div className="h-full flex flex-col bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:translate-x-2 border border-gray-100/50">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/logo.png";
+import signupimage from "../../assets/illustrations/loginimage.png";
 
 import { 
   CircleDot, 
@@ -375,7 +376,7 @@ const SignupPage = () => {
                       Already have an account?{' '}
                       <button 
                         type="button"
-                        onClick={() => navigate('/login')}
+                        onClick={() => navigate('/LoginPage')}
                         className="text-blue-300 hover:text-blue-200"
                       >
                         Sign in

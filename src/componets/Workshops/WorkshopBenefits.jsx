@@ -1,5 +1,5 @@
 // src/components/Workshop/WorkshopBenefits.jsx
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   GraduationCap,
@@ -10,9 +10,86 @@ import {
   Code,
   BookOpen,
   Award,
+  Calendar,
   Laptop,
+  MessageSquare, CheckCircle, X, Mail, Phone, User
 } from "lucide-react";
+const WorkShopBenefitModal = ({ isVisible, onClose }) => {
+  if (!isVisible) return null;
 
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={onClose} />
+
+      <div className="relative w-full max-w-md transform transition-all animate-slideUp">
+        <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
+          <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+
+          <div className="relative px-6 pt-6 pb-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 rounded-xl">
+                  <Calendar className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900">Schedule Consultation</h3>
+                  <p className="text-sm text-gray-500 mt-0.5">Fill in your details to book a consultation</p>
+                </div>
+              </div>
+              <button onClick={onClose} className="p-1 rounded-full hover:bg-gray-100 transition-colors">
+                <X size={20} className="text-gray-500" />
+              </button>
+            </div>
+          </div>
+
+          <form className="px-6 pb-6 space-y-5">
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Name</label>
+              <div className="relative">
+                <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input type="text" required placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Email</label>
+              <div className="relative">
+                <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input type="email" required placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Phone</label>
+              <div className="relative">
+                <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                <input type="tel" required placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Are you an Individual or Organization?</label>
+              <select className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white" required>
+                <option value="">Select an option</option>
+                <option>Individual</option>
+                <option>Organization</option>
+              </select>
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <button type="button" onClick={onClose} className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors">
+                Cancel
+              </button>
+              <button type="submit" className="flex-1 px-4 py-2.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl hover:from-blue-600 hover:to-blue-700 font-medium transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                Book Schedule
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
 const BenefitCard = ({ icon: Icon, title, description }) => {
   return (
     <motion.div
@@ -45,6 +122,8 @@ const StatCard = ({ value, label }) => {
 };
 
 const WorkshopBenefits = () => {
+  const [isModalVisible, setModalVisible] = useState(false);
+
   const benefits = {
     institution: [
       {
@@ -179,11 +258,12 @@ const WorkshopBenefits = () => {
           <h3 className="text-2xl font-bold text-white mb-6">
             Transform Your Institution's Technical Training
           </h3>
-          <button className="bg-gradient-to-br from-primary via-custom to-blue-600 active:scale-90 transition-all duration-300 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:via-custom hover:to-primary">
+          <button className="bg-gradient-to-br from-primary via-custom to-blue-600 active:scale-90 transition-all duration-300 text-white px-8 py-3 rounded-lg font-semibold hover:from-blue-600 hover:via-custom hover:to-primary" onClick={() => setModalVisible(true)}>
             Schedule a Free Consultation
           </button>
         </div>
       </div>
+      <WorkShopBenefitModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect} from "react";
+import React, { useEffect } from "react";
 import { CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle } from 'lucide-react';
 import googleicon from "../../assets/Icons/google.png";
 import logo from "../../assets/logo/logo.png";
@@ -15,16 +15,16 @@ const LoginPage = () => {
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
+  
   // Floating animation elements with different speeds
   const FloatingElement = ({ children, className }) => (
     <div className={`absolute ${className}`}>
       {children}
     </div>
-    
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f] flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f] flex items-center justify-center relative overflow-hidden px-4">
       {/* Expanded animated background elements */}
       <FloatingElement className="top-20 left-20 text-blue-300/20 animate-bounce">
         <CircleDot size={24} />
@@ -52,14 +52,14 @@ const LoginPage = () => {
       </FloatingElement>
 
       {/* Main container with darker glassmorphism effect */}
-      <div className="bg-[#112240]/30 backdrop-blur-lg rounded-xl p-8 w-full max-w-4xl mx-4 shadow-2xl border border-blue-300/10">
+      <div className="bg-[#112240]/30 backdrop-blur-lg rounded-xl p-8 w-full max-w-4xl mx-auto shadow-2xl border border-blue-300/10">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Left side - Image placeholder */}
           <div className="flex-1 rounded-lg overflow-hidden flex items-center justify-center">
             <img
               src={loginimage}
               alt="Login visual"
-              className="w-auto h-auto object-cover"
+              className="w-full h-auto object-cover"
             />
           </div>
 
@@ -69,10 +69,10 @@ const LoginPage = () => {
             <div className="flex justify-center mb-8">
               <div className="text-3xl font-bold text-blue-100"></div>
               <img
-              src={logo}
-              alt="Login visual"
-              className="w-52 h-full object-cover"
-            />
+                src={logo}
+                alt="Login visual"
+                className="w-36 md:w-52 h-auto object-cover"
+              />
             </div>
 
             {/* Login form */}
@@ -120,7 +120,7 @@ const LoginPage = () => {
 
               <p className="text-center text-blue-100 text-sm">
                 Don't have an account?{' '}
-                <Link  to="/SignupPage" className="text-blue-300 hover:text-blue-200">
+                <Link to="/SignupPage" className="text-blue-300 hover:text-blue-200">
                   Sign up
                 </Link>
               </p>

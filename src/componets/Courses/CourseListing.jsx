@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import {
   Search,
   ChevronDown,
@@ -388,7 +388,17 @@ const CourseListing = () => {
   const [category, setCategory] = useState("");
   const [duration, setDuration] = useState("");
   const [isListView, setIsListView] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+      if (window.innerWidth < 768) setIsListView(false); // Automatically switch to grid view on mobile
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   // Filter Options
   const filterOptions = {
     categories: ["Development", "Language", "Programming"],
@@ -485,14 +495,14 @@ const CourseListing = () => {
             >
               <Grid className="h-5 w-5" />
             </button>
-            <button
-              onClick={() => setIsListView(true)}
-              className={`p-2 rounded-lg ${
-                isListView ? "bg-primary text-white" : "bg-gray-200"
-              }`}
-            >
-              <List className="h-5 w-5" />
-            </button>
+            {isDesktop && (
+              <button
+                onClick={() => setIsListView(true)}
+                className={`p-2 rounded-lg ${isListView ? "bg-primary text-white" : "bg-gray-200"}`}
+              >
+                <List className="h-5 w-5" />
+              </button>
+            )}
           </div>
         </div>
 
