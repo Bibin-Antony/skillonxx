@@ -69,12 +69,15 @@ const WorkshopHero = () => {
                 transition={{ delay: 0.4 }}
                 className="flex gap-4 mb-16"
               >
-                <button className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg transition-colors shadow-lg">
+                <div className="flex gap-4 items-center justify-center flex-wrap">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg transition-colors shadow-lg">
                   Schedule a Workshop
                 </button>
-                <button className="bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-lg transition-colors shadow-lg backdrop-blur-sm">
+                <button className="bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg transition-colors shadow-lg backdrop-blur-sm">
                   View Workshop Details
                 </button>
+              </div>
+
               </motion.div>
             </div>
 

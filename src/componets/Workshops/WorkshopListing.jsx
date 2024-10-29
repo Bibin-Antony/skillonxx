@@ -475,10 +475,10 @@ const WorkshopCard = ({ workshop, isListView,onScheduleClick }) => {
         </div>
 
         <div className="mt-auto flex gap-3">
-        <button onClick={() => onScheduleClick(workshop.title)} className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
+        <button onClick={() => onScheduleClick(workshop.title)} className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-1 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
             Schedule Now
           </button>
-          <button className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
+          <button className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-1 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
             Learn More
           </button>
         </div>
