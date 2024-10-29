@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Code, Brain, Target, Rocket } from "lucide-react";
 import "./App.css";
-import Navbar from "./componets/home/navbar";
+import Navbar from "./componets/home/Navbar";
 import Footer from "./componets/home/Footer";
 import BreadCrumb from './componets/common/BreadCrumb'
 
