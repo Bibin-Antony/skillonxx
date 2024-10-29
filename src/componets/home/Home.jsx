@@ -1,16 +1,17 @@
 import React, { useEffect, useRef, Suspense } from "react";
 import BreadCrumb from "../common/BreadCrumb";
 // Lazy load components with prefetching
-const Navbar = React.lazy(() => import("./Navbar"));
-const HeroPage = React.lazy(() => import("./Heropage"));
-const FeaturedCourses = React.lazy(() => import("./FeaturedCourses"));
-const HowItWorks = React.lazy(() => import("./HowItWorks"));
-const CTASection = React.lazy(() => import("./CTASection"));
-const BenefitsSection = React.lazy(() => import("./BenefitsSection"));
-const TestimonialsSection = React.lazy(() => import("./TestimonialsSection"));
-const FAQSection = React.lazy(() => import("./FAQSection"));
-const Footer = React.lazy(() => import("./Footer"));
-const OurTeamSection = React.lazy(() => import("./OurTeamSection"));
+const Navbar = React.lazy(() => import("./Navbar.jsx"));
+const HeroPage = React.lazy(() => import("./Heropage.jsx"));
+const FeaturedCourses = React.lazy(() => import("./FeaturedCourses.jsx"));
+const HowItWorks = React.lazy(() => import("./HowItWorks.jsx"));
+const CTASection = React.lazy(() => import("./CTASection.jsx"));
+const BenefitsSection = React.lazy(() => import("./BenefitsSection.jsx"));
+const TestimonialsSection = React.lazy(() => import("./TestimonialsSection.jsx"));
+const FAQSection = React.lazy(() => import("./FAQSection.jsx"));
+const Footer = React.lazy(() => import("./Footer.jsx"));
+const OurTeamSection = React.lazy(() => import("./OurTeamSection.jsx"));
+
 
 
 // Intersection Observer for lazy loading
