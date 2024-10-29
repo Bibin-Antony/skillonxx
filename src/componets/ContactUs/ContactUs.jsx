@@ -2,7 +2,6 @@ import React, { useEffect, useRef, Suspense } from "react";
 import Breadcrumb from "../common/BreadCrumb";
 
 // Lazy load components
-const Navbar = React.lazy(() => import("../home/navbar"));
 const Footer = React.lazy(() => import("../home/Footer"));
 const ContactHero = React.lazy(() => import("./ContactHero"));
 const QuickContactOptions = React.lazy(() => import("./QuickContactOptions"));
