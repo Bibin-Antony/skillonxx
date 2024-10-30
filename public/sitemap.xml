@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://skillonx.com/</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <!-- Courses Page -->
+  <url>
+    <loc>https://skillonx.com/courses</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- Workshops Page -->
+  <url>
+    <loc>https://skillonx.com/workshops</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+   <!-- Internship Page -->
+  <url>
+    <loc>https://skillonx.com/internship</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- About Us Page -->
+  <url>
+    <loc>https://skillonx.com/AboutUs</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+   <!-- Contact Us Page -->
+  <url>
+    <loc>https://skillonx.com/contactus</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+    <!-- About Us Page -->
+  <url>
+    <loc>https://skillonx.com/AboutUs</loc>
+    <lastmod>2024-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>

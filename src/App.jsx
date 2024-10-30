@@ -16,7 +16,7 @@ const AboutUs = React.lazy(() => import("./componets/AboutUs/AboutUs"));
 const ContactUs = React.lazy(() => import("./componets/ContactUs/ContactUs"));
 const LoginPage = React.lazy(() => import("./componets/LoginSignup/LoginPage"));
 const SignupPage = React.lazy(() => import("./componets/LoginSignup/SignupPage"));
-
+const SurveyStartPage = React.lazy(() => import("./componets/offline/SurveryStartPageOff"));
 
 // Loading spinner component
 const LoadingSpinner = () => (
@@ -77,6 +77,7 @@ const App = () => {
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/LoginPage" element={<LoginPage />} />
             <Route path="/SignupPage" element={<SignupPage />} />
+            <Route path="/SurveyStartPage" element={<SurveyStartPage />} />
             {/* Dynamic route for course details */}
             {/* <Route path="/courses/:courseId" element={<CourseDetails />} /> */}
 
