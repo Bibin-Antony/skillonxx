@@ -367,7 +367,7 @@ const CourseCard = ({ course, isListView }) => {
             >
               Enroll Now
             </button>
-            <button className="flex-1 bg-custom text-white active:scale-95 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
+            <button onClick={() => navigate(`/courses/${course.id}`)} className="flex-1 bg-custom text-white active:scale-95 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
               Learn More
             </button>
           </div>
