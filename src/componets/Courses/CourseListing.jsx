@@ -1,4 +1,5 @@
 import React, { useState, useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   ChevronDown,
@@ -287,6 +288,7 @@ const CourseFilter = ({ label, options, value, onChange }) => {
 // Course Card Component
 const CourseCard = ({ course, isListView }) => {
   const [showEnrollModal, setShowEnrollModal] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>

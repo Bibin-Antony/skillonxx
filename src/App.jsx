@@ -5,7 +5,8 @@ import "./App.css";
 import Navbar from "./componets/home/Navbar";
 import Footer from "./componets/home/Footer";
 import BreadCrumb from './componets/common/BreadCrumb'
-
+// import CourseDetails from "./componets/Courses/CourseDetails";
+import WorkshopDetails from "./componets/Workshops/WorkshopDetails";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -70,11 +71,15 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/courses" element={<Courses />} />
             <Route path="/Workshops" element={<Workshops />} />
+            <Route path="/workshops/:workshopId" element={<WorkshopDetails />} /> {/* Dynamic Workshop Route */}
             <Route path="/Internship" element={<Internship />} />
             <Route path="/AboutUs" element={<AboutUs />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/LoginPage" element={<LoginPage />} />
             <Route path="/SignupPage" element={<SignupPage />} />
+            {/* Dynamic route for course details */}
+            {/* <Route path="/courses/:courseId" element={<CourseDetails />} /> */}
+
           </Routes>
         </Suspense>
       </Layout>

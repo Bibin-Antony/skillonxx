@@ -1,5 +1,7 @@
 // src/components/Workshop/WorkshopListing.jsx
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   Search,
   ChevronDown,
@@ -431,6 +433,8 @@ const WorkshopFilter = ({ label, options, value, onChange }) => {
 
 // Workshop Card Component
 const WorkshopCard = ({ workshop, isListView,onScheduleClick }) => {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       layout
@@ -478,7 +482,7 @@ const WorkshopCard = ({ workshop, isListView,onScheduleClick }) => {
         <button onClick={() => onScheduleClick(workshop.title)} className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
             Schedule Now
           </button>
-          <button className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-1 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
+          <button className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-1 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary"  onClick={() => navigate(`/workshops/${workshop.id}`)}>
             Learn More
           </button>
         </div>
