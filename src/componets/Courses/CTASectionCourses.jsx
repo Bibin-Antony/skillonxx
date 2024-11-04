@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Rocket, ArrowRight, CheckCircle, X, Calendar, Clock, User } from 'lucide-react';
-
+import axios from 'axios'
 const CTASectionCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const benefits = [
@@ -11,8 +11,31 @@ const CTASectionCourses = () => {
   ];
 
   const ScheduleModal = ({ isOpen, onClose }) => {
+    const [name, setName] = useState("");
+    const [scheduleTitle, setScheduleTitle] = useState("");
+    const [date, setDate] = useState("");
+    const [time, setTime] = useState("");
+    const [error, setError] = useState("");
     if (!isOpen) return null;
+    const handleSubmit = async (e) => {
+      e.preventDefault();
 
+      if (!name || !scheduleTitle || !date || !time) {
+        setError("All fields are required");
+        return;
+      }
+
+      const scheduleData = { name, scheduleTitle, date, time };
+
+      try {
+        const response = await axios.post("http://localhost:5000/scheduleconsultation", scheduleData);
+        console.log("Schedule created successfully:", response.data);
+        onClose();
+      } catch (error) {
+        console.error("Error creating schedule:", error);
+        setError("An error occurred. Please try again.");
+      }
+    };
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
         {/* Backdrop */}
@@ -49,7 +72,7 @@ const CTASectionCourses = () => {
             </div>
 
             {/* Form */}
-            <div className="px-6 pb-6 space-y-5">
+            <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
               {/* Name Input */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -63,6 +86,8 @@ const CTASectionCourses = () => {
                     type="text"
                     placeholder="Enter your full name"
                     className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                    value={name}
+                    onChange={(e) => { setName(e.target.value); setError(""); }}
                   />
                 </div>
               </div>
@@ -74,6 +99,8 @@ const CTASectionCourses = () => {
                 </label>
                 <select 
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
+                  value={scheduleTitle}
+                  onChange={(e) => { setScheduleTitle(e.target.value); setError(""); }}
                   style={{ 
                     backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                     backgroundPosition: 'right 0.5rem center',
@@ -98,11 +125,13 @@ const CTASectionCourses = () => {
                   <input
                     type="date"
                     className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                    onChange={(e) => { setDate(e.target.value); setError(""); }}
                   />
                   <div className="flex items-center gap-2">
                     <input
                       type="time"
                       className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                      onChange={(e)=>{setTime(e.target.value);setError("")}}
                     />
                   </div>
                 </div>
@@ -111,6 +140,7 @@ const CTASectionCourses = () => {
               {/* Buttons */}
               <div className="flex gap-3 pt-4">
                 <button
+                  type='submit'
                   onClick={onClose}
                   className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors"
                 >
@@ -123,7 +153,7 @@ const CTASectionCourses = () => {
                   Schedule Now
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>

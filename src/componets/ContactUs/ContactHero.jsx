@@ -12,13 +12,37 @@ import {
   User,
   X
 } from 'lucide-react';
+import axios from 'axios';
 const ScheduleModal = ({ isOpen, onClose }) => {
+  const [name, setName] = useState("");
+  const [scheduleTitle, setScheduleTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [error, setError] = useState("");
   if (!isOpen) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
+    if (!name || !scheduleTitle || !date || !time) {
+      setError("All fields are required");
+      return;
+    }
+
+    const scheduleData = { name, scheduleTitle, date, time };
+
+    try {
+      const response = await axios.post("http://localhost:5000/scheduleconsultation", scheduleData);
+      console.log("Schedule created successfully:", response.data);
+      onClose();
+    } catch (error) {
+      console.error("Error creating schedule:", error);
+      setError("An error occurred. Please try again.");
+    }
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
-      <div
+      <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
@@ -37,11 +61,11 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                   <Calendar className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900">Book Schedule</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Create Schedule</h3>
                   <p className="text-sm text-gray-500 mt-0.5">Fill in the data below to add a schedule</p>
                 </div>
               </div>
-              <button
+              <button 
                 onClick={onClose}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
               >
@@ -51,7 +75,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Form */}
-          <div className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
             {/* Name Input */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
@@ -65,6 +89,8 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                   type="text"
                   placeholder="Enter your full name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  value={name}
+                  onChange={(e) => { setName(e.target.value); setError(""); }}
                 />
               </div>
             </div>
@@ -74,9 +100,11 @@ const ScheduleModal = ({ isOpen, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">
                 Schedule Title
               </label>
-              <select
+              <select 
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
-                style={{
+                value={scheduleTitle}
+                onChange={(e) => { setScheduleTitle(e.target.value); setError(""); }}
+                style={{ 
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                   backgroundPosition: 'right 0.5rem center',
                   backgroundRepeat: 'no-repeat',
@@ -100,11 +128,13 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                 <input
                   type="date"
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) => { setDate(e.target.value); setError(""); }}
                 />
                 <div className="flex items-center gap-2">
                   <input
                     type="time"
                     className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                    onChange={(e)=>{setTime(e.target.value);setError("")}}
                   />
                 </div>
               </div>
@@ -113,6 +143,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
             {/* Buttons */}
             <div className="flex gap-3 pt-4">
               <button
+                type='submit'
                 onClick={onClose}
                 className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors"
               >
@@ -125,14 +156,38 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                 Schedule Now
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   );
 };
 const RequestCallBck = ({ isVisible, onClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [error, setError] = useState("");
   if (!isVisible) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !phone || !date || !time) {
+      setError("All fields are required.");
+      return;
+    }
+
+    const requestData = { name, email, phone, date, time };
+
+    try {
+      let res = await axios.post("http://localhost:5000/workshop/request-callback", requestData);
+      console.log("form submitted",res.data)
+      onClose();
+    } catch (error) {
+      console.error("Error requesting callback:", error);
+      setError("An error occurred. Please try again.");
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
@@ -159,12 +214,15 @@ const RequestCallBck = ({ isVisible, onClose }) => {
             </div>
           </div>
 
-          <form className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="text" required placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="text"  placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
+                  onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
 
@@ -172,7 +230,8 @@ const RequestCallBck = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="email" required placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="email"  placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
 
@@ -180,17 +239,20 @@ const RequestCallBck = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Phone</label>
               <div className="relative">
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="tel" required placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="tel"  placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={phone}
+                  onChange={(e) => setPhone(e.target.value)} />
               </div>
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Date</label>
-              <input type="date" required className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              <input type="date" value={date}
+                onChange={(e) => setDate(e.target.value)} className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Time</label>
-              <input type="time" required className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              <input type="time" value={time}
+                onChange={(e) => setTime(e.target.value)} className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
 
 
