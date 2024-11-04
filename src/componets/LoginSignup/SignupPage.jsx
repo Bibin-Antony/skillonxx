@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/logo.png";
 import Signup from "../../assets/illustrations/loginimage.png";
 
-import { 
-  CircleDot, 
-  Boxes, 
-  Stars, 
-  Cloud, 
-  Moon, 
-  Sun, 
-  Sparkles, 
+import {
+  CircleDot,
+  Boxes,
+  Stars,
+  Cloud,
+  Moon,
+  Sun,
+  Sparkles,
   Circle,
   Home,
   User,
@@ -45,16 +45,32 @@ const scrollbarStyles = `
 
 const SignupPage = () => {
   const [userType, setUserType] = useState('student');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
   const [gender, setGender] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [doorNumber, setDoorNumber] = useState('');
+  const [landmark, setLandmark] = useState('');
+  const [state, setState] = useState('');
+  const [pincode, setPincode] = useState('');
+  const [universityName, setUniversityName] = useState('');
+  const [recognizedBy, setRecognizedBy] = useState('');
+  const [universityAddress, setUniversityAddress] = useState('');
+  const [currentEducation, setCurrentEducation] = useState('');
+  const [passingYear, setPassingYear] = useState('');
+  const [errorMessages, setErrorMessages] = useState({});
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
-  const yearRange = Array.from({length: 10}, (_, i) => currentYear + i);
+  const yearRange = Array.from({ length: 10 }, (_, i) => currentYear + i);
 
   useEffect(() => {
     // Smooth scroll polyfill
-;
-    window.scrollTo({ top: 0});
+    ;
+    window.scrollTo({ top: 0 });
 
     return () => {
       document.documentElement.style.scrollBehavior = 'auto';
@@ -68,7 +84,77 @@ const SignupPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/LoginPage');
+
+    const errors = {};
+
+    // Validation for required fields
+    if (!firstName) errors.firstName = "First name is required";
+    if (!lastName) errors.lastName = "Last name is required";
+    if (!phone) {
+      errors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(phone)) {
+      errors.phone = "Phone number must be 10 digits";
+    }
+    if (!email) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Enter a valid email address";
+    }
+    if (!gender) errors.gender = "Gender is required";
+    if (!password) errors.password = "Password is required";
+    if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
+    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+    // Address fields validation
+    if (!doorNumber) errors.doorNumber = "Door number is required";
+    if (!landmark) errors.landmark = "Landmark is required";
+    if (!state) errors.state = "State is required";
+    if (!pincode) {
+      errors.pincode = "Pincode is required";
+    } else if (!/^\d{6}$/.test(pincode)) {
+      errors.pincode = "Pincode must be 6 digits";
+    }
+    // Student-specific validation
+    if (userType === 'student') {
+      if (!currentEducation) errors.currentEducation = "Current education is required";
+      if (!passingYear) errors.passingYear = "Passing year is required";
+    }
+
+    // University-specific validation
+    if (userType === 'university') {
+      if (!universityName) errors.universityName = "University name is required";
+      if (!recognizedBy) errors.recognizedBy = "Recognition (e.g., UGC, AICTE) is required";
+      if (!universityAddress) errors.universityAddress = "University address is required";
+    }
+
+    setErrorMessages(errors);
+
+    if (Object.keys(errors).length === 0) {
+      const formData = {
+        userType,
+        firstName,
+        lastName,
+        phone,
+        email,
+        gender,
+        password,
+        address: {
+          doorNumber,
+          landmark,
+          state,
+          pincode
+        },
+        ...(userType === 'student' && {
+          currentEducation,
+          passingYear
+        }),
+        ...(userType === 'university' && {
+          universityName,
+          recognizedBy,
+          universityAddress
+        })
+      };
+      navigate('/LoginPage');
+    }
   };
 
   return (
@@ -107,12 +193,12 @@ const SignupPage = () => {
             <div className="flex flex-col lg:flex-row w-full h-[80vh]">
               {/* Image Section */}
               <div className="hidden lg:block lg:w-5/12 relative">
-              <div className="absolute inset-0 bg-blue-900/20 flex items-center">
-                <img
+                <div className="absolute inset-0 bg-blue-900/20 flex items-center">
+                  <img
                     src={Signup}
                     alt="Signup visual"
                     className="w-auto h-full object-contain"
-                />
+                  />
                 </div>
               </div>
 
@@ -135,22 +221,20 @@ const SignupPage = () => {
                       <button
                         type="button"
                         onClick={() => setUserType('student')}
-                        className={`flex-1 px-4 py-2 rounded-md text-sm md:text-base transition-all ${
-                          userType === 'student'
-                            ? 'bg-blue-600 text-white'
-                            : 'text-blue-300 hover:text-blue-200'
-                        }`}
+                        className={`flex-1 px-4 py-2 rounded-md text-sm md:text-base transition-all ${userType === 'student'
+                          ? 'bg-blue-600 text-white'
+                          : 'text-blue-300 hover:text-blue-200'
+                          }`}
                       >
                         Student
                       </button>
                       <button
                         type="button"
                         onClick={() => setUserType('university')}
-                        className={`flex-1 px-4 py-2 rounded-md text-sm md:text-base transition-all ${
-                          userType === 'university'
-                            ? 'bg-blue-600 text-white'
-                            : 'text-blue-300 hover:text-blue-200'
-                        }`}
+                        className={`flex-1 px-4 py-2 rounded-md text-sm md:text-base transition-all ${userType === 'university'
+                          ? 'bg-blue-600 text-white'
+                          : 'text-blue-300 hover:text-blue-200'
+                          }`}
                       >
                         University
                       </button>
@@ -172,8 +256,14 @@ const SignupPage = () => {
                               type="text"
                               placeholder="Enter first name"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              onChange={(e) => {
+                                console.log(firstName)
+                                setFirstName(e.target.value)
+                              }}
+                              
                             />
+                            {errorMessages.firstName && <p className="text-red-500 text-xs mt-1">{errorMessages.firstName}</p>}
+
                           </div>
                           <div className="space-y-2">
                             <label className="text-blue-100 text-sm font-medium">Last Name</label>
@@ -181,8 +271,12 @@ const SignupPage = () => {
                               type="text"
                               placeholder="Enter last name"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setLastName(e.target.value)}
+
                             />
+                            {errorMessages.lastName && <p className="text-red-500 text-xs mt-1">{errorMessages.lastName}</p>}
+
                           </div>
                         </div>
 
@@ -195,16 +289,17 @@ const SignupPage = () => {
                                 key={option}
                                 type="button"
                                 onClick={() => setGender(option)}
-                                className={`px-4 py-2 rounded-lg transition-all ${
-                                  gender === option
-                                    ? 'bg-blue-600 text-white'
-                                    : 'bg-[#0a192f]/50 text-blue-300 hover:text-blue-200'
-                                }`}
+                                className={`px-4 py-2 rounded-lg transition-all ${gender === option
+                                  ? 'bg-blue-600 text-white'
+                                  : 'bg-[#0a192f]/50 text-blue-300 hover:text-blue-200'
+                                  }`}
                               >
                                 {option}
                               </button>
                             ))}
                           </div>
+                          {errorMessages.gender && <p className="text-red-500 text-xs mt-1">{errorMessages.gender}</p>}
+
                         </div>
 
                         {/* Contact Fields */}
@@ -215,8 +310,12 @@ const SignupPage = () => {
                               type="tel"
                               placeholder="Enter phone number"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setPhone(e.target.value)}
+
                             />
+                            {errorMessages.phone && <p className="text-red-500 text-xs mt-1">{errorMessages.phone}</p>}
+
                           </div>
                           <div className="space-y-2">
                             <label className="text-blue-100 text-sm font-medium">Email</label>
@@ -224,8 +323,12 @@ const SignupPage = () => {
                               type="email"
                               placeholder="Enter email address"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setEmail(e.target.value)}
+
                             />
+                            {errorMessages.email && <p className="text-red-500 text-xs mt-1">{errorMessages.email}</p>}
+
                           </div>
                         </div>
 
@@ -237,28 +340,44 @@ const SignupPage = () => {
                               type="text"
                               placeholder="Door Number"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setDoorNumber(e.target.value)}
+
                             />
+                            {errorMessages.doorNumber && <p className="text-red-500 text-xs mt-1">{errorMessages.doorNumber}</p>}
+
                             <input
                               type="text"
                               placeholder="Landmark"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setLandmark(e.target.value)}
+
                             />
+                            {errorMessages.landmark && <p className="text-red-500 text-xs mt-1">{errorMessages.landmark}</p>}
+
                           </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <input
                               type="text"
                               placeholder="State"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setState(e.target.value)}
+
                             />
+                            {errorMessages.state && <p className="text-red-500 text-xs mt-1">{errorMessages.state}</p>}
+
                             <input
                               type="text"
                               placeholder="Pincode"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setPincode(e.target.value)}
+
                             />
+                            {errorMessages.pincode && <p className="text-red-500 text-xs mt-1">{errorMessages.pincode}</p>}
+
                           </div>
                         </div>
 
@@ -270,20 +389,28 @@ const SignupPage = () => {
                               type="text"
                               placeholder="Enter course/degree"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setCurrentEducation(e.target.value)}
+
                             />
+                            {errorMessages.currentEducation && <p className="text-red-500 text-xs mt-1">{errorMessages.currentEducation}</p>}
+
                           </div>
                           <div className="space-y-2">
                             <label className="text-blue-100 text-sm font-medium">Year of Passing</label>
                             <select
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
+                              
+                              onChange={(e) => setPassingYear(e.target.value)}
+
                             >
                               <option value="">Select Year</option>
                               {yearRange.map(year => (
                                 <option key={year} value={year}>{year}</option>
                               ))}
                             </select>
+                            {errorMessages.passingYear && <p className="text-red-500 text-xs mt-1">{errorMessages.passingYear}</p>}
+
                           </div>
                         </div>
                       </div>
@@ -296,8 +423,12 @@ const SignupPage = () => {
                             type="text"
                             placeholder="Ex: Mysore University"
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                            required
+                            
+                            onChange={(e) => setUniversityName(e.target.value)}
+
                           />
+                          {errorMessages.universityName && <p className="text-red-500 text-xs mt-1">{errorMessages.universityName}</p>}
+
                         </div>
                         <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">Recognized By</label>
@@ -305,8 +436,12 @@ const SignupPage = () => {
                             type="text"
                             placeholder="Ex: UGC, AICTE"
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                            required
+                            
+                            onChange={(e) => setRecognizedBy(e.target.value)}
+
                           />
+                          {errorMessages.recognizedBy && <p className="text-red-500 text-xs mt-1">{errorMessages.recognizedBy}</p>}
+
                         </div>
                         <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">University Address</label>
@@ -315,8 +450,12 @@ const SignupPage = () => {
                             rows="4"
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline
                             -none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                            required
+                            
+                            onChange={(e) => setUniversityAddress(e.target.value)}
+
                           />
+                          {errorMessages.universityAddress && <p className="text-red-500 text-xs mt-1">{errorMessages.universityAddress}</p>}
+
                         </div>
                       </div>
                     )}
@@ -328,8 +467,12 @@ const SignupPage = () => {
                         type="password"
                         placeholder="Create password"
                         className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                        required
+                        
+                        onChange={(e) => setPassword(e.target.value)}
+
                       />
+                      {errorMessages.password && <p className="text-red-500 text-xs mt-1">{errorMessages.password}</p>}
+
                     </div>
 
                     <div className="space-y-2">
@@ -338,8 +481,12 @@ const SignupPage = () => {
                         type="password"
                         placeholder="Confirm password"
                         className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                        required
+                        
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+
                       />
+                      {errorMessages.confirmPassword && <p className="text-red-500 text-xs mt-1">{errorMessages.confirmPassword}</p>}
+
                     </div>
 
                     {/* Terms and Conditions */}
@@ -348,7 +495,7 @@ const SignupPage = () => {
                         type="checkbox"
                         id="terms"
                         className="rounded border-blue-300/30 bg-[#0a192f]/50 text-blue-600 focus:ring-blue-400"
-                        required
+                        
                       />
                       <label htmlFor="terms" className="text-blue-100 text-sm">
                         I agree to the{' '}
@@ -373,7 +520,7 @@ const SignupPage = () => {
                     {/* Sign In Link */}
                     <p className="text-center text-blue-100 text-sm md:text-base mt-4">
                       Already have an account?{' '}
-                      <button 
+                      <button
                         type="button"
                         onClick={() => navigate('/LoginPage')}
                         className="text-blue-300 hover:text-blue-200"
