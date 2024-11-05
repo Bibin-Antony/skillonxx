@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/logo.png";
 import Signup from "../../assets/illustrations/loginimage.png";
-
+import axios from 'axios';
 import {
   CircleDot,
   Boxes,
@@ -82,12 +82,18 @@ const SignupPage = () => {
     </div>
   );
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = {};
-
-    // Validation for required fields
+    
+    
+   
+    // Student-specific validation
+    if (userType === 'student') {
+      if (!currentEducation) errors.currentEducation = "Current education is required";
+      if (!passingYear) errors.passingYear = "Passing year is required";
+       // Validation for required fields
     if (!firstName) errors.firstName = "First name is required";
     if (!lastName) errors.lastName = "Last name is required";
     if (!phone) {
@@ -95,15 +101,9 @@ const SignupPage = () => {
     } else if (!/^\d{10}$/.test(phone)) {
       errors.phone = "Phone number must be 10 digits";
     }
-    if (!email) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.email = "Enter a valid email address";
-    }
+    
     if (!gender) errors.gender = "Gender is required";
-    if (!password) errors.password = "Password is required";
-    if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
-    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+    
     // Address fields validation
     if (!doorNumber) errors.doorNumber = "Door number is required";
     if (!landmark) errors.landmark = "Landmark is required";
@@ -113,10 +113,15 @@ const SignupPage = () => {
     } else if (!/^\d{6}$/.test(pincode)) {
       errors.pincode = "Pincode must be 6 digits";
     }
-    // Student-specific validation
-    if (userType === 'student') {
-      if (!currentEducation) errors.currentEducation = "Current education is required";
-      if (!passingYear) errors.passingYear = "Passing year is required";
+    if (!password) errors.password = "Password is required";
+    if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
+
+    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+    if (!email) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = "Enter a valid email address";
+    }
     }
 
     // University-specific validation
@@ -124,6 +129,15 @@ const SignupPage = () => {
       if (!universityName) errors.universityName = "University name is required";
       if (!recognizedBy) errors.recognizedBy = "Recognition (e.g., UGC, AICTE) is required";
       if (!universityAddress) errors.universityAddress = "University address is required";
+      if (!email) {
+        errors.email = "Email is required";
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        errors.email = "Enter a valid email address";
+      }
+      if (!password) errors.password = "Password is required";
+    if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
+
+    if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
     }
 
     setErrorMessages(errors);
@@ -141,7 +155,8 @@ const SignupPage = () => {
           doorNumber,
           landmark,
           state,
-          pincode
+          pincode,
+          
         },
         ...(userType === 'student' && {
           currentEducation,
@@ -153,7 +168,24 @@ const SignupPage = () => {
           universityAddress
         })
       };
-      navigate('/LoginPage');
+
+    const baseUrl = 'http://localhost:5000';
+    const url = userType === 'student' ? `${baseUrl}/student` : `${baseUrl}/university`;
+    try {
+      const response = await axios.post(url, formData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.status === 201) {
+        console.log("form submitted",response.data)
+        navigate('/LoginPage');
+      } else {
+        alert(response.data.error || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Error details:', error.response.data.errors);
+      alert(error.response?.data?.error || 'Registration failed');
+    }
     }
   };
 
@@ -332,7 +364,7 @@ const SignupPage = () => {
                           </div>
                         </div>
                         
-                        <div className="space-y-2">
+                        {/* <div className="space-y-2">
                       <label className="text-blue-100 text-sm font-medium">Password</label>
                       <input
                         type="password"
@@ -350,7 +382,7 @@ const SignupPage = () => {
                         className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
                         required
                       />
-                    </div>
+                    </div> */}
                         {/* Address Fields */}
                         <div className="space-y-4">
                           <label className="text-blue-100 text-sm font-medium">Address</label>
@@ -365,12 +397,7 @@ const SignupPage = () => {
                             />
                             {errorMessages.doorNumber && <p className="text-red-500 text-xs mt-1">{errorMessages.doorNumber}</p>}
 
-                            <input
-                              type="text"
-                              placeholder="Street Name"
-                              className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
-                            />
+                            
                              <input
                               type="text"
                               placeholder="Landmark"
@@ -379,14 +406,7 @@ const SignupPage = () => {
                               onChange={(e) => setLandmark(e.target.value)}
 
                             />
-                             <input
-                              type="text"
-                              placeholder=""
-                              className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                              required
-                            />
-
-                            {errorMessages.landmark && <p className="text-red-500 text-xs mt-1">{errorMessages.landmark}</p>}
+                             
 
                           </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -449,6 +469,19 @@ const SignupPage = () => {
                     ) : (
                       // University Fields
                       <div className="space-y-4">
+                        <div className="space-y-2">
+                            <label className="text-blue-100 text-sm font-medium">Email</label>
+                            <input
+                              type="email"
+                              placeholder="Enter email address"
+                              className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                              
+                              onChange={(e) => setEmail(e.target.value)}
+
+                            />
+                            {errorMessages.email && <p className="text-red-500 text-xs mt-1">{errorMessages.email}</p>}
+
+                          </div>
                         <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">University Name</label>
                           <input

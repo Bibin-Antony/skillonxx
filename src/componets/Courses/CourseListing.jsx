@@ -129,7 +129,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
       email,
       phone,
       education,
-      // featuredCourse: courseName,
+      featuredCourse: courseName,
     };
 
     try {
@@ -229,7 +229,16 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                 />
               </div>
             </div>
-
+            {/* Workshop Details */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Workshop Name</label>
+              <input
+                type="text"
+                value={courseName}
+                disabled
+                className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl bg-gray-100 focus:outline-none"
+              />
+            </div>
             {/* Educational Background */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Educational Qualification</label>
