@@ -331,7 +331,26 @@ const SignupPage = () => {
 
                           </div>
                         </div>
+                        
+                        <div className="space-y-2">
+                      <label className="text-blue-100 text-sm font-medium">Password</label>
+                      <input
+                        type="password"
+                        placeholder="Create password"
+                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                        required
+                      />
+                    </div>
 
+                    <div className="space-y-2">
+                      <label className="text-blue-100 text-sm font-medium">Confirm Password</label>
+                      <input
+                        type="password"
+                        placeholder="Confirm password"
+                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                        required
+                      />
+                    </div>
                         {/* Address Fields */}
                         <div className="space-y-4">
                           <label className="text-blue-100 text-sm font-medium">Address</label>
@@ -348,12 +367,25 @@ const SignupPage = () => {
 
                             <input
                               type="text"
+                              placeholder="Street Name"
+                              className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                              required
+                            />
+                             <input
+                              type="text"
                               placeholder="Landmark"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
                               
                               onChange={(e) => setLandmark(e.target.value)}
 
                             />
+                             <input
+                              type="text"
+                              placeholder=""
+                              className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                              required
+                            />
+
                             {errorMessages.landmark && <p className="text-red-500 text-xs mt-1">{errorMessages.landmark}</p>}
 
                           </div>
@@ -461,6 +493,8 @@ const SignupPage = () => {
                     )}
 
                     {/* Password Fields - Common for both */}
+
+                   
                     <div className="space-y-2">
                       <label className="text-blue-100 text-sm font-medium">Password</label>
                       <input
@@ -501,7 +535,7 @@ const SignupPage = () => {
                         I agree to the{' '}
                         <button
                           type="button"
-                          onClick={() => navigate('/terms')}
+                          onClick={() => navigate('/termsAndConditions')}
                           className="text-blue-300 hover:text-blue-200"
                         >
                           Terms and Conditions
