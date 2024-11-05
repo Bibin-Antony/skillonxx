@@ -535,7 +535,7 @@ const SignupPage = () => {
                         I agree to the{' '}
                         <button
                           type="button"
-                          onClick={() => navigate('/terms')}
+                          onClick={() => navigate('/termsAndConditions')}
                           className="text-blue-300 hover:text-blue-200"
                         >
                           Terms and Conditions
