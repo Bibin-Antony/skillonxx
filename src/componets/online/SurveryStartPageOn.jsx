@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import logoImage from '../../assets/Logo/primaryLogo.png';
-import illustrationImage from '../../assets/Images/SurveyPage/SurveyStarterIllustrator.svg';
+import illustrationImage from '../../assets/illustrations/SurveyStarterIllustrator.svg';
 import '../../App.css'; // Import the custom CSS file
 
 export default function SurveyStartPage() {

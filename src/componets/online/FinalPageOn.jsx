@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import logoImage from '../../assets/Logo/primaryLogo.png';
 import Confetti from 'react-confetti';
 import { FaGithub, FaTwitter, FaLinkedin, FaInstagram, FaFacebook } from 'react-icons/fa';
-import { Button } from '../Buttons/Button';
-import { Alert, AlertDescription, AlertTitle } from '../Buttons/Alert';
+import { Button } from '../../assets/Buttons/Button';
+import { Alert, AlertDescription, AlertTitle } from '../../assets/Buttons/Alert';
 import { useLocation } from 'react-router-dom';
 
 export default function SurveyStartPage() {
