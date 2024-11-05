@@ -11,7 +11,7 @@ import {
   Settings,
   Star,
 } from "lucide-react";
-
+import axios from "axios";
 const faqs = [
   {
     category: "About SkillonX",
@@ -192,6 +192,23 @@ const FloatingElements = () => (
 
 const FAQSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [notFoundMessage, setNotFoundMessage] = useState("");
+  const handleNotFoundQuestion = async () => {
+    try {
+      await axios.post("http://localhost:5000/questions-not-found", { question: searchTerm });
+      setNotFoundMessage("Your question has been submitted.");
+    } catch (error) {
+      setNotFoundMessage("There was an error submitting your question.");
+    }
+  };
+  const filteredFaqs = faqs
+    .map((category) => ({
+      ...category,
+      items: category.items.filter((item) =>
+        item.question.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    }))
+    .filter((category) => category.items.length > 0);
 
   return (
     <section className="relative py-24 bg-gradient-to-r overflow-hidden from-blue-600 via-blue-700 to-indigo-800">
@@ -215,10 +232,23 @@ const FAQSection = () => {
         {/* Search */}
         <FAQSearch onSearch={setSearchTerm} />
 
-        {/* FAQ Categories */}
-        {faqs.map((category, index) => (
-          <FAQCategory key={index} {...category} />
-        ))}
+        {/* FAQ Categories or No Results Message */}
+        {filteredFaqs.length > 0 ? (
+          filteredFaqs.map((category, index) => (
+            <FAQCategory key={index} {...category} />
+          ))
+        ) : (
+          <div className="text-center text-white mt-12">
+            <p className="text-lg">No questions found matching your search.</p>
+            <button
+              onClick={handleNotFoundQuestion}
+              className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg"
+            >
+              Submit Question
+            </button>
+            {notFoundMessage && <p className="mt-2">{notFoundMessage}</p>}
+          </div>
+        )}
       </div>
 
       <style jsx>{`

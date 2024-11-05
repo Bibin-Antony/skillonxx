@@ -31,11 +31,55 @@ import technical from '../../assets/Images/technical.jpg'
 import careerdev from '../../assets/Images/careerdev.jpg'
 import fullstack from '../../assets/Images/fullstack.jpg'
 import responsiveweb from '../../assets/Images/responsiveweb.jpg'
-
+import axios from 'axios'
 const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [batchSize, setBatchSize] = useState("");
+  const [mode, setMode] = useState("");
+  const [preferredDate, setPreferredDate] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
+  const [altDate, setAltDate] = useState("");
+  const [altTime, setAltTime] = useState("");
+  const [institution, setInstitution] = useState("");
+  const [departmentSize, setDepartmentSize] = useState("");
+  const [requirements, setRequirements] = useState("");
+  const [error, setError] = useState("");
   if (!isVisible) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  return (
+    if (!name || !email || !phone || !batchSize || !mode || !preferredDate || !preferredTime || !institution) {
+      setError("Please fill out all required fields.");
+      return;
+    }
+
+    const enrollmentData = {
+      name,
+      email,
+      phone,
+      workshopName,
+      batchSize,
+      mode,
+      preferredDate,
+      preferredTime,
+      altDate,
+      altTime,
+      institution,
+      departmentSize,
+      requirements,
+    };
+
+    try {
+      await axios.post("http://localhost:5000/workshop/workshop-enrollment", enrollmentData);
+      console.log("Workshop Enrollment Successful:", response.data);
+    } catch (error) {
+      console.error("Error enrolling in workshop:", error);
+      setError("An error occurred while submitting. Please try again.");
+    }
+  };
+  return (  
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
       <div 
@@ -71,7 +115,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
           </div>
 
           {/* Form */}
-          <form className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+          {error && <p className="text-red-500 text-sm">{error}</p>}
             {/* Personal Information */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name of the person or organization</label>
@@ -79,7 +124,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="text"
-                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   placeholder="Enter name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                 />
@@ -91,7 +137,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
                 <Mail className="absolute inset-y-0 left-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="email"
-                  required
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                 />
@@ -103,7 +150,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
                 <Phone className="absolute inset-y-0 left-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="tel"
-                  required
+                  value={phone}
+                  onChange={(e)=>setPhone(e.target.value)}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                 />
@@ -124,6 +172,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Preferred Batch Size</label>
               <input
                 type="number"
+                value={batchSize}
+                onChange={(e)=>setBatchSize(e.target.value)}
                 placeholder="Enter batch size"
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
@@ -131,7 +181,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Preferred Mode</label>
               <select 
-                required
+                value={mode}
+                onChange={(e)=>setMode(e.target.value)}
                 className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
               >
                 <option value="">Select mode</option>
@@ -146,6 +197,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Preferred Date</label>
               <input
                 type="date"
+                value={preferredDate}
+                onChange={(e)=>setPreferredDate(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -153,6 +206,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Preferred Time Slot</label>
               <input
                 type="time"
+                value={preferredTime}
+                onChange={(e)=>setPreferredTime(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -160,6 +215,9 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Alternative Date (optional)</label>
               <input
                 type="date"
+                value={altDate}
+                onChange={(e)=>setAltDate(e.target.value)}
+
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -167,6 +225,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Alternative Time Slot (optional)</label>
               <input
                 type="time"
+                value={altTime}
+                onChange={(e)=>setAltTime(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -176,6 +236,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Institution/Organization Name</label>
               <input
                 type="text"
+                value={institution}
+                onChange={(e)=>setInstitution(e.target.value)}
                 placeholder="Enter institution name"
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
@@ -184,6 +246,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Department/Team Size</label>
               <input
                 type="number"
+                value={departmentSize}
+                onChange={(e)=>setDepartmentSize(e.target.value)}
                 placeholder="Enter team size"
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
@@ -192,6 +256,8 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <label className="block text-sm font-medium text-gray-700">Any Specific Requirements</label>
               <textarea
                 placeholder="Enter specific requirements"
+                value={requirements}
+                onChange={(e)=>setRequirements(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               ></textarea>
             </div>
@@ -200,7 +266,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
-                required
+                
                 id="terms"
                 className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />

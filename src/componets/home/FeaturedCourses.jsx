@@ -9,6 +9,7 @@ import {
   Tag,
    X, Mail, Phone, User, GraduationCap,Book
 } from "lucide-react";
+import axios from 'axios'
 
 import frontend from "../../assets/Images/frontend.jpg";
 import python from "../../assets/Images/python.jpg";
@@ -53,8 +54,38 @@ const courses = [
    },
 ];
 const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
-  if (!isVisible) return null;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [education, setEducation] = useState("");
+  const [error, setError] = useState("");
 
+  if (!isVisible) return null;
+  // Function to handle form submission
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!name || !email || !phone || !education) {
+      setError("All fields are required");
+      return;
+    }
+    const enrollmentData = {
+      name,
+      email,
+      phone,
+      education,
+      featuredCourse: courseName,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:5000/createenrollment", enrollmentData);
+      console.log("Enrollment Successful:", response.data);
+      onClose();  // Close modal after submission
+    } catch (error) {
+      console.error("Error enrolling in course:", error);
+      setError("An error occurred while enrolling. Please try again.");
+    }
+  };
   return (
     <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
@@ -85,17 +116,23 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
           </div>
 
           {/* Form */}
-          <form className="px-6 pb-8 space-y-5">
+          <form onSubmit={handleFormSubmit} className="px-6 pb-8 space-y-5">
             {/* Name Field */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="text"
-                  required
+                  value={name}
                   placeholder="Enter your name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setError("");
+                  }}
                 />
               </div>
             </div>
@@ -107,9 +144,13 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="email"
-                  required
+                  value={email}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e)=>{
+                    setEmail(e.target.value)
+                    setError("")
+                  }}
                 />
               </div>
             </div>
@@ -121,9 +162,13 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="tel"
-                  required
+                  value={phone}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) =>{ setPhone(e.target.value)
+                    setError("")
+                  }
+                  }
                 />
               </div>
             </div>
@@ -135,9 +180,13 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 <Book className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="text"
-                  required
+                  value={education}
                   placeholder="Enter your education level"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) => {
+                    setEducation(e.target.value)
+                    setError("")
+                  }}
                 />
               </div>
             </div>
@@ -157,7 +206,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
-                required
+                
                 id="terms"
                 className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />

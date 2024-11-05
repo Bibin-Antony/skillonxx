@@ -1,8 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Linkedin, Youtube } from 'lucide-react';
-
+import axios from 'axios'
 const Footer = () => {
+  const [email, setEmail] = useState("");
+  const handleSubmit = async (e)=>{
+    e.preventDefault();
+    const newEmail = {
+      email
+    }
+    try{
+      const res = await axios.post('http://localhost:5000/stayconnected', newEmail)
+      console.log("Email Saved Successful:", res.data);
+
+    }catch(e){
+      console.error("Error  in email saving:", e);
+
+    }
+
+
+  }
   return (
     <footer className="bg-gray-800 text-white">
       <div className="max-w-[90vw] mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -51,11 +68,12 @@ const Footer = () => {
         <div className="mt-8 pt-8 border-t border-gray-700">
           <h3 className="text-lg font-semibold mb-4">Stay Connected</h3>
           <p className="text-gray-300 mb-4">Subscribe to our newsletter for the latest tech insights and updates.</p>
-          <form className="flex max-w-md">
+          <form onSubmit={handleSubmit} className="flex max-w-md">
             <input
               type="email"
               placeholder="Enter your email"
               className="flex-grow px-4 py-2 bg-gray-700 text-white rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e)=>setEmail(e.target.value)}
             />
             <button
               type="submit"
