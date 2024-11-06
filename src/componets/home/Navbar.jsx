@@ -78,9 +78,7 @@ const NotificationPanel = ({ isOpen, onClose }) => {
             <div className="flex items-center space-x-2">
               <Bell className="w-5 h-5" />
               <h2 className="text-lg font-semibold">Notifications</h2>
-              {/* <SlBadge variant="secondary" className="ml-2">
-                {notifications.filter((n) => n.unread).length} New
-              </SlBadge> */}
+            
             </div>
             <button
               onClick={onClose}
@@ -113,11 +111,7 @@ const NotificationPanel = ({ isOpen, onClose }) => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center justify-between mb-1">
-                      {/* <SlBadge
-                        variant={notification.unread ? "default" : "secondary"}
-                      >
-                        {notification.type}
-                      </SlBadge> */}
+                      
                       <span className="text-sm text-gray-500 flex items-center">
                         <Clock className="w-3 h-3 mr-1" />
                         {notification.time}

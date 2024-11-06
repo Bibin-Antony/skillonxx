@@ -212,12 +212,7 @@ const InternshipHero = () => {
               Choose your path to success with our industry-recognized internship programs
             </motion.p>
 
-            {/* Stats Grid */}
-            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-              {stats.map((stat, index) => (
-                <StatBox key={index} {...stat} />
-              ))}
-            </div> */}
+            
           </div>
 
           {/* Internship Tracks */}

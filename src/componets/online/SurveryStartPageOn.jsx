@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for navigation
 import logoImage from '../../assets/Logo/primaryLogo.png';
-import illustrationImage from '../../assets/Images/SurveyPage/SurveyStarterIllustrator.svg';
+// import illustrationImage from '../../assets/Images/SurveyPage/SurveyStarterIllustrator.svg';
+import illustrationImage from '../../assets/Images/SurveyStarterIllustrator.svg'
 import '../../App.css'; // Import the custom CSS file
 
 export default function SurveyStartPage() {
@@ -22,11 +23,11 @@ export default function SurveyStartPage() {
 
     // Check if referral has already been applied for this referral code
     const storedReferralCode = localStorage.getItem('referralApplied');
-
+    const baseUrl = "http://localhost:5000"
     // Only send referral request if referral code exists and hasn't been applied before
     if (code && storedReferralCode !== code) {
       // Send the referral code to the backend to increase the referral count
-      fetch('https://skillonx-website.onrender.com/api/increase-referral', {
+      fetch(`${baseUrl}/api/increase-referral`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

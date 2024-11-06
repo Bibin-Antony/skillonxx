@@ -88,10 +88,7 @@ const Footer = () => {
         <div className="mt-8 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center">
           <div className="flex space-x-4 mb-4 md:mb-0">
             <a href="#" className="text-gray-300 hover:text-white"><Facebook size={24} /></a>
-            {/* <a href="#" className="text-gray-300 hover:text-white"><Twitter size={24} /></a> */}
             <a href="#" className="text-gray-300 hover:text-white"><Linkedin size={24} /></a>
-            {/* <a href="#" className="text-gray-300 hover:text-white"><Youtube size={24} /></a> */}
-            {/* <a href="#" className="text-gray-300 hover:text-white">GitHub</a> */}
           </div>
           <div className="text-gray-300 text-sm">
             © {new Date().getFullYear()} SkillonX. All rights reserved.

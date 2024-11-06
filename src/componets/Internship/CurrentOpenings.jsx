@@ -153,10 +153,7 @@ const CurrentOpenings = () => {
                         <Clock className="w-4 h-4" />
                         {job.duration}
                       </span>
-                      {/* <span className="flex items-center gap-1">
-                        <DollarSign className="w-4 h-4" />
-                        {job.stipend}
-                      </span> */}
+                      
                     </div>
                   </div>
                   <button className="p-2">

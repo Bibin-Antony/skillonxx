@@ -42,7 +42,7 @@ export default function SurveyStartPage() {
   };
   const prodUrl = "https://skillonx.com"
   const generateReferralLink = () => {
-    const baseUrl = 'https://skillonx.com/SurveyStartPage/offline';
+    const baseUrl = 'http://localhost:5173/SurveyStartPage/offline';
     const referralUrl = `${baseUrl}?ref=${referralCode}`;
     setReferralLink(referralUrl);
   };
@@ -55,25 +55,7 @@ export default function SurveyStartPage() {
   const handleShare = async () => {
     generateReferralLink();
 
-  //   try {
-  //     const response = await fetch('http://localhost:5000/api/save-referral/offline', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify({ email, referralCode }), // Pass email and referral code to the backend
-  //     });
-
-  //     const data = await response.json();
-  //     if (response.ok) {
-  //       console.log('Referral code saved:', data);
-  //     } else {
-  //       console.error('Error saving referral code:', data.message);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error during referral code save request:', error);
-  //   }
-
+ 
     trackReferral(); // Optionally track the referral
   };
 

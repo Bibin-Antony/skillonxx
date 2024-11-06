@@ -247,12 +247,7 @@ const WorkshopBenefits = () => {
     ],
   };
 
-  // const stats = [
-  //   { value: "20+", label: "Partner Institutions" },
-  //   { value: "50+", label: "Workshops Conducted" },
-  //   { value: "5000+", label: "Students Trained" },
-  //   { value: "90%", label: "Positive Feedback" },
-  // ];
+  
 
   return (
     <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-950 py-24 overflow-hidden">
@@ -284,12 +279,7 @@ const WorkshopBenefits = () => {
           </p>
         </motion.div>
 
-        {/* Stats Section */}
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
-          {stats.map((stat, index) => (
-            <StatCard key={index} {...stat} index={index} />
-          ))}
-        </div> */}
+      
 
         {/* Benefits Grid */}
         <div className="space-y-24">

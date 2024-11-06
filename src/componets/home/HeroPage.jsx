@@ -8,7 +8,6 @@ import {
   Target,
 } from "lucide-react";
 import img1 from "../../assets/Courosal/webdev.png";
-// import img2 from "../../assets/Courosal/grahicdesign.png";
 import img2 from '../../assets/illustrations/graphicimg.png'
 import img3 from "../../assets/Courosal/digitalmarketing.png";
 

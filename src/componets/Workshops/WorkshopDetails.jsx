@@ -452,9 +452,7 @@ const WorkshopDetails = () => {
               </button>
             </div>
 
-            {/* <div className="relative">
-              <img src={workshop.image} alt={workshop.title} className="rounded-lg shadow-lg" />
-            </div> */}
+           
             <div className="w-full h-80 max-h-80 overflow-hidden rounded-lg shadow-lg">
               <img
                 src={workshop.image}

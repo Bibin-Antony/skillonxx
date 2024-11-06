@@ -42,8 +42,9 @@ export default function SurveyStartPage() {
   };
 
   const generateReferralLink = () => {
+    const devUrl = "http://localhost:5173/SurveyStartPage/online"
     const baseUrl = 'https://skillonx.com/SurveyStartPage/online';
-    const referralUrl = `${baseUrl}?ref=${referralCode}`;
+    const referralUrl = `${devUrl}?ref=${referralCode}`;
     setReferralLink(referralUrl);
   };
 
@@ -51,12 +52,13 @@ export default function SurveyStartPage() {
     console.log(`Referral shared: ${referralCode}`);
     // Here you can make an API call to track the referral if necessary
   };
+  const baseUrl = "http://localhost:5000"
 
   const handleShare = async () => {
     generateReferralLink();
 
     try {
-      const response = await fetch('https://skillonx-website.onrender.com/api/save-referral', {
+      const response = await fetch(`${baseUrl}/api/save-referral`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
