@@ -53,12 +53,14 @@ export default function SurveyFormOff() {
     return Object.keys(errors).length === 0;
   };
   const baseUrl ="http://localhost:5000"
+  const devUrl = "https://skillonx-website.onrender.com"
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let userData = { ...formData, isStudent, isLocation };
     if (validateForm()) {
       try {
-        const response = await fetch(`${baseUrl}/api/offline`, {
+        const response = await fetch(`${devUrl}/api/offline`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

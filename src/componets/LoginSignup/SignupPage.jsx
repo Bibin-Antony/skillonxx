@@ -170,7 +170,8 @@ const SignupPage = () => {
       };
 
     const baseUrl = 'http://localhost:5000';
-    const url = userType === 'student' ? `${baseUrl}/student` : `${baseUrl}/university`;
+    const devUrl = "https://skillonx-website.onrender.com"
+    const url = userType === 'student' ? `${devUrl}/student` : `${devUrl}/university`;
     try {
       const response = await axios.post(url, formData, {
         headers: { 'Content-Type': 'application/json' },

@@ -24,10 +24,11 @@ export default function SurveyStartPage() {
     // Check if referral has already been applied for this referral code
     const storedReferralCode = localStorage.getItem('referralApplied');
     const baseUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-website.onrender.com"
     // Only send referral request if referral code exists and hasn't been applied before
     if (code && storedReferralCode !== code) {
       // Send the referral code to the backend to increase the referral count
-      fetch(`${baseUrl}/api/increase-referral`, {
+      fetch(`${devUrl}/api/increase-referral`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

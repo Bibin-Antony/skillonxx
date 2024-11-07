@@ -1,11 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle } from 'lucide-react';
 import googleicon from "../../assets/Icons/google.png";
 import logo from "../../assets/logo/logo.png";
 import loginimage from "../../assets/illustrations/loginimage.png";
 import { Link } from 'react-router-dom';
-
+import axios from "axios";
 const LoginPage = () => {
+  
   useEffect(() => {
     // Smooth scroll polyfill
 ;
@@ -15,7 +16,42 @@ const LoginPage = () => {
       document.documentElement.style.scrollBehavior = 'auto';
     };
   }, []);
-  
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(""); // To store error messages
+  const [loading, setLoading] = useState(false); // To manage loading state
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    // Reset error on new attempt
+    setError("");
+    setLoading(true);
+    const formdata ={
+      email,
+      password
+    }
+    console.log(formdata)
+    const devUrl = "https://skillonx-website.onrender.com"
+    try {
+      const response = await axios.post("https://skillonx-website.onrender.com/student/login", {
+        email,
+        password,
+      });
+
+     
+
+        console.log("Login successful!", response.data);
+      
+      window.location.href = "/dashboard"; // Redirect to dashboard or a protected page
+
+    } catch (err) {
+      setError("Invalid email or password"); // Set error message if login fails
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Floating animation elements with different speeds
   const FloatingElement = ({ children, className }) => (
     <div className={`absolute ${className}`}>
@@ -76,12 +112,14 @@ const LoginPage = () => {
             </div>
 
             {/* Login form */}
-            <div className="space-y-6">
+            <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
                 <label className="text-blue-100 text-sm font-medium">Email</label>
                 <input
                   type="email"
                   placeholder="Enter your email"
+                   onChange={(e) => setEmail(e.target.value)}
+                  
                   className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
@@ -90,11 +128,15 @@ const LoginPage = () => {
                 <label className="text-blue-100 text-sm font-medium">Password</label>
                 <input
                   type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
               </div>
-
+              {error && (
+                <p className="text-red-500 text-sm">{error}</p>
+              )}
               <div className="flex items-center justify-between">
                 <label className="flex items-center space-x-2 text-sm text-blue-100">
                   <input type="checkbox" className="rounded border-blue-300/30 bg-[#0a192f]/50" />
@@ -105,7 +147,7 @@ const LoginPage = () => {
                 </a>
               </div>
 
-              <button className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+              <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                 Sign In
               </button>
 
@@ -124,7 +166,7 @@ const LoginPage = () => {
                   Sign up
                 </Link>
               </p>
-            </div>
+            </form>
           </div>
         </div>
       </div>

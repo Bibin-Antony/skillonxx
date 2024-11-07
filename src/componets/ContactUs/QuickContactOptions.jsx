@@ -33,9 +33,10 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
     }
 
     const requestData = { name, email, phone, date, time };
+    const devUrl = "https://skillonx-website.onrender.com"
 
     try {
-      let res = await axios.post("http://localhost:5000/schedule-visit", requestData);
+      let res = await axios.post("https://skillonx-website.onrender.com/schedule-visit", requestData);
       console.log("form submitted",res.data)
       onClose();
     } catch (error) {

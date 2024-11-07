@@ -29,9 +29,9 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       preferredDate,
       batchSize,
     };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      const response = await axios.post("http://localhost:5000/workshop", enrollmentData);
+      const response = await axios.post("https://skillonx-website.onrender.com/workshop", enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
       onClose(); // Close the modal after submission
     } catch (error) {

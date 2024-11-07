@@ -40,10 +40,10 @@ export default function SurveyStartPage() {
   const generateReferralCode = () => {
     return Math.random().toString(36).substr(2, 8).toUpperCase();
   };
-  const prodUrl = "https://skillonx.com"
+  const prodUrl = "https://skillonx.com/SurveyStartPage/offline"
   const generateReferralLink = () => {
     const baseUrl = 'http://localhost:5173/SurveyStartPage/offline';
-    const referralUrl = `${baseUrl}?ref=${referralCode}`;
+    const referralUrl = `${prodUrl}?ref=${referralCode}`;
     setReferralLink(referralUrl);
   };
 

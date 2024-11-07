@@ -56,10 +56,11 @@ export default function ResumePage() {
       console.log('FormData:', linkedinUrl, instagramUrl, file);
 
       const baseUrl ="http://localhost:5000"
+      const devUrl = "https://skillonx-website.onrender.com"
 
       try {
         // Send the form data to the backend API
-        await axios.post(`${baseUrl}/api/upload-resume`, formData, {
+        await axios.post(`${devUrl}/api/upload-resume`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },

@@ -17,11 +17,12 @@ const ConsultationModal = ({ isVisible, onClose }) => {
       setError("Please fill out all required fields.");
       return;
     }
+    const devUral = "https://skillonx-website.onrender.com"
 
     const consultationData = { name, email, phone, type };
 
     try {
-      let res = await axios.post("http://localhost:5000/workshop/consultation", consultationData);
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
       console.log("form submitted",res.data)
     } catch (error) {
       console.error("Error scheduling consultation:", error);

@@ -28,9 +28,9 @@ const InternShipModal = ({ isVisible, onClose }) => {
     }
 
     const consultationData = { name, email, phone };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      let res = await axios.post("http://localhost:5000/workshop/consultation", consultationData);
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
       console.log("form submitted",res.data)
       onClose();
     } catch (error) {

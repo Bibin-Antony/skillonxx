@@ -55,7 +55,7 @@ export default function ResumePage() {
 
     try {
       // Send the form data to the backend API
-      await axios.post(`${baseUrl}/api/upload-resume`, formData, {
+      await axios.post(`${prodUrl}/api/upload-resume`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

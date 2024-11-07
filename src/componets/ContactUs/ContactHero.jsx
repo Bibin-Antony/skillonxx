@@ -31,9 +31,9 @@ const ScheduleModal = ({ isOpen, onClose }) => {
     }
 
     const scheduleData = { name, scheduleTitle, date, time,email,phone };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      const response = await axios.post("http://localhost:5000/scheduleconsultation", scheduleData);
+      const response = await axios.post("https://skillonx-website.onrender.com/scheduleconsultation", scheduleData);
       console.log("Schedule created successfully:", response.data);
       onClose();
     } catch (error) {
@@ -214,9 +214,9 @@ const RequestCallBck = ({ isVisible, onClose }) => {
     }
 
     const requestData = { name, email, phone, date, time };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      let res = await axios.post("http://localhost:5000/workshop/request-callback", requestData);
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/request-callback", requestData);
       console.log("form submitted",res.data)
       onClose();
     } catch (error) {

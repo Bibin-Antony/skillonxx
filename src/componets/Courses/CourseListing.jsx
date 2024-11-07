@@ -131,9 +131,9 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
       education,
       featuredCourse: courseName,
     };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      const response = await axios.post("http://localhost:5000/createprofessionalcourse", enrollmentData);
+      const response = await axios.post("https://skillonx-website.onrender.com/createprofessionalcourse", enrollmentData);
       console.log("Enrollment Successful:", response.data);
       onClose(); // Close the modal after submission
     } catch (error) {

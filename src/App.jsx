@@ -11,7 +11,9 @@ import Footer from "./componets/home/Footer";
 import BreadCrumb from './componets/common/BreadCrumb';
 import CourseDetails from "./componets/Courses/CourseDetails";
 import WorkshopDetails from "./componets/Workshops/WorkshopDetails";
-
+import CoursesPages from './componets/Dashboard/CoursesPages'
+import AssessmentPage from './componets/Dashboard/AssessmentsPage'
+import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -142,6 +144,9 @@ const App = () => {
             <Route path='/ResumePage/offline' element={<ResumePageOff />} />
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
+            <Route path="/coursespage" element={<CoursesPages/>}/>
+            <Route path="/workshoppages" element={<WorkshopsPage/>}/>
+            <Route path="/assesment" element={<AssessmentPage/>}/>
 
             {/* Dashboard Routes - Wrapped with DashboardLayout */}
             <Route path='/dashboard/*' element={
