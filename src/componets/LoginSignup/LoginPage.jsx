@@ -46,10 +46,12 @@ const LoginPage = () => {
 
         console.log("Login successful!", redirectUrl);
         // const { redirectUrl } = response.data;
-        // window.location.href = redirectUrl;
-        window.location.href = "/dashboard"; // Redirect to dashboard or a protected page
+        
+        window.location.href = redirectUrl;
+        // window.location.href = "/student-dashboard"; // Redirect to dashboard or a protected page
 
     } catch (err) {
+      console.log("check -type error", err);
       setError("Invalid email or password"); // Set error message if login fails
     } finally {
       setLoading(false);

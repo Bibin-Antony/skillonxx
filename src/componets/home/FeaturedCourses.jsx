@@ -14,7 +14,8 @@ import axios from 'axios'
 import frontend from "../../assets/Images/frontend.jpg";
 import python from "../../assets/Images/python.jpg";
 import english from "../../assets/Images/english.jpg";
-
+// import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+// import lottieAnim from '../../assets/lottiejson/lottieanima.json'
 const courses = [
   {
     id: 1,
@@ -59,6 +60,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
   const [phone, setPhone] = useState("");
   const [education, setEducation] = useState("");
   const [error, setError] = useState("");
+  // const [loading, setLoading] = useState(false); // Add loading state
 
   if (!isVisible) return null;
   // Function to handle form submission
@@ -69,6 +71,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
       setError("All fields are required");
       return;
     }
+    setLoading(true)
     const enrollmentData = {
       name,
       email,
@@ -214,7 +217,14 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 I agree to the terms and conditions and authorize the institute to contact me regarding the course.
               </label>
             </div>
-
+            {/* Repeat similar input fields for Email, Phone, and Education */}
+            {/* Loading Animation */}
+            {/* {loading && (
+              <div className="flex justify-center py-4">
+                <DotLottieReact src={lottieAnim} loop autoplay   style={{ width: 100, height: 100 }}
+ />
+              </div>
+            )} */}
             {/* Buttons */}
             <div className="flex gap-3 pt-4">
               <button

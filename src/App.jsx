@@ -15,6 +15,8 @@ import CoursesPages from './componets/Dashboard/CoursesPages'
 import AssessmentPage from './componets/Dashboard/AssessmentsPage'
 import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
 import BackToTopButton from './componets/common/BackToTop'
+import ProfilePage from "./componets/Dashboard/ProfilePage";
+import UniversityDashboard from "./componets/Dashboard/UniversityDashboard";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -147,18 +149,19 @@ const App = () => {
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
             <Route path="/coursespage" element={<CoursesPages/>}/>
-                  <Route path="/workshoppages" element={<WorkshopsPage/>}/>
-                  <Route path="/assesment" element={<AssessmentPage/>}/>
-
-            {/* Dashboard Routes - Wrapped with DashboardLayout */}
-            <Route path='/dashboard/*' element={
+            <Route path="/workshoppages" element={<WorkshopsPage/>}/>
+            <Route path="/assesment" element={<AssessmentPage/>}/>
+            <Route path="/profile-page" element={<ProfilePage/>} />
+            <Route path="/university-dashboard" element={<UniversityDashboard/>}/>
+            <Route path="/student-dashboard" element={<StudentDashboard />} /> 
+            {/* Dashboard Routes - Wrapped with DashboardLayout
+            <Route path='/student-dashboard/*' element={
               <DashboardLayout>
                 <Routes>
-                  <Route index element={<StudentDashboard />} />
-                    
+                  <Route index element={<StudentDashboard />} />           
                 </Routes>
               </DashboardLayout>
-            } />
+            } /> */}
           </Routes>
         </Suspense>
       </Layout>

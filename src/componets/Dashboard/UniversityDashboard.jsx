@@ -124,7 +124,7 @@ const CardTitle = ({ children, className, ...props }) => (
   </h3>
 );
 
-function StudentDashboard() {
+function UniversityDashboard() {
   const chartData = [
     { name: 'Jan', value: 30 },
     { name: 'Feb', value: 40 },
@@ -168,7 +168,7 @@ function StudentDashboard() {
           <div className="bg-blue-600 text-white p-2 rounded">
             <GraduationCap className="h-6 w-6" />
           </div>
-          <span className="text-xl font-bold">StudentDashboard</span>
+          <span className="text-xl font-bold">University</span>
         </div>
         
         <nav className="space-y-2">
@@ -184,10 +184,7 @@ function StudentDashboard() {
             <Calendar className="h-5 w-5" />
             Workshops
           </Link>
-          <Link to="/assesment" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
-            <FileText className="h-5 w-5" />
-            Tests
-          </Link>
+          
           
           <Link to="/profile-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <User className="h-5 w-5" />
@@ -208,7 +205,7 @@ function StudentDashboard() {
       {/* Main Content */}
       <div className="flex-1 overflow-auto hide-scrollbar  ">
         <header className="bg-gray-200 p-4 shadow-sm flex items-center justify-between">
-          <h1 className="text-2xl font-bold">Student Dashboard</h1>
+          <h1 className="text-2xl font-bold">University Dashboard</h1>
           <div className="flex items-center gap-4">
             {/* <div className="relative">
               <input
@@ -391,4 +388,4 @@ function StudentDashboard() {
   )
 }
 
-export default StudentDashboard
+export default UniversityDashboard
