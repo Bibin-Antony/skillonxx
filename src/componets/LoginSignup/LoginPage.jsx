@@ -32,18 +32,22 @@ const LoginPage = () => {
       password
     }
     console.log(formdata)
-    const devUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "http://localhost:5000"
+    const prodUrl="https://skillonx-website.onrender.com"
     try {
-      const response = await axios.post("https://skillonx-website.onrender.com/student/login", {
+      const response = await axios.post("http://localhost:5000/check-type", {
         email,
         password,
       });
 
      
+        const { token, redirectUrl } = response.data;
+        console.log(token)
 
-        console.log("Login successful!", response.data);
-      
-      window.location.href = "/dashboard"; // Redirect to dashboard or a protected page
+        console.log("Login successful!", redirectUrl);
+        // const { redirectUrl } = response.data;
+        // window.location.href = redirectUrl;
+        window.location.href = "/dashboard"; // Redirect to dashboard or a protected page
 
     } catch (err) {
       setError("Invalid email or password"); // Set error message if login fails

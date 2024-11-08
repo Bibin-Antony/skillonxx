@@ -74,6 +74,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
     try {
       await axios.post("https://skillonx-website.onrender.com/workshop/workshop-enrollment", enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
+      onClose()
     } catch (error) {
       console.error("Error enrolling in workshop:", error);
       setError("An error occurred while submitting. Please try again.");

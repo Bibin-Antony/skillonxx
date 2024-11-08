@@ -189,10 +189,10 @@ function StudentDashboard() {
             Tests
           </Link>
           
-          <a href="#" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/profile" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <User className="h-5 w-5" />
             Profile
-          </a>
+          </Link>
           <a href="#" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Settings className="h-5 w-5" />
             Settings
@@ -210,7 +210,7 @@ function StudentDashboard() {
         <header className="bg-gray-200 p-4 shadow-sm flex items-center justify-between">
           <h1 className="text-2xl font-bold">Student Dashboard</h1>
           <div className="flex items-center gap-4">
-            <div className="relative">
+            {/* <div className="relative">
               <input
                 type="search"
                 placeholder="Search courses, workshops..."
@@ -229,15 +229,17 @@ function StudentDashboard() {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
-            </div>
-            <Button variant="ghost">
+            </div> */}
+            {/* <Button variant="ghost">
               <Bell className="h-5 w-5" />
-            </Button>
+            </Button> */}
+            <Link to="/profile">
             <img
               src={userImg}
               alt="Avatar"
               className="w-10 h-10 rounded-full"
             />
+            </Link>
           </div>
         </header>
 

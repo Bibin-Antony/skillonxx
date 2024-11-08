@@ -14,6 +14,7 @@ import WorkshopDetails from "./componets/Workshops/WorkshopDetails";
 import CoursesPages from './componets/Dashboard/CoursesPages'
 import AssessmentPage from './componets/Dashboard/AssessmentsPage'
 import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
+import BackToTopButton from './componets/common/BackToTop'
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -76,6 +77,7 @@ const Layout = ({ children }) => {
     <div className="relative min-h-screen">
       <AnimatedBackground />
       {children}
+      <BackToTopButton/>
     </div>
   );
 };
@@ -145,16 +147,15 @@ const App = () => {
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
             <Route path="/coursespage" element={<CoursesPages/>}/>
-            <Route path="/workshoppages" element={<WorkshopsPage/>}/>
-            <Route path="/assesment" element={<AssessmentPage/>}/>
+                  <Route path="/workshoppages" element={<WorkshopsPage/>}/>
+                  <Route path="/assesment" element={<AssessmentPage/>}/>
 
             {/* Dashboard Routes - Wrapped with DashboardLayout */}
             <Route path='/dashboard/*' element={
               <DashboardLayout>
                 <Routes>
                   <Route index element={<StudentDashboard />} />
-                  {/* <Route path="workshops" element={<WorkshopProgressCard />} />
-                  <Route path="assessment" element={<AssessmentPage />} /> */}
+                    
                 </Routes>
               </DashboardLayout>
             } />

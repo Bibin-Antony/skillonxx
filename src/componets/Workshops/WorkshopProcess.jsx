@@ -24,6 +24,7 @@ const ConsultationModal = ({ isVisible, onClose }) => {
     try {
       let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
       console.log("form submitted",res.data)
+      onClose();
     } catch (error) {
       console.error("Error scheduling consultation:", error);
       setError("An error occurred. Please try again.");
