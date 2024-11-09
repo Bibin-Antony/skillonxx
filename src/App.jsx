@@ -19,6 +19,7 @@ import ProfilePage from "./componets/Dashboard/ProfilePage";
 import UniversityDashboard from "./componets/Dashboard/UniversityDashboard";
 import {AuthProvider} from './auth/AuthContext'
 import ProtectedRoute from './auth/ProtectRoute'
+import NotFound from "./error/NotFound";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -156,6 +157,8 @@ const App = () => {
             <Route path="/profile-page" element={<ProfilePage/>} />
             <Route path="/university-dashboard" element={<UniversityDashboard/>}/>
             <Route path="/student-dashboard" element={<StudentDashboard />} /> 
+            <Route path="*" element={<NotFound />} />
+
             {/* Dashboard Routes - Wrapped with DashboardLayout
             <Route path='/student-dashboard/*' element={
               <DashboardLayout>
