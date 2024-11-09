@@ -56,8 +56,8 @@
 // };
 
 // export default StudentDashboard;
-import React from 'react'
-import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users } from 'lucide-react'
+import { useState } from 'react'
+import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users,Menu, X  } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import userImg from '../../assets/user/avatar-1.svg'
@@ -158,18 +158,40 @@ function UniversityDashboard() {
     { id: 2, name: 'Final Project Presentation: Web Development', date: '2024-04-10' },
     { id: 3, name: 'Quiz: Database Management Systems', date: '2024-03-25' },
   ]
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex h-screen pt-16 bg-gray-300">
+    <div className="flex flex-col h-screen pt-16 bg-gray-300 md:flex-row">
       <Navbar/>
+      {/* <button 
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="md:hidden fixed top-20 left-4 z-50 p-2 bg-white rounded-md shadow-lg"
+      >
+        {sidebarOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+      </button> */}
       {/* Sidebar */}
-      <div className="w-64  p-4 shadow-sm bg-gray-200">
-        <div className="flex items-center gap-2 mb-8">
-          <div className="bg-blue-600 text-white p-2 rounded">
-            <GraduationCap className="h-6 w-6" />
-          </div>
-          <span className="text-xl font-bold">University</span>
+      <div className={`
+        fixed inset-y-0 left-0 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:relative md:translate-x-0 transition-transform duration-200 ease-in-out
+        w-64 p-4 shadow-sm bg-gray-200 mt-16 z-50 md:mt-0
+      `}>
+           <div className="flex items-center gap-2 mb-8">
+    {sidebarOpen ? (
+      <button 
+        onClick={() => setSidebarOpen(false)}
+        className="md:hidden p-2"
+      >
+        <X className="h-6 w-6" />
+      </button>
+    ) : (
+      <>
+        <div className="bg-blue-600 text-white p-2 rounded">
+          <GraduationCap className="h-6 w-6" />
         </div>
+        <span className="text-xl font-bold">Dashboard</span>
+      </>
+    )}
+  </div>
         
         <nav className="space-y-2">
           <a href="#" className="flex items-center gap-2 bg-blue-50 text-blue-600 px-4 py-2 rounded">
@@ -204,45 +226,32 @@ function UniversityDashboard() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-auto hide-scrollbar  ">
-        <header className="bg-gray-200 p-4 shadow-sm flex items-center justify-between">
-          <h1 className="text-2xl font-bold">University Dashboard</h1>
-          <div className="flex items-center gap-4">
-            {/* <div className="relative">
-              <input
-                type="search"
-                placeholder="Search courses, workshops..."
-                className="w-64 pl-10 pr-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <svg
-                className="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div> */}
-            {/* <Button variant="ghost">
-              <Bell className="h-5 w-5" />
-            </Button> */}
+      <header className="bg-gray-200 p-4 shadow-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        {!sidebarOpen && (
+        <button 
+          onClick={() => setSidebarOpen(true)}
+          className="md:hidden p-2 bg-white rounded-md shadow-lg"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+      )}
+          <h1 className="text-xl md:text-2xl font-bold">University Dashboard</h1>
+          <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
             <Link to="/profile">
-            <img
-              src={userImg}
-              alt="Avatar"
-              className="w-10 h-10 rounded-full"
-            />
+              <img
+                src={userImg}
+                alt="Avatar"
+                className="w-8 h-8 md:w-10 md:h-10 rounded-full"
+              />
             </Link>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <main className="p-6">
+        <main className="p-4 md:p-6">
           {/* Stats Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2">
                 <CardTitle className="text-sm font-medium text-gray-500">Courses Applied</CardTitle>
@@ -268,10 +277,7 @@ function UniversityDashboard() {
               </CardContent>
             </Card>
             <Card>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-sm font-medium text-gray-500">Tests Completed</CardTitle>
-                <FileText className="h-4 w-4 text-blue-600" />
-              </CardHeader>
+              
               <CardContent>
                 <div className="text-2xl font-bold">8</div>
                 <p className="text-xs text-orange-600">
@@ -294,7 +300,7 @@ function UniversityDashboard() {
           {/* Progress Chart */}
           <Card className="mb-6">
             <CardHeader>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <CardTitle>Learning Progress</CardTitle>
                 <div className="flex items-center gap-2">
                   <Button variant="outline" size="sm">
@@ -303,7 +309,7 @@ function UniversityDashboard() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            <CardContent className="h-[300px] sm:h-[400px]">
               <ResponsiveContainer width="100%" height={300}>
                 <AreaChart data={chartData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -316,7 +322,7 @@ function UniversityDashboard() {
           </Card>
 
           {/* Courses and Workshops */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mb-6">
             <Card>
               <CardHeader>
                 <CardTitle>Applied Courses</CardTitle>
@@ -360,7 +366,7 @@ function UniversityDashboard() {
             <CardContent>
               <div className="space-y-4">
                 {upcomingTests.map((test) => (
-                  <div key={test.id} className="flex justify-between items-center">
+                  <div key={test.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <span className="text-sm font-medium">{test.name}</span>
                     <span className="text-sm text-gray-500">{test.date}</span>
                   </div>

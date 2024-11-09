@@ -17,6 +17,8 @@ import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
 import BackToTopButton from './componets/common/BackToTop'
 import ProfilePage from "./componets/Dashboard/ProfilePage";
 import UniversityDashboard from "./componets/Dashboard/UniversityDashboard";
+import {AuthProvider} from './auth/AuthContext'
+import ProtectedRoute from './auth/ProtectRoute'
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));

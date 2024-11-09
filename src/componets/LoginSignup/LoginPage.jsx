@@ -3,7 +3,7 @@ import { CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle } from 'luc
 import googleicon from "../../assets/Icons/google.png";
 import logo from "../../assets/logo/logo.png";
 import loginimage from "../../assets/illustrations/loginimage.png";
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import axios from "axios";
 const LoginPage = () => {
   
@@ -20,7 +20,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(""); // To store error messages
   const [loading, setLoading] = useState(false); // To manage loading state
-
+  const navigate = useNavigate()
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -40,15 +40,16 @@ const LoginPage = () => {
         password,
       });
 
-     
+      // console.log(response)
         const { token, redirectUrl } = response.data;
-        console.log(token)
+        // console.log(token)
 
-        console.log("Login successful!", redirectUrl);
+        // console.log("Login successful!", redirectUrl);
         // const { redirectUrl } = response.data;
         
-        window.location.href = redirectUrl;
-        // window.location.href = "/student-dashboard"; // Redirect to dashboard or a protected page
+        // navigate('/student-dashboard');
+
+        window.location.href = redirectUrl; // Redirect to dashboard or a protected page
 
     } catch (err) {
       console.log("check -type error", err);

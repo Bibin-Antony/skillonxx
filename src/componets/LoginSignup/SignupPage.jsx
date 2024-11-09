@@ -69,6 +69,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     // Smooth scroll polyfill
+    // console.log(userType)
     ;
     window.scrollTo({ top: 0 });
 
@@ -172,6 +173,7 @@ const SignupPage = () => {
     const baseUrl = 'http://localhost:5000';
     const devUrl = "https://skillonx-website.onrender.com"
     const url = userType === 'student' ? `${baseUrl}/student` : `${baseUrl}/university`;
+    console.log(url)
     try {
       const response = await axios.post(url, formData, {
         headers: { 'Content-Type': 'application/json' },
