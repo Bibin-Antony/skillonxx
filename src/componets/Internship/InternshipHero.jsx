@@ -13,10 +13,14 @@ import {
   
 } from 'lucide-react';
 import axios from "axios";
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 const InternShipModal = ({ isVisible, onClose }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
+  const [formState,setFormState] =useState("idle")
   // const [type, setType] = useState("");
   const [error, setError] = useState("");
   if (!isVisible) return null;
@@ -26,16 +30,23 @@ const InternShipModal = ({ isVisible, onClose }) => {
       setError("Please fill out all required fields.");
       return;
     }
-
+    setFormState("submitting")
     const consultationData = { name, email, phone };
-    const devUrl = "https://skillonx-website.onrender.com"
+    const prodUrl = "https://skillonx-website.onrender.com"
+    const devUrl="http://localhost:5000"
     try {
-      let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
+      let res = await axios.post(`${devUrl}/workshop/consultation`, consultationData);
       console.log("form submitted",res.data)
-      onClose();
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose()
+      },2000)
+      
     } catch (error) {
       console.error("Error scheduling consultation:", error);
       setError("An error occurred. Please try again.");
+      setFormState("idle")
     }
   };
   return (
@@ -45,7 +56,24 @@ const InternShipModal = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState==="submitting"&&(
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+            <div className="w-48 h-48">
+              <Lottie animationData={wait} loop />
+            </div>
+            <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+          </div>
+          )}
+          {formState==="success"&&(
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center
+            z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={complete} loop={false} />
+                </div>
+                <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was
+                  successful!</p>
+              </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
