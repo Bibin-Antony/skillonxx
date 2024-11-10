@@ -1,59 +1,43 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+// src/auth/AuthContext.jsx
+import React, { createContext, useContext, useState } from 'react';
 
-// Create the context
 const AuthContext = createContext(null);
 
-// Create the provider component
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Check if token exists in localStorage
+  const [auth, setAuth] = useState(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      setIsAuthenticated(true);
-    }
-    setLoading(false);
-  }, []);
+    const user = localStorage.getItem('user');
+    return token && user ? { token, user: JSON.parse(user) } : null;
+  });
 
-  const login = (token, userData) => {
+  const login = (token, user) => {
     localStorage.setItem('token', token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setIsAuthenticated(true);
-    setUser(userData);
+    localStorage.setItem('user', JSON.stringify(user));
+    setAuth({ token, user });
   };
 
   const logout = () => {
     localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
-    setIsAuthenticated(false);
-    setUser(null);
+    localStorage.removeItem('user');
+    setAuth(null);
   };
-
-  const value = {
-    isAuthenticated,
-    user,
-    login,
-    logout,
-    loading
-  };
-
+  
+  const isStudent = () => auth?.user?.userType === 'student';
+  const isUniversity = () => auth?.user?.userType === 'university';
   return (
-    <AuthContext.Provider value={value}>
+    <AuthContext.Provider value={{ auth, login, logout,isStudent, isUniversity }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-// Create the hook
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === null) {
+  if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
+
+// You can also export default if you prefer
+export default AuthContext;

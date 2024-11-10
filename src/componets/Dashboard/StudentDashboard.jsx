@@ -59,7 +59,9 @@
 import { useState } from 'react'
 import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users,Menu, X  } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../auth/AuthContext';
+import { authService } from '../../services/authServices';
 import userImg from '../../assets/user/avatar-1.svg'
 import Navbar from '../home/Navbar'
 import Footer from '../home/Footer'
@@ -125,6 +127,9 @@ const CardTitle = ({ children, className, ...props }) => (
 );
 
 function StudentDashboard() {
+  const { auth, logout } = useAuth();
+  const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const chartData = [
     { name: 'Jan', value: 30 },
     { name: 'Feb', value: 40 },
@@ -158,8 +163,18 @@ function StudentDashboard() {
     { id: 2, name: 'Final Project Presentation: Web Development', date: '2024-04-10' },
     { id: 3, name: 'Quiz: Database Management Systems', date: '2024-03-25' },
   ]
-  const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+      logout(); // Clear local auth state
+      navigate('/LoginPage'); // Redirect to login page
+    } catch (error) {
+      console.error('Logout error:', error);
+      // Still logout even if the server request fails
+      logout();
+      navigate('/LoginPage');
+    }
+  };
   return (
     <div className="flex flex-col h-screen pt-16 bg-gray-300 md:flex-row">
       <Navbar/>
@@ -198,20 +213,20 @@ function StudentDashboard() {
             <LayoutDashboard className="h-5 w-5" />
             Dashboard
           </a>
-          <Link to="/coursespage" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/courses" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Book className="h-5 w-5" />
             Courses
           </Link>
-          <Link to="/workshoppages" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/workshops" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Calendar className="h-5 w-5" />
             Workshops
           </Link>
-          <Link to="/assesment" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/assessments" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <FileText className="h-5 w-5" />
             Tests
           </Link>
           
-          <Link to="/profile-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/profile" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <User className="h-5 w-5" />
             Profile
           </Link>
@@ -221,7 +236,7 @@ function StudentDashboard() {
           </a>
         </nav>
 
-        <Button className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50 mt-auto absolute bottom-4 left-4" variant="ghost">
+        <Button className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50 mt-auto absolute bottom-4 left-4" variant="ghost" onClick={handleLogout}>
           <LogOut className="h-5 w-5" />
           Log out
         </Button>

@@ -125,6 +125,7 @@ const DashboardLayout = ({ children }) => {
 const App = () => {
   return (
     <Router>
+      <AuthProvider>
       <Navbar />
       <Layout>
         <Suspense fallback={<LoadingSpinner />}>
@@ -151,13 +152,47 @@ const App = () => {
             <Route path='/ResumePage/offline' element={<ResumePageOff />} />
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
-            <Route path="/coursespage" element={<CoursesPages/>}/>
+            {/* <Route path="/coursespage" element={<CoursesPages/>}/>
             <Route path="/workshoppages" element={<WorkshopsPage/>}/>
             <Route path="/assesment" element={<AssessmentPage/>}/>
-            <Route path="/profile-page" element={<ProfilePage/>} />
-            <Route path="/university-dashboard" element={<UniversityDashboard/>}/>
-            <Route path="/student-dashboard" element={<StudentDashboard />} /> 
-            <Route path="*" element={<NotFound />} />
+            <Route path="/profile-page" element={<ProfilePage/>} /> */}
+            {/* <Route path="/university-dashboard" element={<UniversityDashboard/>}/> */}
+            {/* Student Dashboard Routes */}
+            <Route 
+                path="/student-dashboard/*" 
+                element={
+                  <ProtectedRoute allowedUserTypes={['student']}>
+                    <DashboardLayout>
+                      <Routes>
+                        <Route index element={<StudentDashboard />} />
+                        <Route path="courses" element={<CoursesPages />} />
+                        <Route path="workshops" element={<WorkshopsPage />} />
+                        <Route path="assessments" element={<AssessmentPage />} />
+                        <Route path="profile" element={<ProfilePage />} />
+                      </Routes>
+                    </DashboardLayout>
+                  </ProtectedRoute>
+                } 
+              />       
+              {/* University Dashboard Routes */}
+              <Route 
+                path="/university-dashboard/*" 
+                element={
+                  <ProtectedRoute allowedUserTypes={['university']}>
+                    <DashboardLayout>
+                      <Routes>
+                        <Route index element={<UniversityDashboard />} />
+                        <Route path="courses" element={<CoursesPages />} />
+                        <Route path="workshops" element={<WorkshopsPage />} />
+                        
+                        <Route path="profile" element={<ProfilePage />} />
+                      </Routes>
+                    </DashboardLayout>
+                  </ProtectedRoute>
+                } 
+              />
+          
+               <Route path="*" element={<NotFound />} />
 
             {/* Dashboard Routes - Wrapped with DashboardLayout
             <Route path='/student-dashboard/*' element={
@@ -171,6 +206,7 @@ const App = () => {
         </Suspense>
       </Layout>
       <Footer />
+      </AuthProvider>
     </Router>
   );
 };
