@@ -1,5 +1,5 @@
 // src/components/Workshop/WorkshopListing.jsx
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -31,6 +31,10 @@ import technical from '../../assets/Images/technical.jpg'
 import careerdev from '../../assets/Images/careerdev.jpg'
 import fullstack from '../../assets/Images/fullstack.jpg'
 import responsiveweb from '../../assets/Images/responsiveweb.jpg'
+
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 import axios from 'axios'
 const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
   const [name, setName] = useState("");
@@ -46,6 +50,37 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
   const [departmentSize, setDepartmentSize] = useState("");
   const [requirements, setRequirements] = useState("");
   const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const formRef = useRef(null);
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setBatchSize("")
+    setMode("")
+    setPreferredDate("")
+    setPreferredTime("")
+    setInstitution("")
+    setDepartmentSize("")
+    setRequirements("")
+
+    setDepartmentSize("")
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
+  useEffect(() => {
+    if ((formState === "submitting" || formState === "success") && formRef.current) {
+      formRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+  }, [formState]);
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,7 +89,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
       setError("Please fill out all required fields.");
       return;
     }
-
+    setFormState("submitting")
     const enrollmentData = {
       name,
       email,
@@ -70,21 +105,28 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
       departmentSize,
       requirements,
     };
-    const devUrl = "https://skillonx-website.onrender.com"
+    const prodUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "http://localhost:5000"
+
     try {
-      await axios.post("https://skillonx-website.onrender.com/workshop/workshop-enrollment", enrollmentData);
+      const response = await axios.post(`${devUrl}/workshop/workshop-enrollment`, enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
-      onClose()
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
     } catch (error) {
       console.error("Error enrolling in workshop:", error);
       setError("An error occurred while submitting. Please try again.");
+      setFormState("idle")
     }
   };
   return (  
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn overflow-y-auto">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/60 backdrop-blur-md"
+        className="fixed absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
 
@@ -93,6 +135,31 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           {/* Decorative header background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
 
           {/* Header */}
           <div className="relative px-6 pt-6 pb-4">

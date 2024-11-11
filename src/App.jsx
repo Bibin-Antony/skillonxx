@@ -14,12 +14,14 @@ import WorkshopDetails from "./componets/Workshops/WorkshopDetails";
 import CoursesPages from './componets/Dashboard/CoursesPages'
 import AssessmentPage from './componets/Dashboard/AssessmentsPage'
 import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
+import WorkshopManagement from "./componets/Dashboard/WorkshopManagement";
 import BackToTopButton from './componets/common/BackToTop'
 import ProfilePage from "./componets/Dashboard/ProfilePage";
 import UniversityDashboard from "./componets/Dashboard/UniversityDashboard";
 import {AuthProvider} from './auth/AuthContext'
 import ProtectedRoute from './auth/ProtectRoute'
 import NotFound from "./error/NotFound";
+import CreateWorkshopPage from "./componets/Dashboard/CreateWorkshopPages";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -183,8 +185,8 @@ const App = () => {
                       <Routes>
                         <Route index element={<UniversityDashboard />} />
                         <Route path="courses" element={<CoursesPages />} />
-                        <Route path="workshops" element={<WorkshopsPage />} />
-                        
+                        <Route path="workshops" element={<WorkshopManagement />} />  {/* Renamed from WorkshopManagement */}
+                        <Route path="workshops/create-workshop" element={<CreateWorkshopPage />} />    
                         <Route path="profile" element={<ProfilePage />} />
                       </Routes>
                     </DashboardLayout>

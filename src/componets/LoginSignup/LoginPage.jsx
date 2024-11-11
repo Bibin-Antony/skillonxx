@@ -67,14 +67,25 @@ const LoginPage = () => {
     try {
       const response = await authService.login({ email, password, userType });
       const { token, user } = response;
+      const userDetails = {
+        ...user,
+        userType,
+        token,
+        isAuthenticated: true
+      };
+      login(token, userDetails);
+      // console.log(userDetails)
+      localStorage.setItem('userDetails', JSON.stringify(userDetails));
 
-      login(token, { ...user, userType });
       // Redirect based on user type
       const redirectPath = userType === 'student'
         ? '/student-dashboard'
         : '/university-dashboard';
 
-      navigate(redirectPath, { replace: true });
+      navigate(redirectPath, { 
+        replace: true,
+        state: { userDetails }
+      });
 
     } catch (err) {
       console.error("Login error:", err);

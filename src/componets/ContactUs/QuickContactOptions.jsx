@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Phone,
@@ -16,6 +16,10 @@ import {
   X,
   User
 } from 'lucide-react';
+
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 import axios from 'axios';
 const ScheduleVisitModal = ({ isVisible, onClose }) => {
   const [name, setName] = useState("");
@@ -24,6 +28,25 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    
+    setDate("");
+    setTime("");
+
+    
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
+  
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,17 +54,22 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
       setError("All fields are required.");
       return;
     }
-
+    setFormState("submitting")
     const requestData = { name, email, phone, date, time };
     const devUrl = "https://skillonx-website.onrender.com"
 
     try {
       let res = await axios.post("https://skillonx-website.onrender.com/schedule-visit", requestData);
       console.log("form submitted",res.data)
-      onClose();
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
     } catch (error) {
       console.error("Error requesting callback:", error);
       setError("An error occurred. Please try again.");
+      setFormState("idle")
     }
   };
 
@@ -52,7 +80,31 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">

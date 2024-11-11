@@ -56,7 +56,7 @@
 // };
 
 // export default StudentDashboard;
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users,Menu, X  } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
@@ -130,6 +130,9 @@ function StudentDashboard() {
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  useEffect(() => {
+    console.log("User details from login page:", auth.user);
+  }, [auth.user]);
   const chartData = [
     { name: 'Jan', value: 30 },
     { name: 'Feb', value: 40 },

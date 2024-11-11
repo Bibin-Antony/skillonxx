@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Code, MessageSquare, Users, GraduationCap, X, Mail, Phone, User } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -17,6 +17,23 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
   const [batchSize, setBatchSize] = useState("");
   const [error, setError] = useState("");
   const [formState,setFormState] = useState("idle")
+  const resetForm = () => {
+    setUniversity("");
+    setEmail("");
+    setPhone("");
+    
+    setWorkshopType("");
+    setPreferredDate("");
+    setBatchSize("");
+
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
