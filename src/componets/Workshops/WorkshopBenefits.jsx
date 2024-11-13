@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   GraduationCap, Target, Users, Building, Briefcase, 
@@ -6,6 +6,10 @@ import {
   CheckCircle, X, Mail, Phone, User, ArrowRight
 } from "lucide-react";
 import axios from "axios";
+
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 // Modal component remains same as before
 const WorkShopBenefitModal = ({ isVisible, onClose }) => {
   const [name, setName] = useState("");
@@ -13,6 +17,20 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
   const [phone, setPhone] = useState("");
   const [type, setType] = useState("");
   const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setType("");
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,16 +38,21 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
       setError("Please fill out all required fields.");
       return;
     }
-
+    setFormState("submitting")
     const consultationData = { name, email, phone, type };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      let res = await axios.post("http://localhost:5000/workshop/consultation", consultationData);
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
       console.log("form submitted",res.data)
-      onClose()
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
     } catch (error) {
       console.error("Error scheduling consultation:", error);
       setError("An error occurred. Please try again.");
+      setFormState("idle")
     }
   };
 
@@ -40,7 +63,31 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -247,12 +294,7 @@ const WorkshopBenefits = () => {
     ],
   };
 
-  // const stats = [
-  //   { value: "20+", label: "Partner Institutions" },
-  //   { value: "50+", label: "Workshops Conducted" },
-  //   { value: "5000+", label: "Students Trained" },
-  //   { value: "90%", label: "Positive Feedback" },
-  // ];
+  
 
   return (
     <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-950 py-24 overflow-hidden">
@@ -284,12 +326,7 @@ const WorkshopBenefits = () => {
           </p>
         </motion.div>
 
-        {/* Stats Section */}
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-24">
-          {stats.map((stat, index) => (
-            <StatCard key={index} {...stat} index={index} />
-          ))}
-        </div> */}
+      
 
         {/* Benefits Grid */}
         <div className="space-y-24">

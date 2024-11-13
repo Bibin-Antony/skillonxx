@@ -115,30 +115,7 @@ const AboutUsHero = () => {
             ))}
           </div>
 
-          {/* Stats Grid */}
-          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.6 + index * 0.1 }}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-6 text-center"
-              >
-                <div className="flex justify-center mb-4">
-                  <span className="p-2 rounded-lg bg-blue-500/20">
-                    <stat.icon className="w-6 h-6 text-blue-400" />
-                  </span>
-                </div>
-                <div className="text-3xl font-bold text-white mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-400">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div> */}
+       
         </div>
       </div>
     </div>

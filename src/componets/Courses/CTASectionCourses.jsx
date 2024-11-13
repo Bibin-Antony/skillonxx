@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Rocket, ArrowRight, CheckCircle, X, Calendar, Clock, User } from 'lucide-react';
 import axios from 'axios'
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 const CTASectionCourses = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const benefits = [
@@ -18,6 +21,7 @@ const CTASectionCourses = () => {
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [error, setError] = useState("");
+    const [formState,setFormState] = useState("idle") //states are idle,submitting,success
     if (!isOpen) return null;
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -26,16 +30,22 @@ const CTASectionCourses = () => {
         setError("All fields are required");
         return;
       }
-
+      setFormState("submitting");
       const scheduleData = { name, scheduleTitle, date, time,email,phone };
-
+      const prodUrl = "https://skillonx-website.onrender.com"
+      const devUrl = "http://localhost:5000"
       try {
         const response = await axios.post("http://localhost:5000/scheduleconsultation", scheduleData);
         console.log("Schedule created successfully:", response.data);
-        onClose();
+        setFormState("success");  
+        setTimeout(()=>{
+          setFormState("idle")
+          onClose();
+        },2000)
       } catch (error) {
         console.error("Error creating schedule:", error);
         setError("An error occurred. Please try again.");
+        setFormState("idle");
       }
     };
     return (
@@ -51,7 +61,23 @@ const CTASectionCourses = () => {
           <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
             {/* Decorative header background */}
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+            {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={wait} loop />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
 
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={complete} loop={false} />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Enrollment Successful!</p>
+            </div>
+          )}
             {/* Header */}
             <div className="relative px-6 pt-6 pb-4">
               <div className="flex items-center justify-between">

@@ -69,6 +69,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     // Smooth scroll polyfill
+    // console.log(userType)
     ;
     window.scrollTo({ top: 0 });
 
@@ -103,7 +104,7 @@ const SignupPage = () => {
     }
     
     if (!gender) errors.gender = "Gender is required";
-    
+    if (!universityName) errors.universityName = "University name is required";
     // Address fields validation
     if (!doorNumber) errors.doorNumber = "Door number is required";
     if (!landmark) errors.landmark = "Landmark is required";
@@ -151,6 +152,7 @@ const SignupPage = () => {
         email,
         gender,
         password,
+        universityName,
         address: {
           doorNumber,
           landmark,
@@ -163,14 +165,16 @@ const SignupPage = () => {
           passingYear
         }),
         ...(userType === 'university' && {
-          universityName,
+          
           recognizedBy,
           universityAddress
         })
       };
-
+      console.log(formData)
     const baseUrl = 'http://localhost:5000';
+    const devUrl = "https://skillonx-website.onrender.com"
     const url = userType === 'student' ? `${baseUrl}/student` : `${baseUrl}/university`;
+    console.log(url)
     try {
       const response = await axios.post(url, formData, {
         headers: { 'Content-Type': 'application/json' },
@@ -183,7 +187,7 @@ const SignupPage = () => {
         alert(response.data.error || 'Registration failed');
       }
     } catch (error) {
-      console.error('Error details:', error.response.data.errors);
+      console.error('Error details:', error);
       alert(error.response?.data?.error || 'Registration failed');
     }
     }
@@ -364,25 +368,7 @@ const SignupPage = () => {
                           </div>
                         </div>
                         
-                        {/* <div className="space-y-2">
-                      <label className="text-blue-100 text-sm font-medium">Password</label>
-                      <input
-                        type="password"
-                        placeholder="Create password"
-                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                        required
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-blue-100 text-sm font-medium">Confirm Password</label>
-                      <input
-                        type="password"
-                        placeholder="Confirm password"
-                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                        required
-                      />
-                    </div> */}
+                      
                         {/* Address Fields */}
                         <div className="space-y-4">
                           <label className="text-blue-100 text-sm font-medium">Address</label>
@@ -431,6 +417,19 @@ const SignupPage = () => {
                             {errorMessages.pincode && <p className="text-red-500 text-xs mt-1">{errorMessages.pincode}</p>}
 
                           </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-blue-100 text-sm font-medium">University Name</label>
+                          <input
+                            type="text"
+                            placeholder="Ex: Mysore University"
+                            className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                            
+                            onChange={(e) => setUniversityName(e.target.value)}
+
+                          />
+                          {errorMessages.universityName && <p className="text-red-500 text-xs mt-1">{errorMessages.universityName}</p>}
+
                         </div>
 
                         {/* Education Fields */}

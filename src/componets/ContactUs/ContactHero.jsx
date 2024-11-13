@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Phone,
@@ -13,6 +13,10 @@ import {
   X
 } from 'lucide-react';
 import axios from 'axios';
+
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 const ScheduleModal = ({ isOpen, onClose }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -21,6 +25,24 @@ const ScheduleModal = ({ isOpen, onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setScheduleTitle("");
+    setDate("");
+    setTime("");
+
+    
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
   if (!isOpen) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,16 +51,21 @@ const ScheduleModal = ({ isOpen, onClose }) => {
       setError("All fields are required");
       return;
     }
-
+    setFormState("submitting")
     const scheduleData = { name, scheduleTitle, date, time,email,phone };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      const response = await axios.post("http://localhost:5000/scheduleconsultation", scheduleData);
+      const response = await axios.post("https://skillonx-website.onrender.com/scheduleconsultation", scheduleData);
       console.log("Schedule created successfully:", response.data);
-      onClose();
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
     } catch (error) {
       console.error("Error creating schedule:", error);
       setError("An error occurred. Please try again.");
+      setFormState("idle")
     }
   };
   return (
@@ -54,7 +81,31 @@ const ScheduleModal = ({ isOpen, onClose }) => {
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Decorative header background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           {/* Header */}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
@@ -205,6 +256,21 @@ const RequestCallBck = ({ isVisible, onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resettingForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setDate("")
+    setTime("")
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resettingForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -212,16 +278,21 @@ const RequestCallBck = ({ isVisible, onClose }) => {
       setError("All fields are required.");
       return;
     }
-
+    setFormState("submitting")
     const requestData = { name, email, phone, date, time };
-
+    const devUrl = "https://skillonx-website.onrender.com"
     try {
-      let res = await axios.post("http://localhost:5000/workshop/request-callback", requestData);
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/request-callback", requestData);
       console.log("form submitted",res.data)
-      onClose();
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
     } catch (error) {
       console.error("Error requesting callback:", error);
       setError("An error occurred. Please try again.");
+      setFormState("idle")
     }
   };
 
@@ -232,7 +303,31 @@ const RequestCallBck = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">

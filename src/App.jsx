@@ -11,7 +11,21 @@ import Footer from "./componets/home/Footer";
 import BreadCrumb from './componets/common/BreadCrumb';
 import CourseDetails from "./componets/Courses/CourseDetails";
 import WorkshopDetails from "./componets/Workshops/WorkshopDetails";
-
+import CoursesPages from './componets/Dashboard/CoursesPages'
+import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
+import WorkshopManagement from "./componets/Dashboard/WorkshopManagement";
+import BackToTopButton from './componets/common/BackToTop'
+import ProfilePage from "./componets/Dashboard/ProfilePage";
+import UniversityDashboard from "./componets/Dashboard/UniversityDashboard";
+import {AuthProvider} from './auth/AuthContext'
+import ProtectedRoute from './auth/ProtectRoute'
+import NotFound from "./error/NotFound";
+import CreateWorkshopPage from "./componets/Dashboard/CreateWorkshopPages";
+import CreateAssessment from "./componets/Dashboard/CreateAssessment";
+import AssessmentsQuestion from './componets/Dashboard/AssessmentsQuestion'
+import TestPage from "./componets/Dashboard/AssessmentsPage";
+import GiveAssessment from './componets/Dashboard/GiveAssessment'
+import AllStudents from "./componets/Dashboard/AllStudents";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -22,8 +36,8 @@ const ContactUs = React.lazy(() => import("./componets/ContactUs/ContactUs"));
 const LoginPage = React.lazy(() => import("./componets/LoginSignup/LoginPage"));
 const SignupPage = React.lazy(() => import("./componets/LoginSignup/SignupPage"));
 const SurveyStartPageOff = React.lazy(() => import("./componets/offline/SurveryStartPageOff"));
-const SurveyStartPageOn = React.lazy(() => import("./componets/offline/SurveryStartPageOff"));
-const SurveyFormOn = React.lazy(() => import('./componets/online/SurveryStartPageOn'));
+const SurveyStartPageOn = React.lazy(() => import("./componets/online/SurveryStartPageOn"));
+const SurveyFormOn = React.lazy(() => import('./componets/online/SurveyFormOn'));
 const ResumePageOn = React.lazy(() => import('./componets/online/ResumePageOn'));
 const FinalPageOn = React.lazy(() => import('./componets/online/FinalPageOn'));
 const SurveyFormOff = React.lazy(() => import('./componets/offline/SurveyFormOff'));
@@ -74,6 +88,7 @@ const Layout = ({ children }) => {
     <div className="relative min-h-screen">
       <AnimatedBackground />
       {children}
+      <BackToTopButton/>
     </div>
   );
 };
@@ -116,6 +131,7 @@ const DashboardLayout = ({ children }) => {
 const App = () => {
   return (
     <Router>
+      <AuthProvider>
       <Navbar />
       <Layout>
         <Suspense fallback={<LoadingSpinner />}>
@@ -142,21 +158,67 @@ const App = () => {
             <Route path='/ResumePage/offline' element={<ResumePageOff />} />
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
+            {/* <Route path="/coursespage" element={<CoursesPages/>}/>
+            <Route path="/workshoppages" element={<WorkshopsPage/>}/>
+            <Route path="/assesment" element={<AssessmentPage/>}/>
+            <Route path="/profile-page" element={<ProfilePage/>} /> */}
+            {/* <Route path="/university-dashboard" element={<UniversityDashboard/>}/> */}
+            {/* Student Dashboard Routes */}
+            <Route 
+                path="/student-dashboard/*" 
+                element={
+                  <ProtectedRoute allowedUserTypes={['student']}>
+                    <DashboardLayout>
+                      <Routes>
+                        <Route index element={<StudentDashboard />} />
+                        <Route path="courses-page" element={<CoursesPages />} />
+                        <Route path="workshops-page" element={<WorkshopsPage />} />
+                        <Route path="test" element={<TestPage />} />
+                        <Route path="check-assessment" element={<GiveAssessment/>}/>
+                        <Route path="profile" element={<ProfilePage />} />
+                      </Routes>
+                    </DashboardLayout>
+                  </ProtectedRoute>
+                } 
+              />       
+              {/* University Dashboard Routes */}
+              <Route 
+                path="/university-dashboard/*" 
+                element={
+                  <ProtectedRoute allowedUserTypes={['university']}>
+                    <DashboardLayout>
+                      <Routes>
+                        <Route index element={<UniversityDashboard />} />
+                        <Route path="courses-page" element={<CoursesPages />} />
+                        <Route path="workshops-page" element={<WorkshopManagement />} />  {/* Renamed from WorkshopManagement */}
+                        <Route path="workshops-page/create-workshop" element={<CreateWorkshopPage />} />    
+                        <Route path="workshops-page/create-assessment/:workshopId" element={<AssessmentsQuestion/>} />    
 
-            {/* Dashboard Routes - Wrapped with DashboardLayout */}
-            <Route path='/dashboard/*' element={
+                        <Route path="assessment-page" element={<CreateAssessment/>}/>
+                        <Route path="students" element={<AllStudents/>}/>
+                        {/* <Route path="assessment-page/" element={<AssessmentsQuestion/>}/> */}
+                        <Route path="profile" element={<ProfilePage />} />
+                      </Routes>
+                    </DashboardLayout>
+                  </ProtectedRoute>
+                } 
+              />
+          
+               <Route path="*" element={<NotFound />} />
+
+            {/* Dashboard Routes - Wrapped with DashboardLayout
+            <Route path='/student-dashboard/*' element={
               <DashboardLayout>
                 <Routes>
-                  <Route index element={<StudentDashboard />} />
-                  {/* <Route path="workshops" element={<WorkshopProgressCard />} />
-                  <Route path="assessment" element={<AssessmentPage />} /> */}
+                  <Route index element={<StudentDashboard />} />           
                 </Routes>
               </DashboardLayout>
-            } />
+            } /> */}
           </Routes>
         </Suspense>
       </Layout>
       <Footer />
+      </AuthProvider>
     </Router>
   );
 };

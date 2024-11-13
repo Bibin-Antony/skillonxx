@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Users,
   Calendar,
@@ -10,11 +10,14 @@ import {
    X, Mail, Phone, User, GraduationCap,Book
 } from "lucide-react";
 import axios from 'axios'
-
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 import frontend from "../../assets/Images/frontend.jpg";
 import python from "../../assets/Images/python.jpg";
 import english from "../../assets/Images/english.jpg";
-
+// import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+// import lottieAnim from '../../assets/lottiejson/lottieanima.json'
 const courses = [
   {
     id: 1,
@@ -59,7 +62,22 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
   const [phone, setPhone] = useState("");
   const [education, setEducation] = useState("");
   const [error, setError] = useState("");
+  const [formState, setFormState] = useState("idle"); // idle, submitting, success
 
+  // const [loading, setLoading] = useState(false); // Add loading state
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setEducation("");
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
   // Function to handle form submission
   const handleFormSubmit = async (e) => {
@@ -69,6 +87,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
       setError("All fields are required");
       return;
     }
+    setFormState("submitting");
     const enrollmentData = {
       name,
       email,
@@ -76,15 +95,28 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
       education,
       featuredCourse: courseName,
     };
-
+    const devUrl = "http://localhost:5000"
+    const prodUrl = "https://skillonx-website.onrender.com"
     try {
-      const response = await axios.post("http://localhost:5000/createenrollment", enrollmentData);
+      const response = await axios.post(`${devUrl}/createenrollment`, enrollmentData);
       console.log("Enrollment Successful:", response.data);
-      onClose();  // Close modal after submission
+      setFormState("success");
+      
+      // Close modal after showing success animation
+      setTimeout(() => {
+        resetForm()
+        onClose();
+      }, 2000);  // Close modal after submission
     } catch (error) {
       console.error("Error enrolling in course:", error);
       setError("An error occurred while enrolling. Please try again.");
+      setFormState("idle");
     }
+  };
+  
+  const handleClose = () => {
+    resetForm();
+    onClose();
   };
   return (
     <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 animate-fadeIn">
@@ -96,7 +128,23 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto">
           {/* Decorative header background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={wait} loop />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
 
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={complete} loop={false} />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Enrollment Successful!</p>
+            </div>
+          )}
           {/* Header */}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
@@ -214,7 +262,14 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 I agree to the terms and conditions and authorize the institute to contact me regarding the course.
               </label>
             </div>
-
+            {/* Repeat similar input fields for Email, Phone, and Education */}
+            {/* Loading Animation */}
+            {/* {loading && (
+              <div className="flex justify-center py-4">
+                <DotLottieReact src={lottieAnim} loop autoplay   style={{ width: 100, height: 100 }}
+ />
+              </div>
+            )} */}
             {/* Buttons */}
             <div className="flex gap-3 pt-4">
               <button
@@ -271,10 +326,7 @@ const FeaturedCourses = () => {
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b "></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t "></div>
 
-      {/* Blob elements */}
-      {/* <div className="absolute top-20 left-20 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-20 right-20 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div> */}
+      
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">

@@ -41,7 +41,7 @@ export default function ResumePage() {
   const isFormValid = () => {
     return true; // Make the form always valid to allow submission without resume or links
   };
-
+  const baseUrl = "http://localhost:5000"
   const prodUrl ="https://skillonx-website.onrender.com";
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +55,7 @@ export default function ResumePage() {
 
     try {
       // Send the form data to the backend API
-      await axios.post(`https://skillonx-website.onrender.com/api/upload-resume`, formData, {
+      await axios.post(`${prodUrl}/api/upload-resume`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

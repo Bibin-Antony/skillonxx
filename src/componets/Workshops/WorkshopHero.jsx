@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Code, MessageSquare, Users, GraduationCap, X, Mail, Phone, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from 'axios'
+
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 // Workshop Enrollment Modal Component remains unchanged
 const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
   const [university, setUniversity] = useState("");
@@ -12,6 +16,24 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
   const [preferredDate, setPreferredDate] = useState("");
   const [batchSize, setBatchSize] = useState("");
   const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resetForm = () => {
+    setUniversity("");
+    setEmail("");
+    setPhone("");
+    
+    setWorkshopType("");
+    setPreferredDate("");
+    setBatchSize("");
+
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +42,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       setError("All fields are required");
       return;
     }
-
+    setFormState("submitting")
     const enrollmentData = {
       university,
       email,
@@ -29,14 +51,20 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       preferredDate,
       batchSize,
     };
-
+    const prodUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "http://localhost:5000"
     try {
       const response = await axios.post("http://localhost:5000/workshop", enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
-      onClose(); // Close the modal after submission
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
     } catch (error) {
       console.error("Error enrolling in workshop:", error);
       setError("An error occurred while enrolling. Please try again.");
+      setFormState("idle")
     }
   };
   return (
@@ -46,7 +74,24 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState==="submitting"&&(
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+            <div className="w-48 h-48">
+              <Lottie animationData={wait} loop />
+            </div>
+            <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+          </div>
+          )}
+          {formState==="success"&&(
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center
+            z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={complete} loop={false} />
+                </div>
+                <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was
+                  successful!</p>
+              </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
