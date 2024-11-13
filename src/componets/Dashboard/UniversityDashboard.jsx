@@ -57,7 +57,7 @@
 
 // export default StudentDashboard;
 import { useEffect, useState } from 'react'
-import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users,Menu, X  } from 'lucide-react'
+import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users,Menu, X,PersonStanding , BookOpenCheck } from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -192,7 +192,7 @@ function UniversityDashboard() {
       <div className={`
         fixed inset-y-0 left-0 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         md:relative md:translate-x-0 transition-transform duration-200 ease-in-out
-        w-64 p-4 shadow-sm bg-gray-200 mt-16 z-50 md:mt-0
+        w-64 p-4 shadow-sm bg-gray-200 mt-16  md:mt-0
       `}>
            <div className="flex items-center gap-2 mb-8">
     {sidebarOpen ? (
@@ -217,13 +217,21 @@ function UniversityDashboard() {
             <LayoutDashboard className="h-5 w-5" />
             Dashboard
           </a>
-          <Link to="/university-dashboard/courses" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/university-dashboard/courses-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Book className="h-5 w-5" />
             Courses
           </Link>
-          <Link to="/university-dashboard/workshops" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/university-dashboard/workshops-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Calendar className="h-5 w-5" />
             Workshops
+          </Link>
+          <Link to="/university-dashboard/assessment-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+            <BookOpenCheck className="h-5 w-5" />
+             Assessment
+          </Link>
+          <Link to="/university-dashboard/students" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+            <PersonStanding className="h-5 w-5" />
+             Students
           </Link>
           
           

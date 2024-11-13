@@ -12,7 +12,6 @@ import BreadCrumb from './componets/common/BreadCrumb';
 import CourseDetails from "./componets/Courses/CourseDetails";
 import WorkshopDetails from "./componets/Workshops/WorkshopDetails";
 import CoursesPages from './componets/Dashboard/CoursesPages'
-import AssessmentPage from './componets/Dashboard/AssessmentsPage'
 import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
 import WorkshopManagement from "./componets/Dashboard/WorkshopManagement";
 import BackToTopButton from './componets/common/BackToTop'
@@ -22,6 +21,11 @@ import {AuthProvider} from './auth/AuthContext'
 import ProtectedRoute from './auth/ProtectRoute'
 import NotFound from "./error/NotFound";
 import CreateWorkshopPage from "./componets/Dashboard/CreateWorkshopPages";
+import CreateAssessment from "./componets/Dashboard/CreateAssessment";
+import AssessmentsQuestion from './componets/Dashboard/AssessmentsQuestion'
+import TestPage from "./componets/Dashboard/AssessmentsPage";
+import GiveAssessment from './componets/Dashboard/GiveAssessment'
+import AllStudents from "./componets/Dashboard/AllStudents";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -167,9 +171,10 @@ const App = () => {
                     <DashboardLayout>
                       <Routes>
                         <Route index element={<StudentDashboard />} />
-                        <Route path="courses" element={<CoursesPages />} />
-                        <Route path="workshops" element={<WorkshopsPage />} />
-                        <Route path="assessments" element={<AssessmentPage />} />
+                        <Route path="courses-page" element={<CoursesPages />} />
+                        <Route path="workshops-page" element={<WorkshopsPage />} />
+                        <Route path="test" element={<TestPage />} />
+                        <Route path="check-assessment" element={<GiveAssessment/>}/>
                         <Route path="profile" element={<ProfilePage />} />
                       </Routes>
                     </DashboardLayout>
@@ -184,9 +189,14 @@ const App = () => {
                     <DashboardLayout>
                       <Routes>
                         <Route index element={<UniversityDashboard />} />
-                        <Route path="courses" element={<CoursesPages />} />
-                        <Route path="workshops" element={<WorkshopManagement />} />  {/* Renamed from WorkshopManagement */}
-                        <Route path="workshops/create-workshop" element={<CreateWorkshopPage />} />    
+                        <Route path="courses-page" element={<CoursesPages />} />
+                        <Route path="workshops-page" element={<WorkshopManagement />} />  {/* Renamed from WorkshopManagement */}
+                        <Route path="workshops-page/create-workshop" element={<CreateWorkshopPage />} />    
+                        <Route path="workshops-page/create-assessment/:workshopId" element={<AssessmentsQuestion/>} />    
+
+                        <Route path="assessment-page" element={<CreateAssessment/>}/>
+                        <Route path="students" element={<AllStudents/>}/>
+                        {/* <Route path="assessment-page/" element={<AssessmentsQuestion/>}/> */}
                         <Route path="profile" element={<ProfilePage />} />
                       </Routes>
                     </DashboardLayout>

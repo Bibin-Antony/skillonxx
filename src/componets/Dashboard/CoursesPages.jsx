@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ArrowLeft  } from 'lucide-react'
+import { Link } from 'react-router-dom';
 const CoursesPages = () => {
   const courses = [
     { id: 1, name: 'Introduction to Computer Science', progress: 75 },
@@ -9,8 +11,16 @@ const CoursesPages = () => {
   ];
 
   return (
-    <div className="p-6  pt-16 space-y-4">
-      <h2 className="text-2xl font-bold text-blue-600 mb-4">Courses</h2>
+    <div className="min-h-screen bg-gray-300 absolute inset-0 p-6 pt-10 space-y-4">
+      
+      <h2 className="text-2xl pt-16 font-bold text-blue-600 mb-4">Courses</h2>
+      <Link
+          to="/university-dashboard"
+          className="mb-6  inline-flex items-center text-blue-600 hover:text-gray-900"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Link>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {courses.map(course => (
           <div key={course.id} className="bg-white shadow-md rounded-lg p-4">

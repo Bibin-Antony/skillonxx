@@ -191,7 +191,7 @@ function StudentDashboard() {
       <div className={`
         fixed inset-y-0 left-0 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         md:relative md:translate-x-0 transition-transform duration-200 ease-in-out
-        w-64 p-4 shadow-sm bg-gray-200 mt-16 z-50 md:mt-0
+        w-64 p-4 shadow-sm bg-gray-200 mt-16  md:mt-0
       `}>
            <div className="flex items-center gap-2 mb-8">
     {sidebarOpen ? (
@@ -216,17 +216,21 @@ function StudentDashboard() {
             <LayoutDashboard className="h-5 w-5" />
             Dashboard
           </a>
-          <Link to="/student-dashboard/courses" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/courses-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Book className="h-5 w-5" />
             Courses
           </Link>
-          <Link to="/student-dashboard/workshops" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/workshops-page" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <Calendar className="h-5 w-5" />
             Workshops
           </Link>
-          <Link to="/student-dashboard/assessments" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+          <Link to="/student-dashboard/test" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <FileText className="h-5 w-5" />
             Tests
+          </Link>
+          <Link to="/student-dashboard/check-assessment" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
+            <FileText className="h-5 w-5" />
+            Assessment
           </Link>
           
           <Link to="/student-dashboard/profile" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">

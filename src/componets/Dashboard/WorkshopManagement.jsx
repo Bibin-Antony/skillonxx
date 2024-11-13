@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Calendar, Users, Clock, Trash2, Edit } from 'lucide-react';
+import { Plus, Calendar, Users, Clock, Trash2, Edit,ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -12,6 +12,7 @@ const WorkshopManagement = () => {
   const universityId = auth.user._id;
 
   useEffect(() => {
+    console.log(auth.user)
     fetchWorkshops();
   }, [auth.user]);
 
@@ -45,7 +46,15 @@ const WorkshopManagement = () => {
   // };
 
   return (
-    <div className="p-6 pt-20 min-h-screen bg-gray-100">
+    <div className="p-6 pt-20 min-h-screen bg-gray-300">
+      {/* Back Button */}
+      <Link
+          to="/university-dashboard"
+          className="mb-6 pl-24 inline-flex items-center text-blue-600 hover:text-gray-900"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to Dashboard
+        </Link>
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
@@ -134,6 +143,14 @@ const WorkshopManagement = () => {
                       </div>
                     )}
 
+          <Link
+            to={`create-assessment/${workshop._id}`}
+            state={{ workshop }}
+            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Create Assessment
+          </Link>
                     
                   </div>
                 </div>

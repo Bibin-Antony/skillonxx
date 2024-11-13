@@ -6,7 +6,7 @@ import { Radio, Space } from 'antd';
 import styled from 'styled-components';
 import confetti from 'canvas-confetti';
 
-const AssessmentPage = () => {
+const TestPage = () => {
   const [questions, setQuestions] = useState([]);
   const [showQuestions, setShowQuestions] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -170,4 +170,4 @@ const AssessmentPage = () => {
   );
 };
 
-export default AssessmentPage;
+export default TestPage;

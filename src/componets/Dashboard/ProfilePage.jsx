@@ -54,19 +54,21 @@ export default function EnhancedProfilePage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-24 bg-gradient-to-br from-blue-500 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
+      
       <motion.div
         className="max-w-4xl mx-auto"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <Link to="/dashboard/*"  className="inline-flex items-center text-blue-200 hover:text-blue-300 mb-6 transition-colors duration-200">
+      <Link to="/university-dashboard"  className="inline-flex items-center text-blue-200 hover:text-blue-300 mb-6 transition-colors duration-200">
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
         </Link>
         
         <motion.div variants={itemVariants} className="bg-white bg-opacity-30 backdrop-blur-lg rounded-lg overflow-hidden shadow-lg">
+          
           <div className="relative pb-24 md:pb-32">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 bg-opacity-20 backdrop-blur-lg"></div>
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end p-6">

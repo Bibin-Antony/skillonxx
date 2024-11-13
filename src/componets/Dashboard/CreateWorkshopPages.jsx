@@ -236,7 +236,7 @@ const CreateWorkshopPage = () => {
         console.log("added the workshop")
         setTimeout(() => {
           setShowSuccess(false);
-          navigate('/university-dashboard/workshops');
+          navigate('/university-dashboard/workshops-page');
         }, 2000);
       } else {
         throw new Error('Failed to add workshop');
@@ -248,7 +248,7 @@ const CreateWorkshopPage = () => {
 
    
   return (
-    <div className="p-6 pt-20 min-h-screen bg-gray-100">
+    <div className="p-6 pt-20 min-h-screen bg-gray-300">
       <div className="max-w-7xl mx-auto">
         {/* Success Message */}
         {showSuccess && (
@@ -260,8 +260,8 @@ const CreateWorkshopPage = () => {
 
         {/* Back Button */}
         <Link
-          to="/university-dashboard/workshops"
-          className="mb-6 inline-flex items-center text-gray-600 hover:text-gray-900"
+          to="/university-dashboard/workshops-page"
+          className="mb-6  inline-flex items-center text-blue-600 hover:text-gray-900"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Workshop Management
