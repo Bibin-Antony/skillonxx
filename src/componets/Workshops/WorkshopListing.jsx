@@ -109,7 +109,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
     const devUrl = "http://localhost:5000"
 
     try {
-      const response = await axios.post(`${devUrl}/workshop/workshop-enrollment`, enrollmentData);
+      const response = await axios.post(`${prodUrl}/workshop/workshop-enrollment`, enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
       setFormState("success")
       setTimeout(()=>{

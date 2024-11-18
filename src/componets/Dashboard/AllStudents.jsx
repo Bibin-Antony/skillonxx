@@ -19,11 +19,12 @@ const AllStudents = () => {
 
     const fetchStudents = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/university/get-students/${uniId}`, {
+            const response = await axios.get(`https://skillonx-website.onrender.com/university/get-students/${uniId}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+            console.log(response)
             const formattedStudents = response.data.data.map(student => ({
                 ...student,
                 fullName: `${student.firstName || ''} ${student.lastName || ''}`.trim() || 'N/A'
@@ -250,6 +251,7 @@ const AllStudents = () => {
                                         <Building className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
                                         <span className="text-gray-600">{student.universityName || 'Not specified'}</span>
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>

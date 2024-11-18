@@ -22,7 +22,7 @@ const CreateAssessment = () => {
   const fetchAssesments = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/assessments/university/${universityId}`);
+      const response = await fetch(`https://skillonx-website.onrender.com/assessments/university/${universityId}`);
       const { data } = await response.json();
       console.log('Fetched assessment:', data);
       setAssessments(data);

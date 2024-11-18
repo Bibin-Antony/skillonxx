@@ -220,7 +220,7 @@ const CreateWorkshopPage = () => {
 
   const handleAddWorkshop = async (workshop) => {
     try {
-      const response = await fetch('http://localhost:5000/workshops/add', {
+      const response = await fetch('https://skillonx-website.onrender.com/workshops/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

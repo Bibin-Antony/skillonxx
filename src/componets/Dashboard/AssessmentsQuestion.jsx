@@ -24,7 +24,7 @@ const AssessmentsQuestion = () => {
     const fetchWorkshopData = async () => {
       if (!workshop && workshopId) {
         try {
-          const response = await axios.get(`http://localhost:5000/workshops/${workshopId}`);
+          const response = await axios.get(`https://skillonx-website.onrender.com/workshops/${workshopId}`);
           setWorkshop(response.data.data);
           setAssessmentTitle(response.data.data.title);
           setAssessmentDescription(response.data.data.description);
@@ -132,7 +132,7 @@ const AssessmentsQuestion = () => {
       };
 
       const response = await axios.post(
-        'http://localhost:5000/assessments/add',
+        'https://skillonx-website.onrender.com/add',
         assessmentData,
         {
           headers: {

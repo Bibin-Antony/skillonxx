@@ -15,7 +15,7 @@ import CoursesPages from './componets/Dashboard/CoursesPages'
 import WorkshopsPage from './componets/Dashboard/WorkshopsPage'
 import WorkshopManagement from "./componets/Dashboard/WorkshopManagement";
 import BackToTopButton from './componets/common/BackToTop'
-import ProfilePage from "./componets/Dashboard/ProfilePage";
+import StuProfilePage from "./componets/Dashboard/StuProfilePage";
 import UniversityDashboard from "./componets/Dashboard/UniversityDashboard";
 import {AuthProvider} from './auth/AuthContext'
 import ProtectedRoute from './auth/ProtectRoute'
@@ -26,6 +26,12 @@ import AssessmentsQuestion from './componets/Dashboard/AssessmentsQuestion'
 import TestPage from "./componets/Dashboard/AssessmentsPage";
 import GiveAssessment from './componets/Dashboard/GiveAssessment'
 import AllStudents from "./componets/Dashboard/AllStudents";
+import AdminDashboard from "./componets/Dashboard/AdminDashboard";
+import AdminLogin from './componets/admin/AdminLogin'
+import AdminUniversities from "./componets/Dashboard/admindash/AdminUniversities";
+import AdminStudents from "./componets/Dashboard/admindash/AdminStudents";
+import AdminAssessment from "./componets/Dashboard/admindash/AdminAssessment";
+import UniProfilePage from "./componets/Dashboard/UniProfilePage";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -164,6 +170,25 @@ const App = () => {
             <Route path="/profile-page" element={<ProfilePage/>} /> */}
             {/* <Route path="/university-dashboard" element={<UniversityDashboard/>}/> */}
             {/* Student Dashboard Routes */}
+            <Route path="/manage-system-access" element={<AdminLogin />} />
+
+            <Route 
+    path="/admin/*" 
+    element={
+      <ProtectedRoute allowedUserTypes={['admin']}>
+        <DashboardLayout>
+          <Routes>
+            <Route index element={<AdminDashboard />} />
+            <Route path="universities" element={<AdminUniversities/>} />
+            <Route path="students" element={<AdminStudents/>} />
+            <Route path="assessments" element={<AdminAssessment/>} />
+            {/* Other admin routes */}
+          </Routes>
+        </DashboardLayout>
+      </ProtectedRoute>
+    } 
+  />
+              
             <Route 
                 path="/student-dashboard/*" 
                 element={
@@ -175,7 +200,7 @@ const App = () => {
                         <Route path="workshops-page" element={<WorkshopsPage />} />
                         <Route path="test" element={<TestPage />} />
                         <Route path="check-assessment" element={<GiveAssessment/>}/>
-                        <Route path="profile" element={<ProfilePage />} />
+                        <Route path="profile" element={<StuProfilePage />} />
                       </Routes>
                     </DashboardLayout>
                   </ProtectedRoute>
@@ -197,7 +222,7 @@ const App = () => {
                         <Route path="assessment-page" element={<CreateAssessment/>}/>
                         <Route path="students" element={<AllStudents/>}/>
                         {/* <Route path="assessment-page/" element={<AssessmentsQuestion/>}/> */}
-                        <Route path="profile" element={<ProfilePage />} />
+                        <Route path="profile" element={<UniProfilePage />} />
                       </Routes>
                     </DashboardLayout>
                   </ProtectedRoute>

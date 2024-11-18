@@ -35,7 +35,7 @@ const CTASectionCourses = () => {
       const prodUrl = "https://skillonx-website.onrender.com"
       const devUrl = "http://localhost:5000"
       try {
-        const response = await axios.post("http://localhost:5000/scheduleconsultation", scheduleData);
+        const response = await axios.post("https://skillonx-website.onrender.com/scheduleconsultation", scheduleData);
         console.log("Schedule created successfully:", response.data);
         setFormState("success");  
         setTimeout(()=>{

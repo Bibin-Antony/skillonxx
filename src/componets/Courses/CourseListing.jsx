@@ -151,7 +151,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
     const prodUrl = "https://skillonx-website.onrender.com"
     const devUrl = "http://localhost:5000"
     try {
-      const response = await axios.post("http://localhost:5000/createprofessionalcourse", enrollmentData);
+      const response = await axios.post("https://skillonx-website.onrender.com/createprofessionalcourse", enrollmentData);
       console.log("Enrollment Successful:", response.data);
       setFormState("success");
       setTimeout(() => {

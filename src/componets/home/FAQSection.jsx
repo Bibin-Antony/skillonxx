@@ -193,9 +193,11 @@ const FloatingElements = () => (
 const FAQSection = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [notFoundMessage, setNotFoundMessage] = useState("");
+  const prodUrl = "https://skillonx-website.onrender.com"
+
   const handleNotFoundQuestion = async () => {
     try {
-      await axios.post("http://localhost:5000/questions-not-found", { question: searchTerm });
+      await axios.post("https://skillonx-website.onrender.com/questions-not-found", { question: searchTerm });
       setNotFoundMessage("Your question has been submitted.");
     } catch (error) {
       setNotFoundMessage("There was an error submitting your question.");

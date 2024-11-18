@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL =  'http://localhost:5000';
+const BASE_URL =  'https://skillonx-website.onrender.com';
 
 const api = axios.create({
   baseURL: BASE_URL,
