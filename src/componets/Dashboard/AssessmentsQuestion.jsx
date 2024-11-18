@@ -132,7 +132,7 @@ const AssessmentsQuestion = () => {
       };
 
       const response = await axios.post(
-        'https://skillonx-server.onrender.com/add',
+        'https://skillonx-server.onrender.com/assessments/add',
         assessmentData,
         {
           headers: {
