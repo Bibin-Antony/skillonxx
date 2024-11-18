@@ -65,6 +65,7 @@ import { authService } from '../../services/authServices';
 import userImg from '../../assets/user/avatar-1.svg'
 import Navbar from '../home/Navbar'
 import Footer from '../home/Footer'
+import NotificationButton from './NotificationButton';
 // Custom Button component
 const Button = ({ children, className, variant = 'default', size = 'default', ...props }) => {
   const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
@@ -229,6 +230,7 @@ function UniversityDashboard() {
             <BookOpenCheck className="h-5 w-5" />
              Assessment
           </Link>
+          
           <Link to="/university-dashboard/students" className="flex items-center gap-2 text-gray-600 px-4 py-2 rounded hover:bg-gray-50">
             <PersonStanding className="h-5 w-5" />
              Students
@@ -265,6 +267,7 @@ function UniversityDashboard() {
       )}
           <h1 className="text-xl md:text-2xl font-bold">University Dashboard</h1>
           <div className="flex items-center gap-4 w-full sm:w-auto justify-between sm:justify-end">
+          <NotificationButton />
             <Link to="/profile">
               <img
                 src={userImg}

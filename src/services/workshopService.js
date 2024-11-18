@@ -7,7 +7,7 @@ export const addWorkshopToUniversity = async (workshopData) => {
     try {
         console.log('Sending workshop data:', workshopData); // Debug log
 
-        const response = await fetch('http://localhost:5000/add/workshops', {
+        const response = await fetch('https://skillonx-website.onrender.com/add/workshops', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

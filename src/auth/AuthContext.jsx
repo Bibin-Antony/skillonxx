@@ -21,11 +21,36 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem('user');
     setAuth(null);
   };
-  
+
+  // User type checks
   const isStudent = () => auth?.user?.userType === 'student';
   const isUniversity = () => auth?.user?.userType === 'university';
+  const isAdmin = () => auth?.user?.userType === 'admin';
+
+  // Get dashboard route based on user type
+  const getDashboardRoute = () => {
+    switch (auth?.user?.userType) {
+      case 'admin':
+        return '/admin';
+      case 'student':
+        return '/student-dashboard';
+      case 'university':
+        return '/university-dashboard';
+      default:
+        return '/';
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ auth, login, logout,isStudent, isUniversity }}>
+    <AuthContext.Provider value={{ 
+      auth, 
+      login, 
+      logout, 
+      isStudent, 
+      isUniversity, 
+      isAdmin,
+      getDashboardRoute 
+    }}>
       {children}
     </AuthContext.Provider>
   );
@@ -39,5 +64,4 @@ export const useAuth = () => {
   return context;
 };
 
-// You can also export default if you prefer
 export default AuthContext;

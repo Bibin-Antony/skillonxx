@@ -20,7 +20,7 @@ const Button = ({ children, className, variant = 'primary', ...props }) => {
   )
 }
 
-export default function EnhancedProfilePage() {
+export default function UniProfilePage() {
   const userData = {
     name: "Jane Doe",
     email: "jane.doe@example.com",

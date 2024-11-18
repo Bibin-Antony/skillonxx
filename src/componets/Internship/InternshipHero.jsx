@@ -35,7 +35,7 @@ const InternShipModal = ({ isVisible, onClose }) => {
     const prodUrl = "https://skillonx-website.onrender.com"
     const devUrl="http://localhost:5000"
     try {
-      let res = await axios.post(`${devUrl}/workshop/consultation`, consultationData);
+      let res = await axios.post(`${prodUrl}/workshop/consultation`, consultationData);
       console.log("form submitted",res.data)
       setFormState("success")
       setTimeout(()=>{

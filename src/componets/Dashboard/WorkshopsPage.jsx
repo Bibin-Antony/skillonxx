@@ -15,7 +15,7 @@ const RegistrationForm = ({ workshop, onClose, stuId }) => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/student/register-workshop', {
+      const response = await fetch('https://skillonx-website.onrender.com/student/register-workshop', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,6 +30,7 @@ const RegistrationForm = ({ workshop, onClose, stuId }) => {
       });
 
       const data = await response.json();
+      console.log(data)
       if (!response.ok) {
         throw new Error(data.message || 'Failed to register');
       }
@@ -136,7 +137,7 @@ const WorkshopPage = () => {
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/workshops/get-workshops/${stuId}`, {
+        const response = await fetch(`https://skillonx-website.onrender.com/workshops/get-workshops/${stuId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'

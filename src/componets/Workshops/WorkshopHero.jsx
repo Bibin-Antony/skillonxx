@@ -54,7 +54,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
     const prodUrl = "https://skillonx-website.onrender.com"
     const devUrl = "http://localhost:5000"
     try {
-      const response = await axios.post("http://localhost:5000/workshop", enrollmentData);
+      const response = await axios.post("https://skillonx-website.onrender.com/workshop", enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
       setFormState("success")
       setTimeout(()=>{

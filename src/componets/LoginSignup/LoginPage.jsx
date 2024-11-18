@@ -45,7 +45,6 @@ const LoginPage = () => {
     //     email,
     //     password,
     //   });
-
     //   // console.log(response)
     //     const { token, redirectUrl,user } = response.data;
     //     console.log(token)

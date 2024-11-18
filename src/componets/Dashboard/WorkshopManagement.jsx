@@ -19,7 +19,7 @@ const WorkshopManagement = () => {
   const fetchWorkshops = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`http://localhost:5000/workshops/university/${universityId}`);
+      const response = await fetch(`https://skillonx-website.onrender.com/workshops/university/${universityId}`);
       const { data } = await response.json();
       console.log('Fetched workshops:', data);
       setWorkshops(data);
