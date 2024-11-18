@@ -15,7 +15,7 @@ const RegistrationForm = ({ workshop, onClose, stuId }) => {
     setError('');
 
     try {
-      const response = await fetch('https://skillonx-website.onrender.com/student/register-workshop', {
+      const response = await fetch('https://skillonx-server.onrender.com/student/register-workshop', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -112,9 +112,8 @@ const RegistrationForm = ({ workshop, onClose, stuId }) => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 ${
-                  loading ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 ${loading ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
               >
                 {loading ? 'Registering...' : 'Confirm Registration'}
               </button>
@@ -137,7 +136,7 @@ const WorkshopPage = () => {
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        const response = await fetch(`https://skillonx-website.onrender.com/workshops/get-workshops/${stuId}`, {
+        const response = await fetch(`https://skillonx-server.onrender.com/workshops/get-workshops/${stuId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'

@@ -24,7 +24,7 @@ const AssessmentsQuestion = () => {
     const fetchWorkshopData = async () => {
       if (!workshop && workshopId) {
         try {
-          const response = await axios.get(`https://skillonx-website.onrender.com/workshops/${workshopId}`);
+          const response = await axios.get(`https://skillonx-server.onrender.com/workshops/${workshopId}`);
           setWorkshop(response.data.data);
           setAssessmentTitle(response.data.data.title);
           setAssessmentDescription(response.data.data.description);
@@ -93,7 +93,7 @@ const AssessmentsQuestion = () => {
     if (!assessmentDescription.trim()) {
       throw new Error('Assessment description is required');
     }
-    
+
     questions.forEach((question, index) => {
       if (!question.questionText.trim()) {
         throw new Error(`Question ${index + 1} text is required`);
@@ -132,7 +132,7 @@ const AssessmentsQuestion = () => {
       };
 
       const response = await axios.post(
-        'https://skillonx-website.onrender.com/add',
+        'https://skillonx-server.onrender.com/add',
         assessmentData,
         {
           headers: {
@@ -166,7 +166,7 @@ const AssessmentsQuestion = () => {
           <h1 className="text-2xl font-bold text-gray-900 mb-6">
             Create Assessment for {workshop?.title}
           </h1>
-          
+
           {/* Assessment Details */}
           <div className="space-y-6 mb-8">
             <div>
@@ -182,7 +182,7 @@ const AssessmentsQuestion = () => {
                 disabled
               />
             </div>
-            
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Description

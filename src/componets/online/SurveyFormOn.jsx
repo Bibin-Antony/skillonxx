@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +16,7 @@ export default function SurveyFormOn() {
     email: '',
     phone: ''
   });
-  
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -60,7 +60,7 @@ export default function SurveyFormOn() {
     let userData = { ...formData, isStudent, isLocation, referralCode };
     console.log(userData);
     const baseUrl = "http://localhost:5000"
-    const devUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
 
 
     if (validateForm()) {
@@ -99,13 +99,13 @@ export default function SurveyFormOn() {
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-100 to-gray-300 animate-gradient-x flex flex-col items-center justify-center p-4 overflow-auto">
       <div className="w-full max-w-md mx-auto">
         <div className="mb-6 flex justify-center">
-          <img 
-            src={logoImage} 
-            alt="Company Logo" 
+          <img
+            src={logoImage}
+            alt="Company Logo"
             className="h-20 md:h-28 transition-transform duration-300 hover:scale-105"
           />
         </div>
-        
+
         <div className="w-full max-w-md rounded-lg shadow-2xl glassmorphism-enhanced p-6 space-y-6 bg-white shadow-gray-500 bg-opacity-20 backdrop-blur-lg">
           <style jsx>{`
             @keyframes loading {
@@ -126,9 +126,9 @@ export default function SurveyFormOn() {
               Step 1/2
             </p>
           </div>
-          
+
           <div className="w-full bg-blue-100 rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="bg-gradient-to-r from-blue-300 to-blue-600 h-full rounded-full"
               style={{
                 width: '50%',
@@ -136,7 +136,7 @@ export default function SurveyFormOn() {
               }}
             />
           </div>
-          
+
           <form className="space-y-5" onSubmit={handleSubmit}>
             {formFields.map((field) => (
               <div key={field.name}>
@@ -166,18 +166,16 @@ export default function SurveyFormOn() {
                 <button
                   type="button"
                   onClick={() => setIsStudent(true)}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
-                    isStudent === true ? 'bg-blue-500 text-white' : 'bg-white  text-gray-700 hover:scale-95'
-                  } transition-colors duration-200`}
+                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${isStudent === true ? 'bg-blue-500 text-white' : 'bg-white  text-gray-700 hover:scale-95'
+                    } transition-colors duration-200`}
                 >
                   Yes
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsStudent(false)}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
-                    isStudent === false ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:scale-95'
-                  } transition-colors duration-200`}
+                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${isStudent === false ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:scale-95'
+                    } transition-colors duration-200`}
                 >
                   No
                 </button>
@@ -190,18 +188,16 @@ export default function SurveyFormOn() {
                 <button
                   type="button"
                   onClick={() => setIsLocation(true)}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
-                    isLocation === true ? 'bg-blue-500 text-white' : 'bg-white  text-gray-700 hover:scale-95'
-                  } transition-colors duration-200`}
+                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${isLocation === true ? 'bg-blue-500 text-white' : 'bg-white  text-gray-700 hover:scale-95'
+                    } transition-colors duration-200`}
                 >
                   Yes
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsLocation(false)}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${
-                    isLocation === false ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:scale-95'
-                  } transition-colors duration-200`}
+                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium ${isLocation === false ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:scale-95'
+                    } transition-colors duration-200`}
                 >
                   No
                 </button>
@@ -209,7 +205,7 @@ export default function SurveyFormOn() {
               {formErrors.isLocation && <p className="text-red-500 text-sm">{formErrors.isLocation}</p>}
             </div>
 
-            <button 
+            <button
               type="submit"
               className="w-full text-white py-3 px-6 rounded-xl 
                          text-lg font-semibold
@@ -227,8 +223,8 @@ export default function SurveyFormOn() {
                 {isHovered ? 'Continue' : 'Submit'}
               </span>
               <svg className="w-5 h-5 ml-2 text-white relative z-10 transition-all duration-300 group-hover:translate-x-1"
-                   fill="none" stroke="currentColor" viewBox="0 0 24 24" 
-                   xmlns="http://www.w3.org/2000/svg">
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
               </svg>
             </button>

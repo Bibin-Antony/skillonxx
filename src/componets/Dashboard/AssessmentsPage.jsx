@@ -16,7 +16,7 @@ const TestPage = () => {
 
   const fetchPythonTest = async () => {
     try {
-      const response = await axios.get('https://skillonx-website.onrender.com/questions/python-test');
+      const response = await axios.get('https://skillonx-server.onrender.com/questions/python-test');
       setQuestions(response.data);
       setShowQuestions(true);
       confetti({

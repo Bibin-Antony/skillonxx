@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Calendar, Users, Clock, Trash2, Edit,ArrowLeft } from 'lucide-react';
+import { Plus, Calendar, Users, Clock, Trash2, Edit, ArrowLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -19,7 +19,7 @@ const WorkshopManagement = () => {
   const fetchWorkshops = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`https://skillonx-website.onrender.com/workshops/university/${universityId}`);
+      const response = await fetch(`https://skillonx-server.onrender.com/workshops/university/${universityId}`);
       const { data } = await response.json();
       console.log('Fetched workshops:', data);
       setWorkshops(data);
@@ -49,12 +49,12 @@ const WorkshopManagement = () => {
     <div className="p-6 pt-20 min-h-screen bg-gray-300">
       {/* Back Button */}
       <Link
-          to="/university-dashboard"
-          className="mb-6 pl-24 inline-flex items-center text-blue-600 hover:text-gray-900"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Dashboard
-        </Link>
+        to="/university-dashboard"
+        className="mb-6 pl-24 inline-flex items-center text-blue-600 hover:text-gray-900"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Dashboard
+      </Link>
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <div>
@@ -90,13 +90,13 @@ const WorkshopManagement = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {workshops.map((workshop) => (
-                <div 
-                  key={workshop._id} 
+                <div
+                  key={workshop._id}
                   className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
                 >
                   {workshop.image && (
                     <div className="aspect-video w-full overflow-hidden">
-                      <img 
+                      <img
                         src={workshop.image}
                         alt={workshop.title}
                         className="w-full h-full object-cover"
@@ -110,11 +110,11 @@ const WorkshopManagement = () => {
                         {workshop.category}
                       </span>
                     </div>
-                    
+
                     <p className="text-sm text-gray-600 mb-4">
                       {workshop.description}
                     </p>
-                    
+
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center text-sm text-gray-600">
                         <Clock className="w-4 h-4 mr-2" />
@@ -133,7 +133,7 @@ const WorkshopManagement = () => {
                     {workshop.highlights && (
                       <div className="flex flex-wrap gap-2 mb-4">
                         {workshop.highlights.map((highlight, index) => (
-                          <span 
+                          <span
                             key={index}
                             className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
                           >
@@ -143,15 +143,15 @@ const WorkshopManagement = () => {
                       </div>
                     )}
 
-          <Link
-            to={`create-assessment/${workshop._id}`}
-            state={{ workshop }}
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Create Assessment
-          </Link>
-                    
+                    <Link
+                      to={`create-assessment/${workshop._id}`}
+                      state={{ workshop }}
+                      className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Create Assessment
+                    </Link>
+
                   </div>
                 </div>
               ))}

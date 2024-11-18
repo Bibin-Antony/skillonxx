@@ -28,14 +28,14 @@ export default function SurveyFormOff() {
 
   const validateForm = () => {
     const errors = {};
-    
+
     // Validate required fields
     ['fullName', 'email', 'phone'].forEach(field => {
       if (!formData[field]) {
         errors[field] = `${formFields.find(f => f.name === field).label} is required`;
       }
     });
-    
+
 
     if (formData.phone && !/^\d{10}$/.test(formData.phone)) {
       errors.phone = 'Phone number must be exactly 10 digits';
@@ -49,11 +49,11 @@ export default function SurveyFormOff() {
     }
 
     setFormErrors(errors);
-    
+
     return Object.keys(errors).length === 0;
   };
-  const baseUrl ="http://localhost:5000"
-  const devUrl = "https://skillonx-website.onrender.com"
+  const baseUrl = "http://localhost:5000"
+  const devUrl = "https://skillonx-server.onrender.com"
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,13 +95,13 @@ export default function SurveyFormOff() {
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-100 to-gray-300 animate-gradient-x flex flex-col items-center justify-center p-4 overflow-auto">
       <div className="w-full max-w-md mx-auto">
         <div className="mb-6 flex justify-center">
-          <img 
-            src={logoImage} 
-            alt="Company Logo" 
+          <img
+            src={logoImage}
+            alt="Company Logo"
             className="h-20 md:h-28 transition-transform duration-300 hover:scale-105"
           />
         </div>
-        
+
         <div className="w-full max-w-md rounded-lg shadow-2xl glassmorphism-enhanced p-6 space-y-6 bg-white shadow-gray-500 bg-opacity-20 backdrop-blur-lg">
           <style jsx>{`
             @keyframes loading {
@@ -122,9 +122,9 @@ export default function SurveyFormOff() {
               Step 1/2
             </p>
           </div>
-          
+
           <div className="w-full bg-blue-100 rounded-full h-2 overflow-hidden">
-            <div 
+            <div
               className="bg-gradient-to-r from-blue-300 to-blue-600 h-full rounded-full"
               style={{
                 width: '50%',
@@ -132,7 +132,7 @@ export default function SurveyFormOff() {
               }}
             />
           </div>
-          
+
           <form className="space-y-5" onSubmit={handleSubmit}>
             {formFields.map((field) => (
               <div key={field.name}>
@@ -197,7 +197,7 @@ export default function SurveyFormOff() {
               {formErrors.isLocation && <p className="text-red-500 text-sm">{formErrors.isLocation}</p>}
             </div>
 
-            <button 
+            <button
               type="submit"
               className="w-full text-white py-3 px-6 rounded-xl text-lg font-semibold transition-all duration-300 ease-in-out hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 active:shadow-md flex items-center justify-center relative overflow-hidden group"
               onMouseEnter={() => setIsHovered(true)}
@@ -209,8 +209,8 @@ export default function SurveyFormOff() {
                 {isHovered ? 'Continue' : 'Next'}
               </span>
               <svg className="w-5 h-5 ml-2 text-white relative z-10 transition-all duration-300 group-hover:translate-x-1"
-                   fill="none" stroke="currentColor" viewBox="0 0 24 24" 
-                   xmlns="http://www.w3.org/2000/svg">
+                fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
               </svg>
             </button>

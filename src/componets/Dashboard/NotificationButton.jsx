@@ -15,7 +15,7 @@ const NotificationModal = ({ isOpen, onClose, notifications, onClearAll }) => {
           <h2 className="text-lg font-semibold">Workshop Registrations</h2>
           <div className="flex gap-2">
             {notifications.length > 0 && (
-              <button 
+              <button
                 onClick={onClearAll}
                 className="text-sm text-blue-600 hover:text-blue-800"
               >
@@ -27,7 +27,7 @@ const NotificationModal = ({ isOpen, onClose, notifications, onClearAll }) => {
             </button>
           </div>
         </div>
-        
+
         <div className="overflow-y-auto max-h-[calc(100vh-64px)]">
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center p-8 text-gray-500">
@@ -80,7 +80,7 @@ const NotificationButton = () => {
   const uniId = auth.user._id
   const fetchNotifications = async () => {
     try {
-      const response = await fetch(`https://skillonx-website.onrender.com/university/workshop-registrations/${uniId}`, {
+      const response = await fetch(`https://skillonx-server.onrender.com/university/workshop-registrations/${uniId}`, {
         credentials: 'include'
       });
       if (!response.ok) throw new Error('Failed to fetch notifications');
@@ -93,7 +93,7 @@ const NotificationButton = () => {
 
   const clearAllNotifications = async () => {
     try {
-      await fetch(`https://skillonx-website.onrender.com/university/clear-notifications/${uniId}`, {
+      await fetch(`https://skillonx-server.onrender.com/university/clear-notifications/${uniId}`, {
         method: 'POST',
         credentials: 'include'
       });

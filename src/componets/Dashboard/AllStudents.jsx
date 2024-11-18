@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Mail, Phone, Building, UserCircle, Search, ChevronLeft, ChevronRight,GraduationCap } from 'lucide-react';
+import { User, Mail, Phone, Building, UserCircle, Search, ChevronLeft, ChevronRight, GraduationCap } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import axios from 'axios';
 
@@ -19,7 +19,7 @@ const AllStudents = () => {
 
     const fetchStudents = async () => {
         try {
-            const response = await axios.get(`https://skillonx-website.onrender.com/university/get-students/${uniId}`, {
+            const response = await axios.get(`https://skillonx-server.onrender.com/university/get-students/${uniId}`, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -51,14 +51,14 @@ const AllStudents = () => {
     const filteredStudents = students.filter(student => {
         if (!student) return false;
 
-        const matchesSearch = searchTerm === '' || 
+        const matchesSearch = searchTerm === '' ||
             safeIncludes(student.fullName, searchTerm) ||
             safeIncludes(student.email, searchTerm) ||
             safeIncludes(student.universityName, searchTerm);
-        
-        const matchesGender = filterGender === 'all' || 
+
+        const matchesGender = filterGender === 'all' ||
             (student.gender && student.gender.toLowerCase() === filterGender.toLowerCase());
-        
+
         return matchesSearch && matchesGender;
     });
 
@@ -66,12 +66,12 @@ const AllStudents = () => {
     const sortedStudents = [...filteredStudents].sort((a, b) => {
         const order = sortOrder === 'asc' ? 1 : -1;
         if (!a || !b) return 0;
-        
+
         const getCompareValue = (student) => {
             if (sortBy === 'name') return student.fullName;
             return student[sortBy] || '';
         };
-        
+
         return getCompareValue(a).localeCompare(getCompareValue(b)) * order;
     });
 
@@ -89,19 +89,18 @@ const AllStudents = () => {
         );
     }
     const MobileFilters = () => (
-        <div 
-            className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${
-                isMobileFiltersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
+        <div
+            className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${isMobileFiltersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
             onClick={() => setIsMobileFiltersOpen(false)}
         >
-            <div 
+            <div
                 className="absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white p-4"
                 onClick={e => e.stopPropagation()}
             >
                 <div className="flex justify-between items-center mb-4">
                     <h3 className="text-lg font-semibold">Filters</h3>
-                    <button 
+                    <button
                         onClick={() => setIsMobileFiltersOpen(false)}
                         className="p-2 hover:bg-gray-100 rounded-lg"
                     >
@@ -180,7 +179,7 @@ const AllStudents = () => {
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
                             </div>
-                            
+
                             <div className="flex gap-2 flex-wrap">
                                 <select
                                     className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors text-gray-600"
@@ -217,8 +216,8 @@ const AllStudents = () => {
                 {/* Students Grid */}
                 <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                     {currentStudents.map((student) => (
-                        <div 
-                            key={student._id} 
+                        <div
+                            key={student._id}
                             className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-purple-100 hover:border-purple-200"
                         >
                             <div className="p-5 md:p-6">
@@ -241,17 +240,17 @@ const AllStudents = () => {
                                         <Mail className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
                                         <span className="text-gray-600 break-all">{student.email || 'No email'}</span>
                                     </div>
-                                    
+
                                     <div className="flex items-center p-2 rounded-lg bg-gray-50 group hover:bg-purple-50 transition-colors">
                                         <Phone className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
                                         <span className="text-gray-600">{student.phone || 'Not provided'}</span>
                                     </div>
-                                    
+
                                     <div className="flex items-center p-2 rounded-lg bg-gray-50 group hover:bg-purple-50 transition-colors">
                                         <Building className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
                                         <span className="text-gray-600">{student.universityName || 'Not specified'}</span>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -273,11 +272,10 @@ const AllStudents = () => {
                                 <button
                                     key={number}
                                     onClick={() => paginate(number)}
-                                    className={`px-4 py-2 rounded-lg transition-all duration-200 ${
-                                        currentPage === number
+                                    className={`px-4 py-2 rounded-lg transition-all duration-200 ${currentPage === number
                                             ? 'bg-purple-500 text-white shadow-sm'
                                             : 'bg-white border border-gray-200 hover:bg-purple-50 text-gray-600'
-                                    }`}
+                                        }`}
                                 >
                                     {number}
                                 </button>

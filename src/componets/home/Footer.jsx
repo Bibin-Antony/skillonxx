@@ -9,10 +9,10 @@ const Footer = () => {
     const newEmail = {
       email
     }
-    const devUrl = "https://skillonx-website.onrender.com"
+    const url = "https://skillonx-server.onrender.com/"
 
     try{
-      const res = await axios.post('https://skillonx-website.onrender.com/stayconnected', newEmail)
+      const res = await axios.post('https://skillonx-server.onrender.com/stayconnected', newEmail)
       console.log("Email Saved Successful:", res.data);
 
     }catch(e){

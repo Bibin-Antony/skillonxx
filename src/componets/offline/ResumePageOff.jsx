@@ -16,9 +16,9 @@ export default function ResumePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { email } = location.state || {}; // Retrieve email from state
-  
+
   console.log(email);
-  
+
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
   };
@@ -55,8 +55,8 @@ export default function ResumePage() {
       formData.append('instagramUrl', instagramUrl);
       console.log('FormData:', linkedinUrl, instagramUrl, file);
 
-      const baseUrl ="http://localhost:5000"
-      const devUrl = "https://skillonx-website.onrender.com"
+      const baseUrl = "http://localhost:5000"
+      const devUrl = "https://skillonx-server.onrender.com"
 
       try {
         // Send the form data to the backend API
@@ -65,7 +65,7 @@ export default function ResumePage() {
             'Content-Type': 'multipart/form-data',
           },
         });
-        
+
 
         // alert('Resume submitted successfully');
       } catch (error) {
@@ -94,7 +94,7 @@ export default function ResumePage() {
           <h1 className="text-2xl font-bold text-gray-800">Your personal information</h1>
           <p className="text-sm text-gray-800 mt-2">Step 2/2</p>
           <div className="w-full bg-blue-100 rounded-full h-2 mt-3 overflow-hidden">
-            <div 
+            <div
               className="bg-gradient-to-r from-blue-300 to-blue-600 h-full rounded-full"
               style={{
                 width: '100%',
@@ -188,30 +188,30 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <Link 
-            to="/FinalPage/offline"
-            className="w-full text-white py-2 sm:py-3 px-4 sm:px-6 rounded-xl 
+        <Link
+          to="/FinalPage/offline"
+          className="w-full text-white py-2 sm:py-3 px-4 sm:px-6 rounded-xl 
                        text-base sm:text-lg font-semibold
                        transition-all duration-300 ease-in-out
                        hover:shadow-lg hover:-translate-y-0.5
                        active:translate-y-0 active:shadow-md
                        flex items-center justify-center
                        relative overflow-hidden group"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
-            onClick={handleSubmit}
-          >
-            <div className="absolute inset-0 bg-sky-500 transition-transform duration-300 ease-in-out group-hover:translate-x-[-100%]"></div>
-            <div className="absolute inset-0 bg-gray-900 transition-transform duration-300 ease-in-out translate-x-[100%] group-hover:translate-x-0"></div>
-            <span className="relative z-10 transition-all text-white duration-300 group-hover:tracking-wider">
-              {isHovered ? 'Continue' : 'Submit'}
-            </span>
-            <svg className="w-4 h-4 sm:w-5 text-white sm:h-5 ml-2 relative z-10 transition-all duration-300 group-hover:translate-x-1"
-                 fill="none" stroke="currentColor" viewBox="0 0 24 24" 
-                 xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-          </Link>
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={handleSubmit}
+        >
+          <div className="absolute inset-0 bg-sky-500 transition-transform duration-300 ease-in-out group-hover:translate-x-[-100%]"></div>
+          <div className="absolute inset-0 bg-gray-900 transition-transform duration-300 ease-in-out translate-x-[100%] group-hover:translate-x-0"></div>
+          <span className="relative z-10 transition-all text-white duration-300 group-hover:tracking-wider">
+            {isHovered ? 'Continue' : 'Submit'}
+          </span>
+          <svg className="w-4 h-4 sm:w-5 text-white sm:h-5 ml-2 relative z-10 transition-all duration-300 group-hover:translate-x-1"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </Link>
       </div>
     </div>
   );

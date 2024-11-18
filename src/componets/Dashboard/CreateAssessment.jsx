@@ -22,7 +22,7 @@ const CreateAssessment = () => {
   const fetchAssesments = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`https://skillonx-website.onrender.com/assessments/university/${universityId}`);
+      const response = await fetch(`https://skillonx-server.onrender.com/assessments/university/${universityId}`);
       const { data } = await response.json();
       console.log('Fetched assessment:', data);
       setAssessments(data);
@@ -68,7 +68,7 @@ const CreateAssessment = () => {
 
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
           <h2 className="text-xl font-semibold mb-4 text-gray-800">Your Active Assessments</h2>
-          
+
           {assessments.length === 0 ? (
             <div className="text-center py-8">
               <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-3" />
@@ -77,8 +77,8 @@ const CreateAssessment = () => {
           ) : (
             <div className="space-y-8">
               {assessments.map((assessment) => (
-                <div 
-                  key={assessment._id} 
+                <div
+                  key={assessment._id}
                   className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:shadow-md transition-shadow"
                 >
                   {/* Assessment Header */}
@@ -105,26 +105,23 @@ const CreateAssessment = () => {
                             </p>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                               {question.options.map((option, optIndex) => (
-                                <div 
+                                <div
                                   key={optIndex}
-                                  className={`p-3 rounded-md flex items-center gap-2 ${
-                                    question.correctAnswer === optIndex 
-                                      ? 'bg-green-50 border border-green-100' 
+                                  className={`p-3 rounded-md flex items-center gap-2 ${question.correctAnswer === optIndex
+                                      ? 'bg-green-50 border border-green-100'
                                       : 'bg-gray-50 border border-gray-100'
-                                  }`}
+                                    }`}
                                 >
-                                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-sm border ${
-                                    question.correctAnswer === optIndex
+                                  <span className={`w-6 h-6 rounded-full flex items-center justify-center text-sm border ${question.correctAnswer === optIndex
                                       ? 'border-green-500 text-green-600'
                                       : 'border-gray-300 text-gray-500'
-                                  }`}>
+                                    }`}>
                                     {String.fromCharCode(65 + optIndex)}
                                   </span>
-                                  <span className={`flex-1 text-sm ${
-                                    question.correctAnswer === optIndex
+                                  <span className={`flex-1 text-sm ${question.correctAnswer === optIndex
                                       ? 'text-green-700'
                                       : 'text-gray-600'
-                                  }`}>
+                                    }`}>
                                     {option}
                                   </span>
                                   {question.correctAnswer === optIndex && (

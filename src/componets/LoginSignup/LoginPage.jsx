@@ -39,7 +39,7 @@ const LoginPage = () => {
     }
     console.log(formdata)
     const devUrl = "http://localhost:5000"
-    const prodUrl = "https://skillonx-website.onrender.com"
+    const prodUrl = "https://skillonx-server.onrender.com"
     // try {
     //   const response = await axios.post("http://localhost:5000/student/login", {
     //     email,
@@ -81,7 +81,7 @@ const LoginPage = () => {
         ? '/student-dashboard'
         : '/university-dashboard';
 
-      navigate(redirectPath, { 
+      navigate(redirectPath, {
         replace: true,
         state: { userDetails }
       });
@@ -156,7 +156,7 @@ const LoginPage = () => {
             {/* Login form */}
             <form onSubmit={handleLogin} className="space-y-6">
               {/* User Type Selection */}
-              
+
               <div className="space-y-2">
                 <label className="text-blue-100 text-sm font-medium mb-2 block">Login As</label>
                 <div className="grid grid-cols-2 gap-4 w-full">

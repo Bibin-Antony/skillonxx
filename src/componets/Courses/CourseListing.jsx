@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Search,
@@ -148,10 +148,10 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
       education,
       featuredCourse: courseName,
     };
-    const prodUrl = "https://skillonx-website.onrender.com"
+    const prodUrl = "https://skillonx-server.onrender.com"
     const devUrl = "http://localhost:5000"
     try {
-      const response = await axios.post("https://skillonx-website.onrender.com/createprofessionalcourse", enrollmentData);
+      const response = await axios.post("https://skillonx-server.onrender.com/createprofessionalcourse", enrollmentData);
       console.log("Enrollment Successful:", response.data);
       setFormState("success");
       setTimeout(() => {
@@ -169,7 +169,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
@@ -209,7 +209,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                   <p className="text-sm text-gray-500 mt-0.5">Fill in your details to enroll</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={onClose}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
               >
@@ -220,7 +220,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             {/* Personal Information */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Full Name</label>
@@ -233,7 +233,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                   value={name}
                   placeholder="Enter your full name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                  onChange={(e)=>setName(e.target.value)}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>
@@ -250,7 +250,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                   value={email}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                  onChange={(e)=>setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -266,7 +266,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                   value={phone}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                  onChange={(e)=>setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                 />
               </div>
             </div>
@@ -287,18 +287,18 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <Book className="h-5 w-5 text-gray-400" />
                 </div>
-                <select 
-                  
+                <select
+
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
                   value={education}
-                  style={{ 
+                  style={{
                     backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                     backgroundPosition: 'right 0.5rem center',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: '1.5em 1.5em',
                     paddingRight: '2.5rem'
                   }}
-                  onChange={(e)=>setEducation(e.target.value)}
+                  onChange={(e) => setEducation(e.target.value)}
                 >
                   <option value="">Select your qualification</option>
                   <option value="high_school">High School</option>
@@ -378,9 +378,8 @@ const CourseCard = ({ course, isListView }) => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
-        className={`bg-white rounded-xl shadow-lg overflow-hidden ${
-          isListView ? "flex" : "flex flex-col"
-        }`}
+        className={`bg-white rounded-xl shadow-lg overflow-hidden ${isListView ? "flex" : "flex flex-col"
+          }`}
       >
         <div className={`relative ${isListView ? "w-1/3" : "w-full"}`}>
           <img
@@ -455,7 +454,7 @@ const CourseCard = ({ course, isListView }) => {
         </div>
       </motion.div>
 
-      <EnrollmentModal 
+      <EnrollmentModal
         isOpen={showEnrollModal}
         onClose={() => setShowEnrollModal(false)}
         courseName={course.title}
@@ -572,9 +571,8 @@ const CourseListing = () => {
           <div className="flex gap-2">
             <button
               onClick={() => setIsListView(false)}
-              className={`p-2 rounded-lg ${
-                !isListView ? "bg-custom text-white" : "bg-gray-200"
-              }`}
+              className={`p-2 rounded-lg ${!isListView ? "bg-custom text-white" : "bg-gray-200"
+                }`}
             >
               <Grid className="h-5 w-5" />
             </button>
@@ -592,11 +590,10 @@ const CourseListing = () => {
         {/* Course Cards */}
         <motion.div
           layout
-          className={`grid gap-6 ${
-            isListView
+          className={`grid gap-6 ${isListView
               ? "grid-cols-1"
               : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-          }`}
+            }`}
         >
           {filteredCourses.map((course) => (
             <CourseCard

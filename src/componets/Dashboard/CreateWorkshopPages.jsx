@@ -212,7 +212,7 @@ const CreateWorkshopPage = () => {
 
   const filteredWorkshops = workshops.filter(workshop => {
     const matchesSearch = workshop.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         workshop.description.toLowerCase().includes(searchTerm.toLowerCase());
+      workshop.description.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || workshop.category === selectedCategory;
     const matchesLevel = selectedLevel === 'All' || workshop.level === selectedLevel;
     return matchesSearch && matchesCategory && matchesLevel;
@@ -220,7 +220,7 @@ const CreateWorkshopPage = () => {
 
   const handleAddWorkshop = async (workshop) => {
     try {
-      const response = await fetch('https://skillonx-website.onrender.com/workshops/add', {
+      const response = await fetch('https://skillonx-server.onrender.com/workshops/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -246,7 +246,7 @@ const CreateWorkshopPage = () => {
     }
   };
 
-   
+
   return (
     <div className="p-6 pt-20 min-h-screen bg-gray-300">
       <div className="max-w-7xl mx-auto">
@@ -270,7 +270,7 @@ const CreateWorkshopPage = () => {
         {/* Search and Filters */}
         <div className="mb-6">
           <h2 className="text-2xl font-bold mb-4 text-gray-800">Create New Workshop</h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
@@ -309,13 +309,13 @@ const CreateWorkshopPage = () => {
         <div className="container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {workshops.map((workshop) => ( // Changed from filteredWorkshops to workshops to test
-              <div 
-                key={workshop.id} 
+              <div
+                key={workshop.id}
                 className="bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow w-full"
               >
                 <div className="aspect-video w-full overflow-hidden">
-                  <img 
-                    src={workshop.image} 
+                  <img
+                    src={workshop.image}
                     alt={workshop.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                   />
@@ -327,11 +327,11 @@ const CreateWorkshopPage = () => {
                       {workshop.category}
                     </span>
                   </div>
-                  
+
                   <p className="text-sm text-gray-600 mb-4">
                     {workshop.description}
                   </p>
-                  
+
                   <div className="space-y-2 mb-4">
                     <div className="flex items-center text-sm text-gray-600">
                       <Clock className="w-4 h-4 mr-2" />
@@ -349,7 +349,7 @@ const CreateWorkshopPage = () => {
 
                   <div className="flex flex-wrap gap-2 mb-4">
                     {workshop.highlights.map((highlight, index) => (
-                      <span 
+                      <span
                         key={index}
                         className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded-full"
                       >

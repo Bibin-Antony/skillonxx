@@ -15,33 +15,33 @@ const CTASectionCourses = () => {
 
   const ScheduleModal = ({ isOpen, onClose }) => {
     const [name, setName] = useState("");
-    const [email,setEmail] = useState("")
-    const [phone,setPhone] = useState("")
+    const [email, setEmail] = useState("")
+    const [phone, setPhone] = useState("")
     const [scheduleTitle, setScheduleTitle] = useState("");
     const [date, setDate] = useState("");
     const [time, setTime] = useState("");
     const [error, setError] = useState("");
-    const [formState,setFormState] = useState("idle") //states are idle,submitting,success
+    const [formState, setFormState] = useState("idle") //states are idle,submitting,success
     if (!isOpen) return null;
     const handleSubmit = async (e) => {
       e.preventDefault();
 
-      if (!name || !scheduleTitle || !date || !time ||!email ||!phone) {
+      if (!name || !scheduleTitle || !date || !time || !email || !phone) {
         setError("All fields are required");
         return;
       }
       setFormState("submitting");
-      const scheduleData = { name, scheduleTitle, date, time,email,phone };
-      const prodUrl = "https://skillonx-website.onrender.com"
+      const scheduleData = { name, scheduleTitle, date, time, email, phone };
+      const prodUrl = "https://skillonx-server.onrender.com"
       const devUrl = "http://localhost:5000"
       try {
-        const response = await axios.post("https://skillonx-website.onrender.com/scheduleconsultation", scheduleData);
+        const response = await axios.post("https://skillonx-server.onrender.com/scheduleconsultation", scheduleData);
         console.log("Schedule created successfully:", response.data);
-        setFormState("success");  
-        setTimeout(()=>{
+        setFormState("success");
+        setTimeout(() => {
           setFormState("idle")
           onClose();
-        },2000)
+        }, 2000)
       } catch (error) {
         console.error("Error creating schedule:", error);
         setError("An error occurred. Please try again.");
@@ -51,7 +51,7 @@ const CTASectionCourses = () => {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
         {/* Backdrop */}
-        <div 
+        <div
           className="absolute inset-0 bg-black/60 backdrop-blur-md"
           onClick={onClose}
         />
@@ -62,22 +62,22 @@ const CTASectionCourses = () => {
             {/* Decorative header background */}
             <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
             {formState === "submitting" && (
-            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
-              <div className="w-48 h-48">
-                <Lottie animationData={wait} loop />
+              <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+                <div className="w-48 h-48">
+                  <Lottie animationData={wait} loop />
+                </div>
+                <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
               </div>
-              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
-            </div>
-          )}
+            )}
 
-          {formState === "success" && (
-            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
-              <div className="w-48 h-48">
-                <Lottie animationData={complete} loop={false} />
+            {formState === "success" && (
+              <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+                <div className="w-48 h-48">
+                  <Lottie animationData={complete} loop={false} />
+                </div>
+                <p className="text-lg font-medium text-gray-700 mt-4">Enrollment Successful!</p>
               </div>
-              <p className="text-lg font-medium text-gray-700 mt-4">Enrollment Successful!</p>
-            </div>
-          )}
+            )}
             {/* Header */}
             <div className="relative px-6 pt-6 pb-4">
               <div className="flex items-center justify-between">
@@ -90,7 +90,7 @@ const CTASectionCourses = () => {
                     <p className="text-sm text-gray-500 mt-0.5">Fill in the data below to add a schedule</p>
                   </div>
                 </div>
-                <button 
+                <button
                   onClick={onClose}
                   className="p-1 rounded-full hover:bg-gray-100 transition-colors"
                 >
@@ -101,7 +101,7 @@ const CTASectionCourses = () => {
 
             {/* Form */}
             <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-              
+
               {/* Name Input */}
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">
@@ -160,11 +160,11 @@ const CTASectionCourses = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Schedule Title
                 </label>
-                <select 
+                <select
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
                   value={scheduleTitle}
                   onChange={(e) => { setScheduleTitle(e.target.value); setError(""); }}
-                  style={{ 
+                  style={{
                     backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                     backgroundPosition: 'right 0.5rem center',
                     backgroundRepeat: 'no-repeat',
@@ -194,7 +194,7 @@ const CTASectionCourses = () => {
                     <input
                       type="time"
                       className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                      onChange={(e)=>{setTime(e.target.value);setError("")}}
+                      onChange={(e) => { setTime(e.target.value); setError("") }}
                     />
                   </div>
                 </div>
@@ -259,7 +259,7 @@ const CTASectionCourses = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button 
+            <button
               onClick={() => setIsModalOpen(true)}
               className="px-8 py-4 rounded-xl text-white border border-white/20 hover:bg-white/10 transition-all duration-300 flex items-center justify-center gap-2"
             >
@@ -271,7 +271,7 @@ const CTASectionCourses = () => {
       </div>
 
       {/* Schedule Modal */}
-      <ScheduleModal 
+      <ScheduleModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />

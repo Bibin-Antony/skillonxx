@@ -19,7 +19,7 @@ const GiveAssessment = () => {
   useEffect(() => {
     const fetchAssessments = async () => {
       try {
-        const response = await fetch(`https://skillonx-website.onrender.com/assessments/get-assessment/${stuId}`, {
+        const response = await fetch(`https://skillonx-server.onrender.com/assessments/get-assessment/${stuId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ const GiveAssessment = () => {
     assessment.questions.forEach((question, index) => {
       totalMarks += question.marks;
       const userAnswer = userAnswers[`${assessment._id}-${index}`];
-      
+
       const questionScore = {
         questionNumber: index + 1,
         userAnswer: userAnswer,
@@ -73,9 +73,9 @@ const GiveAssessment = () => {
         marks: question.marks,
         scored: userAnswer === question.correctAnswer ? question.marks : 0
       };
-      
+
       questionScores.push(questionScore);
-      
+
       if (userAnswer === question.correctAnswer) {
         obtainedMarks += question.marks;
       }
@@ -92,14 +92,14 @@ const GiveAssessment = () => {
   };
   const handleSubmitAssessment = async (assessmentId) => {
     // ... (previous validation code remains the same)
-  
+
     setSubmitting(true);
     try {
       const currentAssessment = assessments.find(a => a._id === assessmentId);
-      
+
       // Debug logging for answers comparison
       console.log('\n=== Assessment Submission Debug Info ===');
-      
+
       // Format answers according to schema
       const answers = Object.entries(selectedAnswers)
         .filter(([key]) => key.startsWith(assessmentId))
@@ -107,13 +107,13 @@ const GiveAssessment = () => {
           questionIndex: parseInt(key.split('-')[1]),
           selectedOption: value
         }));
-  
+
       console.log('\n1. Formatted Answers:', answers);
-  
+
       // Calculate score
       const score = calculateScore(currentAssessment, selectedAnswers);
       console.log('\n2. Calculated Score:', score);
-  
+
       // Format submission payload according to schema
       const submissionPayload = {
         assessmentId,
@@ -125,10 +125,10 @@ const GiveAssessment = () => {
           percentage: parseFloat(score.percentage)
         }
       };
-  
+
       console.log('\n3. Submission Payload:', submissionPayload);
-  
-      const response = await fetch(`https://skillonx-website.onrender.com/student/submit/${stuId}`, {
+
+      const response = await fetch(`https://skillonx-server.onrender.com/student/submit/${stuId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -136,17 +136,17 @@ const GiveAssessment = () => {
         credentials: 'include',
         body: JSON.stringify(submissionPayload)
       });
-  
+
       // if (!response.ok) {
       //   throw new Error('Failed to submit assessment');
       // }
-  
+
       const responseData = await response.json();
       console.log('\n4. Server Response:', responseData);
-  
+
       setResults(score);
       setShowResults(true);
-  
+
     } catch (err) {
       console.error('\nSubmission Error:', err);
       setError(err.message);
@@ -155,7 +155,7 @@ const GiveAssessment = () => {
       console.log('\n=== End of Assessment Submission Debug Info ===\n');
     }
   };
-  
+
   // const handleSubmitAssessment = async (assessmentId) => {
   //   setSubmitting(true);
   //   try {
@@ -284,7 +284,7 @@ const GiveAssessment = () => {
 
               <div className="space-y-6">
                 {assessment.questions.map((question, qIndex) => (
-                  <motion.div 
+                  <motion.div
                     key={qIndex}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -303,14 +303,14 @@ const GiveAssessment = () => {
 
                     <div className="space-y-3 ml-11">
                       {question.options.map((option, optIndex) => (
-                        <motion.div 
+                        <motion.div
                           key={optIndex}
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
                           onClick={() => handleOptionSelect(assessment._id, qIndex, optIndex)}
                           className={`p-3 rounded-lg border cursor-pointer transition-all duration-200
-                            ${selectedAnswers[`${assessment._id}-${qIndex}`] === optIndex 
-                              ? 'bg-blue-50 border-blue-300 shadow-md' 
+                            ${selectedAnswers[`${assessment._id}-${qIndex}`] === optIndex
+                              ? 'bg-blue-50 border-blue-300 shadow-md'
                               : 'bg-white border-gray-200 hover:bg-gray-50'}`}
                         >
                           <div className="flex items-center gap-3">
@@ -332,7 +332,7 @@ const GiveAssessment = () => {
                 ))}
               </div>
 
-              <motion.div 
+              <motion.div
                 className="mt-6"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}

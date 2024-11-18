@@ -24,7 +24,7 @@ export default function SurveyStartPage() {
     // Check if referral has already been applied for this referral code
     const storedReferralCode = localStorage.getItem('referralApplied');
     const baseUrl = "http://localhost:5000"
-    const devUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
     // Only send referral request if referral code exists and hasn't been applied before
     if (code && storedReferralCode !== code) {
       // Send the referral code to the backend to increase the referral count
@@ -67,24 +67,24 @@ export default function SurveyStartPage() {
       <div className={`w-full max-w-2xl relative transition-opacity duration-1000 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
         {/* Logo */}
         <div className="mb-4 sm:mb-8 flex justify-center">
-          <img 
-            src={logoImage} 
-            alt="Company Logo" 
+          <img
+            src={logoImage}
+            alt="Company Logo"
             className="h-14 sm:h-16 md:h-28 transition-transform duration-300 hover:scale-105"
           />
         </div>
-        
+
         {/* Main content container with custom glassmorphism */}
         <div className="glassmorphism-container shadow-gray-500 shadow-lg p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8">
           {/* Illustration */}
           <div className="flex justify-center mb-4 sm:mb-6">
-            <img 
-              src={illustrationImage} 
-              alt="Survey illustration" 
+            <img
+              src={illustrationImage}
+              alt="Survey illustration"
               className="w-full max-w-[200px] sm:max-w-[300px] md:max-w-[400px] h-auto object-contain transform hover:scale-105 transition-transform duration-300"
             />
           </div>
-          
+
           {/* Text content */}
           <div className="text-center space-y-2 sm:space-y-4">
             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
@@ -94,9 +94,9 @@ export default function SurveyStartPage() {
               Please set aside 1-2 minutes to complete this survey.
             </p>
           </div>
-          
+
           {/* Next button */}
-          <button 
+          <button
             onClick={handleNext}
             className="w-full text-white py-2 sm:py-3 px-4 sm:px-6 rounded-xl 
                        text-base sm:text-lg font-semibold
@@ -114,8 +114,8 @@ export default function SurveyStartPage() {
               {isHovered ? 'Continue' : 'Start'}
             </span>
             <svg className="w-4 h-4 sm:w-5 text-white sm:h-5 ml-2 relative z-10 transition-all duration-300 group-hover:translate-x-1"
-                 fill="none" stroke="currentColor" viewBox="0 0 24 24" 
-                 xmlns="http://www.w3.org/2000/svg">
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
             </svg>
           </button>

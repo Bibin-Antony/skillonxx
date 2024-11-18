@@ -28,16 +28,16 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
-  const [formState,setFormState] = useState("idle")
+  const [formState, setFormState] = useState("idle")
   const resetForm = () => {
     setName("");
     setEmail("");
     setPhone("");
-    
+
     setDate("");
     setTime("");
 
-    
+
     setError("");
     setFormState("idle");
   };
@@ -46,7 +46,7 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
       resetForm();
     }
   }, [isVisible]);
-  
+
   if (!isVisible) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,16 +56,16 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
     }
     setFormState("submitting")
     const requestData = { name, email, phone, date, time };
-    const devUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
 
     try {
-      let res = await axios.post("https://skillonx-website.onrender.com/schedule-visit", requestData);
-      console.log("form submitted",res.data)
+      let res = await axios.post("https://skillonx-server.onrender.com/schedule-visit", requestData);
+      console.log("form submitted", res.data)
       setFormState("success")
-      setTimeout(()=>{
+      setTimeout(() => {
         setFormState("idle")
         onClose();
-      },2000)
+      }, 2000)
     } catch (error) {
       console.error("Error requesting callback:", error);
       setError("An error occurred. Please try again.");
@@ -83,21 +83,21 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
           {formState === "submitting" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={wait} 
-                  loop 
+                <Lottie
+                  animationData={wait}
+                  loop
                   className="w-full h-full"
                 />
               </div>
               <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
             </div>
           )}
-          
+
           {formState === "success" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={complete} 
+                <Lottie
+                  animationData={complete}
                   loop={false}
                   className="w-full h-full"
                 />
@@ -123,13 +123,13 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="text"  placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
+                <input type="text" placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
                   onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
@@ -138,7 +138,7 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="email"  placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
+                <input type="email" placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
                   onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
@@ -147,7 +147,7 @@ const ScheduleVisitModal = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Phone</label>
               <div className="relative">
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="tel"  placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={phone}
+                <input type="tel" placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={phone}
                   onChange={(e) => setPhone(e.target.value)} />
               </div>
             </div>
@@ -252,7 +252,7 @@ const QuickContactOptions = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-12">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -300,7 +300,7 @@ const QuickContactOptions = () => {
               </div>
             </motion.div>
           ))}
-        <ScheduleVisitModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
+          <ScheduleVisitModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} />
 
         </div>
 

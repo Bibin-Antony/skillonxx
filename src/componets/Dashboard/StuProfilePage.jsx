@@ -13,7 +13,7 @@ const Button = ({ children, className, variant = 'primary', ...props }) => {
     secondary: "border-gray-300 text-gray-700 bg-white hover:bg-gray-50",
     danger: "border-transparent text-white bg-red-600 hover:bg-red-700",
   }
-  
+
   return (
     <button
       className={`${baseStyle} ${variants[variant]} ${className}`}
@@ -39,7 +39,7 @@ export default function StuProfilePage() {
     const fetchStudentData = async () => {
       try {
         setIsLoading(true)
-        const response = await fetch(`https://skillonx-website.onrender.com/student/profile/${stuId}`) 
+        const response = await fetch(`https://skillonx-server.onrender.com/student/profile/${stuId}`)
         if (!response.ok) {
           throw new Error('Failed to fetch student data')
         }
@@ -96,31 +96,31 @@ export default function StuProfilePage() {
         phone: editedData.phone,
         address: editedData.address
       }
-      const response = await fetch(`https://skillonx-website.onrender.com/student/profile/${stuId}`, {
+      const response = await fetch(`https://skillonx-server.onrender.com/student/profile/${stuId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedFields),
       })
-      
+
       // if (!response.ok) {
       //   throw new Error('Failed to save changes')
       // }
-      
+
       const updatedData = await response.json()
-    
-    // Preserve the original education details when updating the state
-    setUserData({
-      ...updatedData.data,
-      universityName: userData.universityName,
-      currentEducation: userData.currentEducation,
-      passingYear: userData.passingYear
-    })
-    setIsEditing(false)
-    setSaveStatus('success')
-    
-    setTimeout(() => setSaveStatus(null), 3000)
+
+      // Preserve the original education details when updating the state
+      setUserData({
+        ...updatedData.data,
+        universityName: userData.universityName,
+        currentEducation: userData.currentEducation,
+        passingYear: userData.passingYear
+      })
+      setIsEditing(false)
+      setSaveStatus('success')
+
+      setTimeout(() => setSaveStatus(null), 3000)
     } catch (err) {
       console.error('Error saving changes:', err)
       setSaveStatus('error')
@@ -187,19 +187,19 @@ export default function StuProfilePage() {
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
         </Link>
-        
+
         {saveStatus === 'success' && (
           <div className="mb-4 bg-green-100 text-green-700 p-4 rounded-lg">
             Profile updated successfully!
           </div>
         )}
-        
+
         {saveStatus === 'error' && (
           <div className="mb-4 bg-red-100 text-red-700 p-4 rounded-lg">
             Failed to update profile. Please try again.
           </div>
         )}
-        
+
         <motion.div variants={itemVariants} className="bg-white bg-opacity-30 backdrop-blur-lg rounded-lg overflow-hidden shadow-lg">
           <div className="relative pb-24 md:pb-32">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 bg-opacity-20 backdrop-blur-lg"></div>
@@ -227,7 +227,7 @@ export default function StuProfilePage() {
                 )}
                 <p className="text-blue-100">Student</p>
               </div>
-              <img 
+              <img
                 src={userImg}
                 alt={displayData.firstName}
                 className="w-24 h-24 rounded-full border-4 border-white shadow-lg mt-4 md:mt-0"
@@ -278,32 +278,32 @@ export default function StuProfilePage() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-  <h2 className="text-lg font-semibold mb-2 flex items-center">
-    <Briefcase className="h-5 w-5 mr-2 text-gray-500" />
-    Education Details
-  </h2>
-  <div className="bg-gray-50 p-4 rounded-md shadow-sm">
-    <div className="grid gap-4">
-      <div>
-        <h3 className="text-lg font-semibold mb-2 flex items-center">
-          <Briefcase className="h-5 w-5 mr-2 text-gray-500" />
-          {/* Read-only university name */}
-          {displayData.universityName}
-        </h3>
-        <div className="font-medium">
-          {/* Read-only current education */}
-          {displayData.currentEducation}
-        </div>
-        <div className="text-sm text-gray-500 flex items-center mt-1">
-          <Calendar className="h-4 w-4 mr-1" />
-          Passing Year: {' '}
-          {/* Read-only passing year */}
-          {displayData.passingYear}
-        </div>
-      </div>
-    </div>
-  </div>
-</motion.div>
+              <h2 className="text-lg font-semibold mb-2 flex items-center">
+                <Briefcase className="h-5 w-5 mr-2 text-gray-500" />
+                Education Details
+              </h2>
+              <div className="bg-gray-50 p-4 rounded-md shadow-sm">
+                <div className="grid gap-4">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2 flex items-center">
+                      <Briefcase className="h-5 w-5 mr-2 text-gray-500" />
+                      {/* Read-only university name */}
+                      {displayData.universityName}
+                    </h3>
+                    <div className="font-medium">
+                      {/* Read-only current education */}
+                      {displayData.currentEducation}
+                    </div>
+                    <div className="text-sm text-gray-500 flex items-center mt-1">
+                      <Calendar className="h-4 w-4 mr-1" />
+                      Passing Year: {' '}
+                      {/* Read-only passing year */}
+                      {displayData.passingYear}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
           <div className="px-6 py-4 bg-gray-50 flex justify-end space-x-2">
             {isEditing ? (
