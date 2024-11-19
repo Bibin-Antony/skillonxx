@@ -59,10 +59,13 @@ export default function SurveyFormOn() {
     e.preventDefault();
     let userData = { ...formData, isStudent, isLocation, referralCode };
     console.log(userData);
-    
+    const baseUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-website.onrender.com"
+
+
     if (validateForm()) {
       try {
-        const response = await fetch("https://skillonx-website.onrender.com/api/online", {
+        const response = await fetch(`${devUrl}/api/online`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

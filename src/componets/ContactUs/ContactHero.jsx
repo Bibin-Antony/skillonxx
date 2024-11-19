@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Phone,
@@ -12,13 +12,66 @@ import {
   User,
   X
 } from 'lucide-react';
-const ScheduleModal = ({ isOpen, onClose }) => {
-  if (!isOpen) return null;
+import axios from 'axios';
 
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
+const ScheduleModal = ({ isOpen, onClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [scheduleTitle, setScheduleTitle] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setScheduleTitle("");
+    setDate("");
+    setTime("");
+
+    
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
+  if (!isOpen) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!name || !scheduleTitle || !date || !time||!email||!phone) {
+      setError("All fields are required");
+      return;
+    }
+    setFormState("submitting")
+    const scheduleData = { name, scheduleTitle, date, time,email,phone };
+    const devUrl = "https://skillonx-website.onrender.com"
+    try {
+      const response = await axios.post("https://skillonx-website.onrender.com/scheduleconsultation", scheduleData);
+      console.log("Schedule created successfully:", response.data);
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
+    } catch (error) {
+      console.error("Error creating schedule:", error);
+      setError("An error occurred. Please try again.");
+      setFormState("idle")
+    }
+  };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
-      <div
+      <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
@@ -28,7 +81,31 @@ const ScheduleModal = ({ isOpen, onClose }) => {
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Decorative header background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           {/* Header */}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
@@ -37,11 +114,11 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                   <Calendar className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900">Book Schedule</h3>
+                  <h3 className="text-xl font-semibold text-gray-900">Create Schedule</h3>
                   <p className="text-sm text-gray-500 mt-0.5">Fill in the data below to add a schedule</p>
                 </div>
               </div>
-              <button
+              <button 
                 onClick={onClose}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
               >
@@ -51,7 +128,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
           </div>
 
           {/* Form */}
-          <div className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
             {/* Name Input */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
@@ -65,6 +142,42 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                   type="text"
                   placeholder="Enter your full name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  value={name}
+                  onChange={(e) => { setName(e.target.value); setError(""); }}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Email
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Phone
+              </label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <User className="h-5 w-5 text-gray-400" />
+                </div>
+                <input
+                  type="number"
+                  placeholder="Enter your phone number"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  value={phone}
+                  onChange={(e) => { setPhone(e.target.value); setError(""); }}
                 />
               </div>
             </div>
@@ -74,9 +187,11 @@ const ScheduleModal = ({ isOpen, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">
                 Schedule Title
               </label>
-              <select
+              <select 
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
-                style={{
+                value={scheduleTitle}
+                onChange={(e) => { setScheduleTitle(e.target.value); setError(""); }}
+                style={{ 
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                   backgroundPosition: 'right 0.5rem center',
                   backgroundRepeat: 'no-repeat',
@@ -100,11 +215,13 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                 <input
                   type="date"
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) => { setDate(e.target.value); setError(""); }}
                 />
                 <div className="flex items-center gap-2">
                   <input
                     type="time"
                     className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                    onChange={(e)=>{setTime(e.target.value);setError("")}}
                   />
                 </div>
               </div>
@@ -113,6 +230,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
             {/* Buttons */}
             <div className="flex gap-3 pt-4">
               <button
+                type='submit'
                 onClick={onClose}
                 className="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 font-medium transition-colors"
               >
@@ -125,14 +243,58 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                 Schedule Now
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>
   );
 };
 const RequestCallBck = ({ isVisible, onClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+  const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+  const resettingForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setDate("")
+    setTime("")
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resettingForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !phone || !date || !time) {
+      setError("All fields are required.");
+      return;
+    }
+    setFormState("submitting")
+    const requestData = { name, email, phone, date, time };
+    const devUrl = "https://skillonx-website.onrender.com"
+    try {
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/request-callback", requestData);
+      console.log("form submitted",res.data)
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
+    } catch (error) {
+      console.error("Error requesting callback:", error);
+      setError("An error occurred. Please try again.");
+      setFormState("idle")
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
@@ -141,7 +303,31 @@ const RequestCallBck = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -159,12 +345,15 @@ const RequestCallBck = ({ isVisible, onClose }) => {
             </div>
           </div>
 
-          <form className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="text" required placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="text"  placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
+                  onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
 
@@ -172,7 +361,8 @@ const RequestCallBck = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="email" required placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="email"  placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
 
@@ -180,17 +370,20 @@ const RequestCallBck = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Phone</label>
               <div className="relative">
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="tel" required placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="tel"  placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={phone}
+                  onChange={(e) => setPhone(e.target.value)} />
               </div>
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Date</label>
-              <input type="date" required className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              <input type="date" value={date}
+                onChange={(e) => setDate(e.target.value)} className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Time</label>
-              <input type="time" required className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+              <input type="time" value={time}
+                onChange={(e) => setTime(e.target.value)} className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
             </div>
 
 

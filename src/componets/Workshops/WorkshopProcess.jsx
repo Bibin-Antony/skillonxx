@@ -1,10 +1,59 @@
 // src/components/Workshop/WorkshopProcess.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
 import { MessageSquare, Calendar, Users, BookOpen, Award, CheckCircle, X, Mail, Phone, User } from "lucide-react";
 
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 const ConsultationModal = ({ isVisible, onClose }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [type, setType] = useState("");
+  const [error, setError] = useState("");
+  const [formState,setFormState] = useState("idle")
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setType("");
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
   if (!isVisible) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!name || !email || !phone || !type) {
+      setError("Please fill out all required fields.");
+      return;
+    }
+    setFormState("submitting")
+    const devUral = "https://skillonx-website.onrender.com"
+
+    const consultationData = { name, email, phone, type };
+
+    try {
+      let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
+      console.log("form submitted",res.data)
+      setFormState("success")
+      setTimeout(()=>{
+        setFormState("idle")
+        onClose();
+      },2000)
+    } catch (error) {
+      console.error("Error scheduling consultation:", error);
+      setError("An error occurred. Please try again.");
+      setFormState("idle")
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
@@ -13,7 +62,31 @@ const ConsultationModal = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={wait} 
+                  loop 
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+          
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
+              <div className="w-48 h-48 flex items-center justify-center">
+                <Lottie 
+                  animationData={complete} 
+                  loop={false}
+                  className="w-full h-full"
+                />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was successful!</p>
+            </div>
+          )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -31,12 +104,15 @@ const ConsultationModal = ({ isVisible, onClose }) => {
             </div>
           </div>
 
-          <form className="px-6 pb-6 space-y-5">
+          <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+          {error && <p className="text-red-500 text-sm">{error}</p>}
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="text" required placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="text" required placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
+                  onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
 
@@ -44,7 +120,8 @@ const ConsultationModal = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="email" required placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="email"  placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
+                  onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
 
@@ -52,13 +129,15 @@ const ConsultationModal = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Phone</label>
               <div className="relative">
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="tel" required placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
+                <input type="tel" value={phone}
+                  onChange={(e) => setPhone(e.target.value)} placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" />
               </div>
             </div>
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Are you an Individual or Organization?</label>
-              <select className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white" required>
+              <select className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white" value={type}
+                onChange={(e) => setType(e.target.value)}>
                 <option value="">Select an option</option>
                 <option>Individual</option>
                 <option>Organization</option>

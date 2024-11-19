@@ -135,13 +135,7 @@ const BackgroundElements = () => (
 const StepCard = ({ step, index, isLast }) => (
   <div className="group relative h-full">
     {/* Connector Lines */}
-    {/* {!isLast && index % 4 !== 3 && (
-      <div className="hidden lg:block absolute top-1/2 -right-4 w-8 h-0.5 bg-gradient-to-r from-gray-200 to-transparent z-0">
-        <div className="absolute right-0 top-1/2 transform -translate-y-1/2">
-          <ChevronRight className="w-4 h-4 text-gray-400" />
-        </div>
-      </div>
-    )} */}
+    
 
     {/* Card */}
     <div className="h-full flex flex-col bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:translate-x-2 border border-gray-100/50">
@@ -191,9 +185,6 @@ const HowItWorks = () => {
             supported every step of the way.
           </p>
         </div>
-        {/* <div className="absolute -top-0 -left-10 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-        <div className="absolute -top-0 -right-10 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div> */}
 
         {/* Steps Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 cursor-pointer">

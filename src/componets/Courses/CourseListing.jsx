@@ -19,13 +19,15 @@ import {
   Book
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-
+import axios from 'axios'
 // Import course images
 import frontendImg from '../../assets/Images/frontend.jpg'
 import backendImg from '../../assets/Images/frontend.jpg'
 import englishImg from '../../assets/Images/english.jpg'
 import pythonImg from '../../assets/Images/python.jpg'
-
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 // Course Data
 const courses = [
   {
@@ -108,13 +110,60 @@ const courses = [
 
 // Enrollment Modal Component
 const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [education, setEducation] = useState("");
+  const [error, setError] = useState("");
+  const [formState, setFormState] = useState("idle"); // idle, submitting, success
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setEducation("");
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isOpen) {
+      resetForm();
+    }
+  }, [isOpen]);
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log('Form submitted');
-    onClose();
+
+    // Validate inputs
+    if (!name || !email || !phone || !education) {
+      setError("All fields are required");
+      return;
+    }
+    setFormState("submitting");
+    const enrollmentData = {
+      name,
+      email,
+      phone,
+      education,
+      featuredCourse: courseName,
+    };
+    const prodUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "http://localhost:5000"
+    try {
+      const response = await axios.post("https://skillonx-website.onrender.com/createprofessionalcourse", enrollmentData);
+      console.log("Enrollment Successful:", response.data);
+      setFormState("success");
+      setTimeout(() => {
+        resetForm()
+        onClose();
+      }, 2000); // Close the modal after submission
+    } catch (error) {
+      console.error("Error enrolling in course:", error);
+      setError("An error occurred while enrolling. Please try again.");
+      setFormState("idle");
+
+    }
   };
 
   return (
@@ -130,6 +179,23 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden">
           {/* Decorative header background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={wait} loop />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
+
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={complete} loop={false} />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Enrollment Successful!</p>
+            </div>
+          )}
 
           {/* Header */}
           <div className="relative px-6 pt-6 pb-4">
@@ -154,6 +220,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
+          {error && <p className="text-red-500 text-sm">{error}</p>}
             {/* Personal Information */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Full Name</label>
@@ -163,9 +230,10 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                 </div>
                 <input
                   type="text"
-                  required
+                  value={name}
                   placeholder="Enter your full name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e)=>setName(e.target.value)}
                 />
               </div>
             </div>
@@ -179,9 +247,10 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                 </div>
                 <input
                   type="email"
-                  required
+                  value={email}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e)=>setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -194,13 +263,23 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                 </div>
                 <input
                   type="tel"
-                  required
+                  value={phone}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e)=>setPhone(e.target.value)}
                 />
               </div>
             </div>
-
+            {/* Workshop Details */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Workshop Name</label>
+              <input
+                type="text"
+                value={courseName}
+                disabled
+                className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl bg-gray-100 focus:outline-none"
+              />
+            </div>
             {/* Educational Background */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Educational Qualification</label>
@@ -209,8 +288,9 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                   <Book className="h-5 w-5 text-gray-400" />
                 </div>
                 <select 
-                  required
+                  
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
+                  value={education}
                   style={{ 
                     backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                     backgroundPosition: 'right 0.5rem center',
@@ -218,6 +298,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
                     backgroundSize: '1.5em 1.5em',
                     paddingRight: '2.5rem'
                   }}
+                  onChange={(e)=>setEducation(e.target.value)}
                 >
                   <option value="">Select your qualification</option>
                   <option value="high_school">High School</option>

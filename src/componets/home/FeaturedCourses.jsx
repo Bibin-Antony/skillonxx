@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Users,
   Calendar,
@@ -9,11 +9,15 @@ import {
   Tag,
    X, Mail, Phone, User, GraduationCap,Book
 } from "lucide-react";
-
+import axios from 'axios'
+import Lottie from 'lottie-react';
+import wait from '../../assets/lottiejson/wait.json'
+import complete from '../../assets/lottiejson/complete.json'
 import frontend from "../../assets/Images/frontend.jpg";
 import python from "../../assets/Images/python.jpg";
 import english from "../../assets/Images/english.jpg";
-
+// import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+// import lottieAnim from '../../assets/lottiejson/lottieanima.json'
 const courses = [
   {
     id: 1,
@@ -53,8 +57,67 @@ const courses = [
    },
 ];
 const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
-  if (!isVisible) return null;
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [education, setEducation] = useState("");
+  const [error, setError] = useState("");
+  const [formState, setFormState] = useState("idle"); // idle, submitting, success
 
+  // const [loading, setLoading] = useState(false); // Add loading state
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setPhone("");
+    setEducation("");
+    setError("");
+    setFormState("idle");
+  };
+  useEffect(() => {
+    if (!isVisible) {
+      resetForm();
+    }
+  }, [isVisible]);
+  if (!isVisible) return null;
+  // Function to handle form submission
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!name || !email || !phone || !education) {
+      setError("All fields are required");
+      return;
+    }
+    setFormState("submitting");
+    const enrollmentData = {
+      name,
+      email,
+      phone,
+      education,
+      featuredCourse: courseName,
+    };
+    const devUrl = "http://localhost:5000"
+    const prodUrl = "https://skillonx-website.onrender.com"
+    try {
+      const response = await axios.post(`${prodUrl}/createenrollment`, enrollmentData);
+      console.log("Enrollment Successful:", response.data);
+      setFormState("success");
+      
+      // Close modal after showing success animation
+      setTimeout(() => {
+        resetForm()
+        onClose();
+      }, 2000);  // Close modal after submission
+    } catch (error) {
+      console.error("Error enrolling in course:", error);
+      setError("An error occurred while enrolling. Please try again.");
+      setFormState("idle");
+    }
+  };
+  
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
   return (
     <div className="fixed inset-0 z-[1050] flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
@@ -65,7 +128,23 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[85vh] overflow-y-auto">
           {/* Decorative header background */}
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
+          {formState === "submitting" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={wait} loop />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
+            </div>
+          )}
 
+          {formState === "success" && (
+            <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
+              <div className="w-48 h-48">
+                <Lottie animationData={complete} loop={false} />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Enrollment Successful!</p>
+            </div>
+          )}
           {/* Header */}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
@@ -85,17 +164,23 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
           </div>
 
           {/* Form */}
-          <form className="px-6 pb-8 space-y-5">
+          <form onSubmit={handleFormSubmit} className="px-6 pb-8 space-y-5">
             {/* Name Field */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="text"
-                  required
+                  value={name}
                   placeholder="Enter your name"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setError("");
+                  }}
                 />
               </div>
             </div>
@@ -107,9 +192,13 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="email"
-                  required
+                  value={email}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e)=>{
+                    setEmail(e.target.value)
+                    setError("")
+                  }}
                 />
               </div>
             </div>
@@ -121,9 +210,13 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="tel"
-                  required
+                  value={phone}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) =>{ setPhone(e.target.value)
+                    setError("")
+                  }
+                  }
                 />
               </div>
             </div>
@@ -135,9 +228,13 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 <Book className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                 <input
                   type="text"
-                  required
+                  value={education}
                   placeholder="Enter your education level"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+                  onChange={(e) => {
+                    setEducation(e.target.value)
+                    setError("")
+                  }}
                 />
               </div>
             </div>
@@ -157,7 +254,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
-                required
+                
                 id="terms"
                 className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
@@ -165,7 +262,14 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                 I agree to the terms and conditions and authorize the institute to contact me regarding the course.
               </label>
             </div>
-
+            {/* Repeat similar input fields for Email, Phone, and Education */}
+            {/* Loading Animation */}
+            {/* {loading && (
+              <div className="flex justify-center py-4">
+                <DotLottieReact src={lottieAnim} loop autoplay   style={{ width: 100, height: 100 }}
+ />
+              </div>
+            )} */}
             {/* Buttons */}
             <div className="flex gap-3 pt-4">
               <button
@@ -222,10 +326,7 @@ const FeaturedCourses = () => {
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b "></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t "></div>
 
-      {/* Blob elements */}
-      {/* <div className="absolute top-20 left-20 w-40 h-40 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
-      <div className="absolute top-20 right-20 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-80 animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-0 left-10 w-40 h-40 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div> */}
+      
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
