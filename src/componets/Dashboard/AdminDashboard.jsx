@@ -24,6 +24,8 @@ import {
 import { useAuth } from '../../auth/AuthContext';
 import { authService } from '../../services/authServices';
 import { Link, useNavigate } from 'react-router-dom';
+import AdminCourseRequests from '../Dashboard/admindash/AdminCourseRequest'
+import axios from 'axios'
 // Custom hook for fetching dashboard data
 const useDashboardData = () => {
   const [dashboardData, setDashboardData] = useState({
@@ -45,17 +47,17 @@ const useDashboardData = () => {
         const token = localStorage.getItem('token')
 
         setLoading(true);
-        const response = await fetch('https://skillonx-website.onrender.com/admin/dashboard',
+        const response = await fetch('https://skillonx-server.onrender.com/admin/dashboard',
           {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
-              }
-              }
-              
+            }
+          }
+
         );
-        
+
         if (!response.ok) {
           throw new Error('Failed to fetch dashboard data');
         }
@@ -81,6 +83,7 @@ const useDashboardData = () => {
   return { ...dashboardData, loading, error };
 };
 const AdminDashboard = () => {
+  const [pendingCourseRequests, setPendingCourseRequests] = useState([]);
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -88,6 +91,23 @@ const AdminDashboard = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { stats, recentStudents, recentAssessments, loading, error } = useDashboardData();
   console.log(recentStudents, "sadad");
+  useEffect(() => {
+    const fetchPendingRequests = async () => {
+      try {
+        const response = await axios.get('https://skillonx-server.onrender.com/course-requests/pending', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        console.log(response.data)
+        setPendingCourseRequests(response.data.data);
+      } catch (err) {
+        console.error('Error fetching pending requests:', err);
+      }
+    };
+
+    fetchPendingRequests();
+  }, []);
   const statsCards = [
     { label: 'Total Students', value: stats.totalStudents, icon: Users },
     { label: 'Universities', value: stats.totalUniversities, icon: School },
@@ -113,6 +133,16 @@ const AdminDashboard = () => {
   //   { id: 2, title: 'Data Structures', course: 'Computer Science', submissions: 98, avgScore: 78 },
   //   { id: 3, title: 'Machine Learning Basics', course: 'Data Science', submissions: 112, avgScore: 82 },
   // ];
+  const NotificationButton = () => (
+    <button className="relative">
+      <Bell className="w-6 h-6" />
+      {pendingCourseRequests.length > 0 && (
+        <span className="absolute -top-1 -right-1 bg-teal-500 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+          {pendingCourseRequests.length}
+        </span>
+      )}
+    </button>
+  );
   const handleLogout = async () => {
     try {
       await authService.logout();
@@ -151,9 +181,8 @@ const AdminDashboard = () => {
   return (
     <div className="min-h-screen pt-16 bg-gray-900 text-gray-100">
       {/* Sidebar */}
-      <div className={`fixed top-0 pt-16 left-0 h-full bg-gray-800 w-64 transform transition-transform duration-200 ease-in-out ${
-        isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div className={`fixed top-0 pt-16 left-0 h-full bg-gray-800 w-64 transform transition-transform duration-200 ease-in-out ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}>
         <div className="flex  items-center justify-between p-4 border-b border-gray-700">
           <h1 className="text-xl font-bold text-teal-500">Admin Dashboard</h1>
           <button onClick={() => setIsSidebarOpen(false)} className="lg:hidden">
@@ -164,39 +193,41 @@ const AdminDashboard = () => {
         <nav className="mt-6 px-4">
           <button
             onClick={() => setActiveTab('dashboard')}
-            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${
-              activeTab === 'dashboard' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
-            }`}
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'dashboard' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}
           >
             <BarChart2 className="w-5 h-5 mr-3" />
             Dashboard
           </button>
 
           <Link to="/admin/universities" onClick={() => setActiveTab('universities')}
-            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${
-              activeTab === 'universities' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
-            }`}>
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'universities' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}>
             <School2 className="h-5 w-5" />
             Universities
           </Link>
 
           <Link to="/admin/students" onClick={() => setActiveTab('students')}
-            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${
-              activeTab === 'students' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
-            }`}>
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'students' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}>
             <User className="h-5 w-5" />
             Students
           </Link>
 
           <Link to="/admin/assessments" onClick={() => setActiveTab('assessments')}
-            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${
-              activeTab === 'assessments' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
-            }`}>
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'assessments' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}>
             <ClipboardList className="h-5 w-5" />
             Assessments
           </Link>
+          <Link to="/admin/add-course" onClick={() => setActiveTab('assessments')}
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'assessments' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}>
+            <ClipboardList className="h-5 w-5" />
+            Courses
+          </Link>
 
-          
+
         </nav>
       </div>
 
@@ -271,7 +302,11 @@ const AdminDashboard = () => {
               </div>
             ))}
           </div>
-
+          {pendingCourseRequests.length > 0 && (
+            <div className="mb-6">
+              <AdminCourseRequests />
+            </div>
+          )}
           {/* Recent Activity */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Recent Students */}
@@ -289,7 +324,7 @@ const AdminDashboard = () => {
                   <div key={student.id} className="bg-gray-700 p-4 rounded-lg">
                     <div className="flex items-center justify-between mb-2">
                       <h3 className="font-medium">{student.firstName} {student.lastName}</h3>
-                      
+
                     </div>
                     <p className="text-sm text-gray-400">{student.university}</p>
                     <div className="mt-3 flex gap-2">

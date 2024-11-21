@@ -7,13 +7,13 @@ import { authService } from '../../services/authServices'
 import userImg from '../../assets/user/avatar-1.svg'
 
 const Button = ({ children, className, variant = 'primary', ...props }) => {
-  const baseStyle = "inline-flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+  const baseStyle = "inline-flex items-center justify-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
   const variants = {
-    primary: "border-transparent text-white bg-blue-600 hover:bg-blue-700",
-    secondary: "border-gray-300 text-gray-700 bg-white hover:bg-gray-50",
+    primary: "border-transparent text-white bg-teal-500 hover:bg-teal-600",
+    secondary: "border-gray-600 text-gray-300 bg-gray-800 hover:bg-gray-700",
     danger: "border-transparent text-white bg-red-600 hover:bg-red-700",
   }
-  
+
   return (
     <button
       className={`${baseStyle} ${variants[variant]} ${className}`}
@@ -39,7 +39,7 @@ export default function StuProfilePage() {
     const fetchStudentData = async () => {
       try {
         setIsLoading(true)
-        const response = await fetch(`https://skillonx-website.onrender.com/student/profile/${stuId}`) 
+        const response = await fetch(`https://skillonx-server.onrender.com/student/profile/${stuId}`)
         if (!response.ok) {
           throw new Error('Failed to fetch student data')
         }
@@ -96,31 +96,31 @@ export default function StuProfilePage() {
         phone: editedData.phone,
         address: editedData.address
       }
-      const response = await fetch(`https://skillonx-website.onrender.com/student/profile/${stuId}`, {
+      const response = await fetch(`https://skillonx-server.onrender.com/student/profile/${stuId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(updatedFields),
       })
-      
+
       // if (!response.ok) {
       //   throw new Error('Failed to save changes')
       // }
-      
+
       const updatedData = await response.json()
-    
-    // Preserve the original education details when updating the state
-    setUserData({
-      ...updatedData.data,
-      universityName: userData.universityName,
-      currentEducation: userData.currentEducation,
-      passingYear: userData.passingYear
-    })
-    setIsEditing(false)
-    setSaveStatus('success')
-    
-    setTimeout(() => setSaveStatus(null), 3000)
+
+      // Preserve the original education details when updating the state
+      setUserData({
+        ...updatedData.data,
+        universityName: userData.universityName,
+        currentEducation: userData.currentEducation,
+        passingYear: userData.passingYear
+      })
+      setIsEditing(false)
+      setSaveStatus('success')
+
+      setTimeout(() => setSaveStatus(null), 3000)
     } catch (err) {
       console.error('Error saving changes:', err)
       setSaveStatus('error')
@@ -149,9 +149,10 @@ export default function StuProfilePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen pt-24 bg-gradient-to-br from-blue-500 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center text-white">
-          Loading profile...
+      <div className="min-h-screen pt-24 bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="w-16 h-16 border-4 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <p className="mt-4 text-gray-300">Loading profile...</p>
         </div>
       </div>
     )
@@ -159,9 +160,9 @@ export default function StuProfilePage() {
 
   if (error) {
     return (
-      <div className="min-h-screen pt-24 bg-gradient-to-br from-blue-500 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen pt-24 bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-red-100 text-red-700 p-4 rounded-lg">
+          <div className="bg-red-900/50 text-red-300 border border-red-500 p-4 rounded-lg">
             Error: {error}
           </div>
         </div>
@@ -169,40 +170,38 @@ export default function StuProfilePage() {
     )
   }
 
-  if (!userData) {
-    return null
-  }
+  if (!userData) return null;
 
-  const displayData = isEditing ? editedData : userData
+  const displayData = isEditing ? editedData : userData;
 
   return (
-    <div className="min-h-screen pt-24 bg-gradient-to-br from-blue-500 to-blue-800 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen pt-24 bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <motion.div
         className="max-w-4xl mx-auto"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <Link to="/university-dashboard" className="inline-flex items-center text-blue-200 hover:text-blue-300 mb-6 transition-colors duration-200">
+        <Link to="/student-dashboard" className="inline-flex items-center text-teal-500 hover:text-teal-400 mb-6 transition-colors duration-200">
           <ArrowLeft className="h-5 w-5 mr-2" />
           Back to Dashboard
         </Link>
-        
+
         {saveStatus === 'success' && (
-          <div className="mb-4 bg-green-100 text-green-700 p-4 rounded-lg">
+          <div className="mb-4 bg-teal-900/50 text-teal-300 border border-teal-500 p-4 rounded-lg">
             Profile updated successfully!
           </div>
         )}
-        
+
         {saveStatus === 'error' && (
-          <div className="mb-4 bg-red-100 text-red-700 p-4 rounded-lg">
+          <div className="mb-4 bg-red-900/50 text-red-300 border border-red-500 p-4 rounded-lg">
             Failed to update profile. Please try again.
           </div>
         )}
-        
-        <motion.div variants={itemVariants} className="bg-white bg-opacity-30 backdrop-blur-lg rounded-lg overflow-hidden shadow-lg">
+
+        <motion.div variants={itemVariants} className="bg-gray-800 rounded-lg overflow-hidden shadow-lg border border-gray-700">
           <div className="relative pb-24 md:pb-32">
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 bg-opacity-20 backdrop-blur-lg"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-teal-600 to-gray-800"></div>
             <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end p-6">
               <div>
                 {isEditing ? (
@@ -211,101 +210,99 @@ export default function StuProfilePage() {
                       type="text"
                       value={displayData.firstName}
                       onChange={(e) => handleInputChange('firstName', e.target.value)}
-                      className="bg-white bg-opacity-90 rounded px-2 py-1 text-gray-800"
+                      className="bg-gray-700 text-gray-100 rounded px-2 py-1"
                     />
                     <input
                       type="text"
                       value={displayData.lastName}
                       onChange={(e) => handleInputChange('lastName', e.target.value)}
-                      className="bg-white bg-opacity-90 rounded px-2 py-1 text-gray-800 ml-2"
+                      className="bg-gray-700 text-gray-100 rounded px-2 py-1 ml-2"
                     />
                   </div>
                 ) : (
-                  <h1 className="text-2xl font-bold text-white mb-2">
+                  <h1 className="text-2xl font-bold text-gray-100 mb-2">
                     {displayData.firstName} {displayData.lastName}
                   </h1>
                 )}
-                <p className="text-blue-100">Student</p>
+                <p className="text-gray-300">Student</p>
               </div>
-              <img 
+              <img
                 src={userImg}
                 alt={displayData.firstName}
-                className="w-24 h-24 rounded-full border-4 border-white shadow-lg mt-4 md:mt-0"
+                className="w-24 h-24 rounded-full border-4 border-gray-700 shadow-lg mt-4 md:mt-0"
               />
             </div>
           </div>
+          
           <div className="p-6 space-y-6">
             <motion.div variants={itemVariants} className="grid sm:grid-cols-2 gap-4">
               <div className="flex items-center space-x-2 text-sm">
-                <Mail className="h-5 w-5 text-gray-500" />
+                <Mail className="h-5 w-5 text-teal-500" />
                 {isEditing ? (
                   <input
                     type="email"
                     value={displayData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    className="bg-white rounded px-2 py-1 flex-1"
+                    className="bg-gray-700 text-gray-100 rounded px-2 py-1 flex-1"
                   />
                 ) : (
-                  <span>{displayData.email}</span>
+                  <span className="text-gray-300">{displayData.email}</span>
                 )}
               </div>
               <div className="flex items-center space-x-2 text-sm">
-                <Phone className="h-5 w-5 text-gray-500" />
+                <Phone className="h-5 w-5 text-teal-500" />
                 {isEditing ? (
                   <input
                     type="tel"
                     value={displayData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                    className="bg-white rounded px-2 py-1 flex-1"
+                    className="bg-gray-700 text-gray-100 rounded px-2 py-1 flex-1"
                   />
                 ) : (
-                  <span>{displayData.phone}</span>
+                  <span className="text-gray-300">{displayData.phone}</span>
                 )}
               </div>
               <div className="flex items-center space-x-2 text-sm sm:col-span-2">
-                <MapPin className="h-5 w-5 text-gray-500" />
+                <MapPin className="h-5 w-5 text-teal-500" />
                 {isEditing ? (
                   <input
                     type="text"
                     value={displayData.address.doorNumber}
                     onChange={(e) => handleInputChange('address.doorNumber', e.target.value)}
-                    className="bg-white rounded px-2 py-1 flex-1"
+                    className="bg-gray-700 text-gray-100 rounded px-2 py-1 flex-1"
                   />
                 ) : (
-                  <span>{displayData.address.doorNumber}</span>
+                  <span className="text-gray-300">{displayData.address.doorNumber}</span>
                 )}
               </div>
             </motion.div>
 
             <motion.div variants={itemVariants}>
-  <h2 className="text-lg font-semibold mb-2 flex items-center">
-    <Briefcase className="h-5 w-5 mr-2 text-gray-500" />
-    Education Details
-  </h2>
-  <div className="bg-gray-50 p-4 rounded-md shadow-sm">
-    <div className="grid gap-4">
-      <div>
-        <h3 className="text-lg font-semibold mb-2 flex items-center">
-          <Briefcase className="h-5 w-5 mr-2 text-gray-500" />
-          {/* Read-only university name */}
-          {displayData.universityName}
-        </h3>
-        <div className="font-medium">
-          {/* Read-only current education */}
-          {displayData.currentEducation}
-        </div>
-        <div className="text-sm text-gray-500 flex items-center mt-1">
-          <Calendar className="h-4 w-4 mr-1" />
-          Passing Year: {' '}
-          {/* Read-only passing year */}
-          {displayData.passingYear}
-        </div>
-      </div>
-    </div>
-  </div>
-</motion.div>
+              <h2 className="text-lg font-semibold mb-2 flex items-center text-gray-100">
+                <Briefcase className="h-5 w-5 mr-2 text-teal-500" />
+                Education Details
+              </h2>
+              <div className="bg-gray-900 p-4 rounded-md shadow-sm border border-gray-700">
+                <div className="grid gap-4">
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2 flex items-center text-gray-100">
+                      <Briefcase className="h-5 w-5 mr-2 text-teal-500" />
+                      {displayData.universityName}
+                    </h3>
+                    <div className="font-medium text-gray-300">
+                      {displayData.currentEducation}
+                    </div>
+                    <div className="text-sm text-gray-400 flex items-center mt-1">
+                      <Calendar className="h-4 w-4 mr-1 text-teal-500" />
+                      Passing Year: {displayData.passingYear}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
-          <div className="px-6 py-4 bg-gray-50 flex justify-end space-x-2">
+
+          <div className="px-6 py-4 bg-gray-900 border-t border-gray-700 flex justify-end space-x-2">
             {isEditing ? (
               <>
                 <Button variant="danger" onClick={handleCancel}>

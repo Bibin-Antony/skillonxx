@@ -160,17 +160,17 @@ const HeroPage = () => {
           </div>
 
           {/* Image Section */}
-          <div className=" w-10 md:w-1/2">
+          <div className="w-10 md:w-1/2">
             <div className="">
               {/* Background decoration */}
               <div className="absolute"></div>
-              <div className="relative ">
+              <div className="relative">
                 <img
-                  className="w-full h-auto object-cover transform hover:scale-105 transition-transform duration-700 hidden md:block"
+                  className="w-full h-auto max-w-[150%] object-cover transform hover:scale-105 transition-transform duration-700 hidden md:block"
                   src={slides[currentSlide].image}
                   alt={slides[currentSlide].title}
                 />
-                <div className="absolute "></div>
+                <div className="absolute"></div>
               </div>
             </div>
           </div>

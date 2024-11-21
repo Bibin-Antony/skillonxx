@@ -43,7 +43,7 @@ export default function SurveyStartPage() {
 
   const generateReferralLink = () => {
     const devUrl = "http://localhost:5173/SurveyStartPage/online"
-    // const devUrl = "https://skillonx-website.onrender.com"
+    // const devUrl = "https://skillonx-server.onrender.com"
     const baseUrl = 'https://skillonx.com/SurveyStartPage/online';
     const referralUrl = `${baseUrl}?ref=${referralCode}`;
     setReferralLink(referralUrl);
@@ -53,8 +53,8 @@ export default function SurveyStartPage() {
     console.log(`Referral shared: ${referralCode}`);
     // Here you can make an API call to track the referral if necessary
   };
-  // const baseUrl = "http://localhost:5000"
-  const devUrl = "https://skillonx-website.onrender.com"
+  // const baseUrl = "https://skillonx-server.onrender.com"
+  const devUrl = "https://skillonx-server.onrender.com"
 
 
   const handleShare = async () => {
@@ -102,16 +102,16 @@ export default function SurveyStartPage() {
 
       <div className={`w-full max-w-2xl relative transition-opacity duration-1000 ${mounted ? 'opacity-100' : 'opacity-0'}`}>
         <div className="mb-4 sm:mb-8 flex justify-center">
-          <img 
+          <img
             src={logoImage}
             alt="Company Logo"
             className="h-14 sm:h-16 md:h-28 transition-transform duration-300 hover:scale-105"
           />
         </div>
-        
+
         <div className="backdrop-blur-lg bg-white/30 border border-white/20 rounded-2xl shadow-xl p-4 sm:p-6 md:p-8 space-y-4 sm:space-y-6 md:space-y-8">
           <h2 className='text-xl px-3 mx-5 text-gray-800'>Thank you for submitting your application. We will review your application and get back to you.</h2>
-          
+
           <div className="flex justify-center gap-6">
             {socialLinks.map(({ Icon, href, label }) => (
               <a
@@ -132,7 +132,7 @@ export default function SurveyStartPage() {
             <p className="text-center text-gray-700">
               Share SKILLONX with your network and get a chance to win a ₹5,000 reward!
             </p>
-            
+
             <Alert>
               <AlertTitle className="flex items-center ">&#x1F4E2; Here's how:</AlertTitle>
               <AlertDescription>
@@ -155,10 +155,10 @@ export default function SurveyStartPage() {
               </Button>
             ) : (
               <div className="space-y-2">
-                <input 
-                  type="text" 
-                  value={referralLink} 
-                  readOnly 
+                <input
+                  type="text"
+                  value={referralLink}
+                  readOnly
                   className="w-full p-2 border rounded bg-white text-gray-800"
                 />
                 <Button onClick={() => {
@@ -173,7 +173,7 @@ export default function SurveyStartPage() {
             <div className="text-center text-sm">
               <a href="/termsandcondition" className="text-primary hover:text-blue-600 transition-colors duration-200 inline-block" target="_blank">
                 Terms & condition
-              </a>  
+              </a>
             </div>
           </div>
         </div>
