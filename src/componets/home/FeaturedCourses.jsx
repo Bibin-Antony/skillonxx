@@ -95,8 +95,8 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
       education,
       featuredCourse: courseName,
     };
-    const devUrl = "http://localhost:5000"
-    const url = "https://skillonx-server.onrender.com/"
+    const devUrl = "https://skillonx-server.onrender.com"
+    const url = "https://skillonx-server.onrender.com"
     // const prodUrl = "https://skillonx-server.onrender.com"
     try {
       const response = await axios.post(`${url}/createenrollment`, enrollmentData);

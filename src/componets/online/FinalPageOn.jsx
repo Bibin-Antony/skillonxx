@@ -53,7 +53,7 @@ export default function SurveyStartPage() {
     console.log(`Referral shared: ${referralCode}`);
     // Here you can make an API call to track the referral if necessary
   };
-  // const baseUrl = "http://localhost:5000"
+  // const baseUrl = "https://skillonx-server.onrender.com"
   const devUrl = "https://skillonx-server.onrender.com"
 
 

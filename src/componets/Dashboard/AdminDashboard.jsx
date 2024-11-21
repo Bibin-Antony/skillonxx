@@ -24,6 +24,8 @@ import {
 import { useAuth } from '../../auth/AuthContext';
 import { authService } from '../../services/authServices';
 import { Link, useNavigate } from 'react-router-dom';
+import AdminCourseRequests from '../Dashboard/admindash/AdminCourseRequest'
+import axios from 'axios'
 // Custom hook for fetching dashboard data
 const useDashboardData = () => {
   const [dashboardData, setDashboardData] = useState({
@@ -81,6 +83,7 @@ const useDashboardData = () => {
   return { ...dashboardData, loading, error };
 };
 const AdminDashboard = () => {
+  const [pendingCourseRequests, setPendingCourseRequests] = useState([]);
   const { auth, logout } = useAuth();
   const navigate = useNavigate();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -88,6 +91,23 @@ const AdminDashboard = () => {
   const [isProfileDropdownOpen, setIsProfileDropdownOpen] = useState(false);
   const { stats, recentStudents, recentAssessments, loading, error } = useDashboardData();
   console.log(recentStudents, "sadad");
+  useEffect(() => {
+    const fetchPendingRequests = async () => {
+      try {
+        const response = await axios.get('https://skillonx-server.onrender.com/course-requests/pending', {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`
+          }
+        });
+        console.log(response.data)
+        setPendingCourseRequests(response.data.data);
+      } catch (err) {
+        console.error('Error fetching pending requests:', err);
+      }
+    };
+
+    fetchPendingRequests();
+  }, []);
   const statsCards = [
     { label: 'Total Students', value: stats.totalStudents, icon: Users },
     { label: 'Universities', value: stats.totalUniversities, icon: School },
@@ -113,6 +133,16 @@ const AdminDashboard = () => {
   //   { id: 2, title: 'Data Structures', course: 'Computer Science', submissions: 98, avgScore: 78 },
   //   { id: 3, title: 'Machine Learning Basics', course: 'Data Science', submissions: 112, avgScore: 82 },
   // ];
+  const NotificationButton = () => (
+    <button className="relative">
+      <Bell className="w-6 h-6" />
+      {pendingCourseRequests.length > 0 && (
+        <span className="absolute -top-1 -right-1 bg-teal-500 text-xs w-5 h-5 rounded-full flex items-center justify-center">
+          {pendingCourseRequests.length}
+        </span>
+      )}
+    </button>
+  );
   const handleLogout = async () => {
     try {
       await authService.logout();
@@ -190,6 +220,12 @@ const AdminDashboard = () => {
             <ClipboardList className="h-5 w-5" />
             Assessments
           </Link>
+          <Link to="/admin/add-course" onClick={() => setActiveTab('assessments')}
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'assessments' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}>
+            <ClipboardList className="h-5 w-5" />
+            Courses
+          </Link>
 
 
         </nav>
@@ -266,7 +302,11 @@ const AdminDashboard = () => {
               </div>
             ))}
           </div>
-
+          {pendingCourseRequests.length > 0 && (
+            <div className="mb-6">
+              <AdminCourseRequests />
+            </div>
+          )}
           {/* Recent Activity */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Recent Students */}

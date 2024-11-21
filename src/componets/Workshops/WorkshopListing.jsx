@@ -106,7 +106,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
       requirements,
     };
     const prodUrl = "https://skillonx-server.onrender.com"
-    const devUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-server.onrender.com"
 
     try {
       const response = await axios.post(`${prodUrl}/workshop/workshop-enrollment`, enrollmentData);
@@ -970,8 +970,8 @@ const WorkshopListing = () => {
         <motion.div
           layout
           className={`grid gap-6 ${isListView
-              ? "grid-cols-1"
-              : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+            ? "grid-cols-1"
+            : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
             }`}
         >
           {filteredWorkshops.map((workshop) => (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { User, Mail, Phone, Building, UserCircle, Search, ChevronLeft, ChevronRight, GraduationCap } from 'lucide-react';
+import { User, Mail, Phone, Building, UserCircle, X,Search, ChevronLeft, ChevronRight, GraduationCap } from 'lucide-react';
 import { useAuth } from '../../auth/AuthContext';
 import axios from 'axios';
 
@@ -83,45 +83,46 @@ const AllStudents = () => {
 
     if (isLoading) {
         return (
-            <div className="flex items-center justify-center min-h-screen">
-                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <div className="flex items-center justify-center min-h-screen bg-gray-900">
+                <div className="w-8 h-8 border-4 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
             </div>
         );
     }
     const MobileFilters = () => (
         <div
-            className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${isMobileFiltersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                }`}
+            className={`fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity duration-300 ${
+                isMobileFiltersOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+            }`}
             onClick={() => setIsMobileFiltersOpen(false)}
         >
             <div
-                className="absolute right-0 top-0 h-full w-[80%] max-w-sm bg-white p-4"
+                className="absolute right-0 top-0 h-full w-[80%] max-w-sm bg-gray-800 p-4 border-l border-gray-700"
                 onClick={e => e.stopPropagation()}
             >
                 <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold">Filters</h3>
+                    <h3 className="text-lg font-semibold text-gray-100">Filters</h3>
                     <button
                         onClick={() => setIsMobileFiltersOpen(false)}
-                        className="p-2 hover:bg-gray-100 rounded-lg"
+                        className="p-2 hover:bg-gray-700 rounded-lg text-gray-400"
                     >
                         <X className="w-5 h-5" />
                     </button>
                 </div>
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">Search</label>
                         <input
                             type="text"
                             placeholder="Search students..."
-                            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                            className="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-gray-100"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">Gender</label>
                         <select
-                            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg"
+                            className="w-full px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg text-gray-100"
                             value={filterGender}
                             onChange={(e) => setFilterGender(e.target.value)}
                         >
@@ -131,42 +132,24 @@ const AllStudents = () => {
                             <option value="other">Other</option>
                         </select>
                     </div>
-                    <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
-                        <select
-                            className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg"
-                            value={sortBy}
-                            onChange={(e) => setSortBy(e.target.value)}
-                        >
-                            <option value="name">Name</option>
-                            <option value="email">Email</option>
-                            <option value="universityName">University</option>
-                        </select>
-                    </div>
-                    <button
-                        onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                        className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg"
-                    >
-                        Sort {sortOrder === 'asc' ? 'Ascending' : 'Descending'}
-                    </button>
                 </div>
             </div>
         </div>
     );
     return (
-        <div className="min-h-screen bg-gradient-to-br pt-16 from-purple-200 to-pink-100 px-2 sm:px-4 md:px-6 py-6">
+        <div className="min-h-screen bg-gray-900 pt-16 px-2 sm:px-4 md:px-6 py-6">
             <div className="max-w-7xl mx-auto">
                 {/* Header Section */}
                 <div className="mb-8 text-center">
-                    <div className="inline-block p-2 bg-purple-50 rounded-full mb-4">
-                        <GraduationCap className="w-8 h-8 text-purple-600" />
+                    <div className="inline-block p-2 bg-gray-800 rounded-full mb-4">
+                        <GraduationCap className="w-8 h-8 text-teal-500" />
                     </div>
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Students Directory</h1>
-                    <p className="text-gray-600">Managing {students.length} students</p>
+                    <h1 className="text-2xl md:text-3xl font-bold text-gray-100 mb-2">Students Directory</h1>
+                    <p className="text-gray-400">Managing {students.length} students</p>
                 </div>
 
                 {/* Controls Section */}
-                <div className="mb-6 bg-white rounded-xl shadow-sm border border-purple-100">
+                <div className="mb-6 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
                     <div className="p-4 md:p-6 space-y-4">
                         <div className="flex flex-col sm:flex-row gap-3">
                             <div className="relative flex-grow">
@@ -174,7 +157,7 @@ const AllStudents = () => {
                                 <input
                                     type="text"
                                     placeholder="Search students..."
-                                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors"
+                                    className="w-full pl-10 pr-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-gray-100 placeholder-gray-400"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />
@@ -182,7 +165,7 @@ const AllStudents = () => {
 
                             <div className="flex gap-2 flex-wrap">
                                 <select
-                                    className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors text-gray-600"
+                                    className="px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-gray-100"
                                     value={filterGender}
                                     onChange={(e) => setFilterGender(e.target.value)}
                                 >
@@ -193,7 +176,7 @@ const AllStudents = () => {
                                 </select>
 
                                 <select
-                                    className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-colors text-gray-600"
+                                    className="px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-gray-100"
                                     value={sortBy}
                                     onChange={(e) => setSortBy(e.target.value)}
                                 >
@@ -204,7 +187,7 @@ const AllStudents = () => {
 
                                 <button
                                     onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                                    className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-lg hover:bg-gray-100 transition-colors text-gray-600"
+                                    className="px-4 py-2.5 bg-gray-700 border border-gray-600 rounded-lg hover:bg-gray-600 transition-colors text-gray-100"
                                 >
                                     {sortOrder === 'asc' ? '↑' : '↓'}
                                 </button>
@@ -218,17 +201,17 @@ const AllStudents = () => {
                     {currentStudents.map((student) => (
                         <div
                             key={student._id}
-                            className="bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-200 border border-purple-100 hover:border-purple-200"
+                            className="bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 border border-gray-700 hover:border-gray-600"
                         >
                             <div className="p-5 md:p-6">
                                 {/* Student Header */}
                                 <div className="flex items-center space-x-4 mb-4">
-                                    <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-3 rounded-lg">
-                                        <UserCircle className="w-6 h-6 text-purple-600" />
+                                    <div className="bg-teal-500/10 p-3 rounded-lg">
+                                        <UserCircle className="w-6 h-6 text-teal-500" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-gray-800 mb-1">{student.fullName}</h3>
-                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-600">
+                                        <h3 className="font-semibold text-gray-100 mb-1">{student.fullName}</h3>
+                                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-teal-900/50 text-teal-400">
                                             {student.gender || 'Not Specified'}
                                         </span>
                                     </div>
@@ -236,21 +219,20 @@ const AllStudents = () => {
 
                                 {/* Student Details */}
                                 <div className="space-y-3 text-sm">
-                                    <div className="flex items-center p-2 rounded-lg bg-gray-50 group hover:bg-purple-50 transition-colors">
-                                        <Mail className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
-                                        <span className="text-gray-600 break-all">{student.email || 'No email'}</span>
+                                    <div className="flex items-center p-2 rounded-lg bg-gray-900 group hover:bg-gray-700 transition-colors">
+                                        <Mail className="w-4 h-4 text-teal-500 mr-3" />
+                                        <span className="text-gray-300 break-all">{student.email || 'No email'}</span>
                                     </div>
 
-                                    <div className="flex items-center p-2 rounded-lg bg-gray-50 group hover:bg-purple-50 transition-colors">
-                                        <Phone className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
-                                        <span className="text-gray-600">{student.phone || 'Not provided'}</span>
+                                    <div className="flex items-center p-2 rounded-lg bg-gray-900 group hover:bg-gray-700 transition-colors">
+                                        <Phone className="w-4 h-4 text-teal-500 mr-3" />
+                                        <span className="text-gray-300">{student.phone || 'Not provided'}</span>
                                     </div>
 
-                                    <div className="flex items-center p-2 rounded-lg bg-gray-50 group hover:bg-purple-50 transition-colors">
-                                        <Building className="w-4 h-4 text-gray-400 mr-3 group-hover:text-purple-500" />
-                                        <span className="text-gray-600">{student.universityName || 'Not specified'}</span>
+                                    <div className="flex items-center p-2 rounded-lg bg-gray-900 group hover:bg-gray-700 transition-colors">
+                                        <Building className="w-4 h-4 text-teal-500 mr-3" />
+                                        <span className="text-gray-300">{student.universityName || 'Not specified'}</span>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -263,7 +245,7 @@ const AllStudents = () => {
                         <button
                             onClick={() => paginate(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className="p-2 bg-white rounded-lg border border-gray-200 disabled:opacity-50 hover:bg-purple-50 transition-colors"
+                            className="p-2 bg-gray-800 rounded-lg border border-gray-700 disabled:opacity-50 hover:bg-gray-700 transition-colors text-gray-300"
                         >
                             <ChevronLeft className="w-5 h-5" />
                         </button>
@@ -272,10 +254,11 @@ const AllStudents = () => {
                                 <button
                                     key={number}
                                     onClick={() => paginate(number)}
-                                    className={`px-4 py-2 rounded-lg transition-all duration-200 ${currentPage === number
-                                            ? 'bg-purple-500 text-white shadow-sm'
-                                            : 'bg-white border border-gray-200 hover:bg-purple-50 text-gray-600'
-                                        }`}
+                                    className={`px-4 py-2 rounded-lg transition-all duration-200 ${
+                                        currentPage === number
+                                            ? 'bg-teal-500 text-white shadow-lg'
+                                            : 'bg-gray-800 border border-gray-700 hover:bg-gray-700 text-gray-300'
+                                    }`}
                                 >
                                     {number}
                                 </button>
@@ -284,7 +267,7 @@ const AllStudents = () => {
                         <button
                             onClick={() => paginate(currentPage + 1)}
                             disabled={currentPage === totalPages}
-                            className="p-2 bg-white rounded-lg border border-gray-200 disabled:opacity-50 hover:bg-purple-50 transition-colors"
+                            className="p-2 bg-gray-800 rounded-lg border border-gray-700 disabled:opacity-50 hover:bg-gray-700 transition-colors text-gray-300"
                         >
                             <ChevronRight className="w-5 h-5" />
                         </button>
@@ -293,15 +276,18 @@ const AllStudents = () => {
 
                 {/* Empty State */}
                 {sortedStudents.length === 0 && (
-                    <div className="text-center py-12 bg-white rounded-xl shadow-sm border border-purple-100">
-                        <div className="bg-purple-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <User className="w-8 h-8 text-purple-400" />
+                    <div className="text-center py-12 bg-gray-800 rounded-xl shadow-lg border border-gray-700">
+                        <div className="bg-gray-900 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <User className="w-8 h-8 text-teal-500" />
                         </div>
-                        <h3 className="text-lg font-medium text-gray-900 mb-1">No Students Found</h3>
-                        <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+                        <h3 className="text-lg font-medium text-gray-100 mb-1">No Students Found</h3>
+                        <p className="text-gray-400">Try adjusting your search or filter criteria</p>
                     </div>
                 )}
             </div>
+
+            {/* Mobile Filters */}
+            <MobileFilters />
         </div>
     );
 };

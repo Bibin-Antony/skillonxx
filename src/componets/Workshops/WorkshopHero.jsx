@@ -52,7 +52,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       batchSize,
     };
     const prodUrl = "https://skillonx-server.onrender.com"
-    const devUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
       const response = await axios.post("https://skillonx-server.onrender.com/workshop", enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);

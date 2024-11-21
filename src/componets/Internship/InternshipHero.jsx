@@ -33,7 +33,7 @@ const InternShipModal = ({ isVisible, onClose }) => {
     setFormState("submitting")
     const consultationData = { name, email, phone };
     const prodUrl = "https://skillonx-server.onrender.com"
-    const devUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
       let res = await axios.post(`${prodUrl}/workshop/consultation`, consultationData);
       console.log("form submitted", res.data)

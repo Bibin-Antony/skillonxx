@@ -23,7 +23,7 @@ export default function SurveyStartPage() {
 
     // Check if referral has already been applied for this referral code
     const storedReferralCode = localStorage.getItem('referralApplied');
-    const baseUrl = "http://localhost:5000"
+    const baseUrl = "https://skillonx-server.onrender.com"
     const devUrl = "https://skillonx-server.onrender.com"
     // Only send referral request if referral code exists and hasn't been applied before
     if (code && storedReferralCode !== code) {

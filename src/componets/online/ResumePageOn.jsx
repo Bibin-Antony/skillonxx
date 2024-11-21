@@ -41,7 +41,7 @@ export default function ResumePage() {
   const isFormValid = () => {
     return true; // Make the form always valid to allow submission without resume or links
   };
-  const baseUrl = "http://localhost:5000"
+  const baseUrl = "https://skillonx-server.onrender.com"
   const prodUrl = "https://skillonx-server.onrender.com";
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -62,15 +62,37 @@ const SignupPage = () => {
   const [currentEducation, setCurrentEducation] = useState('');
   const [passingYear, setPassingYear] = useState('');
   const [errorMessages, setErrorMessages] = useState({});
+  const [universityNameDrop, setUniversityNameDrop] = useState('')
+  const [universities, setUniversities] = useState([]);
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
   const yearRange = Array.from({ length: 10 }, (_, i) => currentYear + i);
 
   useEffect(() => {
-    // Smooth scroll polyfill
-    // console.log(userType)
-    ;
+    const fetchUniversityName = async () => {
+      try {
+        const response = await axios.get('https://skillonx-server.onrender.com/university/get-name')
+        console.log('Raw API Response:', response.data);
+
+        // Combine both student and university arrays
+        const studentUniversities = response.data.data.student.map(item => item.universityName);
+        const universityNames = response.data.data.university.map(item => item.universityName);
+
+        // Combine arrays and get unique values
+        const uniqueUniversities = Array.from(
+          new Set([...studentUniversities, ...universityNames])
+        )
+          .filter(name => name) // Remove any null/undefined/empty values
+          .sort();
+
+        console.log('Unique universities:', uniqueUniversities);
+        setUniversities(uniqueUniversities);
+      } catch (error) {
+        console.log(error, " there is error")
+      }
+    }
+    fetchUniversityName();
     window.scrollTo({ top: 0 });
 
     return () => {
@@ -104,7 +126,12 @@ const SignupPage = () => {
       }
 
       if (!gender) errors.gender = "Gender is required";
-      if (!universityName) errors.universityName = "University name is required";
+      if (!universityName && !universityNameDrop) {
+        errors.universityName = "Please either enter a university name or select one from the dropdown";
+      }
+      if (universityName && universityNameDrop) {
+        errors.universityName = "Please use either manual input or dropdown selection, not both";
+      }
       // Address fields validation
       if (!doorNumber) errors.doorNumber = "Door number is required";
       if (!landmark) errors.landmark = "Landmark is required";
@@ -127,7 +154,12 @@ const SignupPage = () => {
 
     // University-specific validation
     if (userType === 'university') {
-      if (!universityName) errors.universityName = "University name is required";
+      if (!universityName && !universityNameDrop) {
+        errors.universityName = "Please either enter a university name or select one from the dropdown";
+      }
+      if (universityName && universityNameDrop) {
+        errors.universityName = "Please use either manual input or dropdown university name selection, not both";
+      }
       if (!recognizedBy) errors.recognizedBy = "Recognition (e.g., UGC, AICTE) is required";
       if (!universityAddress) errors.universityAddress = "University address is required";
       if (!email) {
@@ -144,6 +176,8 @@ const SignupPage = () => {
     setErrorMessages(errors);
 
     if (Object.keys(errors).length === 0) {
+      const finalUniversityName = universityNameDrop || universityName;
+
       const formData = {
         userType,
         firstName,
@@ -152,7 +186,8 @@ const SignupPage = () => {
         email,
         gender,
         password,
-        universityName,
+
+        universityName: finalUniversityName,
         address: {
           doorNumber,
           landmark,
@@ -171,7 +206,7 @@ const SignupPage = () => {
         })
       };
       console.log(formData)
-      const baseUrl = 'http://localhost:5000';
+      const baseUrl = 'https://skillonx-server.onrender.com';
       const devUrl = "https://skillonx-server.onrender.com"
       const url = userType === 'student' ? `${devUrl}/student` : `${devUrl}/university`;
       console.log(url)
@@ -431,6 +466,23 @@ const SignupPage = () => {
                           {errorMessages.universityName && <p className="text-red-500 text-xs mt-1">{errorMessages.universityName}</p>}
 
                         </div>
+                        <div className="space-y-2">
+                          <label className="text-blue-100 text-sm font-medium">University Name As Dropdown</label>
+
+                          <select
+                            className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                            value={universityNameDrop}
+                            onChange={(e) => setUniversityNameDrop(e.target.value)}
+                          >
+                            <option value="">Select University</option>
+                            {universities.map((uni, index) => (
+                              <option key={index} value={uni}>
+                                {uni}
+                              </option>
+                            ))}
+                          </select>
+                          {errorMessages.universityNameDrop && <p className="text-red-500 text-xs mt-1">{errorMessages.universityNameDrop}</p>}
+                        </div>
 
                         {/* Education Fields */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -493,6 +545,23 @@ const SignupPage = () => {
                           />
                           {errorMessages.universityName && <p className="text-red-500 text-xs mt-1">{errorMessages.universityName}</p>}
 
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-blue-100 text-sm font-medium">University Name As Dropdown</label>
+
+                          <select
+                            className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                            value={universityNameDrop}
+                            onChange={(e) => setUniversityNameDrop(e.target.value)}
+                          >
+                            <option value="">Select University</option>
+                            {universities.map((uni, index) => (
+                              <option key={index} value={uni}>
+                                {uni}
+                              </option>
+                            ))}
+                          </select>
+                          {errorMessages.universityNameDrop && <p className="text-red-500 text-xs mt-1">{errorMessages.universityNameDrop}</p>}
                         </div>
                         <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">Recognized By</label>

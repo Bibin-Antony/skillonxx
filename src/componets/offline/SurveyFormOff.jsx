@@ -52,7 +52,7 @@ export default function SurveyFormOff() {
 
     return Object.keys(errors).length === 0;
   };
-  const baseUrl = "http://localhost:5000"
+  const baseUrl = "https://skillonx-server.onrender.com"
   const devUrl = "https://skillonx-server.onrender.com"
 
   const handleSubmit = async (e) => {

@@ -20,14 +20,14 @@ const AdminLogin = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://localhost:5000/admin/login", {
+      const response = await axios.post("https://skillonx-server.onrender.com/admin/login", {
         email,
         password,
       });
 
       if (response.data.success) {
         const { token, user } = response.data;
-        
+
         // Format user data to match your existing structure
         const userData = {
           ...user,
@@ -36,7 +36,7 @@ const AdminLogin = () => {
 
         // Use your existing login function
         login(token, userData);
-        
+
         // Navigate to admin dashboard
         navigate('/admin');
       }

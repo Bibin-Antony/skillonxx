@@ -55,7 +55,7 @@ export default function ResumePage() {
       formData.append('instagramUrl', instagramUrl);
       console.log('FormData:', linkedinUrl, instagramUrl, file);
 
-      const baseUrl = "http://localhost:5000"
+      const baseUrl = "https://skillonx-server.onrender.com"
       const devUrl = "https://skillonx-server.onrender.com"
 
       try {

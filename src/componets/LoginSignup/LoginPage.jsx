@@ -38,10 +38,10 @@ const LoginPage = () => {
       password
     }
     console.log(formdata)
-    const devUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-server.onrender.com"
     const prodUrl = "https://skillonx-server.onrender.com"
     // try {
-    //   const response = await axios.post("http://localhost:5000/student/login", {
+    //   const response = await axios.post("https://skillonx-server.onrender.com/student/login", {
     //     email,
     //     password,
     //   });
@@ -236,23 +236,16 @@ const LoginPage = () => {
                   <input type="checkbox" className="rounded border-blue-300/30 bg-[#0a192f]/50" />
                   <span>Remember me</span>
                 </label>
-                <a href="#" className="text-sm text-blue-300 hover:text-blue-200">
+                <Link to='/forgot-password' className="text-sm text-blue-300 hover:text-blue-200">
                   Forgot Password?
-                </a>
+                </Link>
               </div>
 
               <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
                 Sign In
               </button>
 
-              <button className="w-full py-2 px-4 bg-[#0a192f] text-blue-100 rounded-lg flex items-center justify-center space-x-2 hover:bg-[#112240] transition-colors border border-blue-300/30">
-                <img
-                  src={googleicon}
-                  alt="Google"
-                  className="w-5 h-5"
-                />
-                <span>Sign In with Google</span>
-              </button>
+
 
               <p className="text-center text-blue-100 text-sm">
                 Don't have an account?{' '}

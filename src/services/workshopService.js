@@ -3,7 +3,7 @@
 // services/workshopService.js
 
 export const addWorkshopToUniversity = async (workshopData) => {
-  const baseUrl = "http://localhost:5000/";
+  const baseUrl = "https://skillonx-server.onrender.com/";
   try {
     console.log("Sending workshop data:", workshopData); // Debug log
 

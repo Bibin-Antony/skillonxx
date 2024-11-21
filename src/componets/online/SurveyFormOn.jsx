@@ -59,7 +59,7 @@ export default function SurveyFormOn() {
     e.preventDefault();
     let userData = { ...formData, isStudent, isLocation, referralCode };
     console.log(userData);
-    const baseUrl = "http://localhost:5000"
+    const baseUrl = "https://skillonx-server.onrender.com"
     const devUrl = "https://skillonx-server.onrender.com"
 
 

@@ -33,7 +33,7 @@ const CTASectionCourses = () => {
       setFormState("submitting");
       const scheduleData = { name, scheduleTitle, date, time, email, phone };
       const prodUrl = "https://skillonx-server.onrender.com"
-      const devUrl = "http://localhost:5000"
+      const devUrl = "https://skillonx-server.onrender.com"
       try {
         const response = await axios.post("https://skillonx-server.onrender.com/scheduleconsultation", scheduleData);
         console.log("Schedule created successfully:", response.data);

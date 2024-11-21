@@ -114,7 +114,7 @@ const AdminUniversities = () => {
       if (!universityToDelete) return;
       const token = localStorage.getItem('token')
       // Now universityToDelete is the ID directly, so use it without ._id
-      //http://localhost:5000/admin/universities/672d7346d4a09c8b46fdd1ca
+      //https://skillonx-server.onrender.com/admin/universities/672d7346d4a09c8b46fdd1ca
       await axios.delete(
         `https://skillonx-server.onrender.com/admin/universities/${universityToDelete}`,
         {

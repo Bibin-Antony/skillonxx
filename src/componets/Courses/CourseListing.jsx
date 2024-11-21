@@ -149,7 +149,7 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
       featuredCourse: courseName,
     };
     const prodUrl = "https://skillonx-server.onrender.com"
-    const devUrl = "http://localhost:5000"
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
       const response = await axios.post("https://skillonx-server.onrender.com/createprofessionalcourse", enrollmentData);
       console.log("Enrollment Successful:", response.data);
@@ -591,8 +591,8 @@ const CourseListing = () => {
         <motion.div
           layout
           className={`grid gap-6 ${isListView
-              ? "grid-cols-1"
-              : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+            ? "grid-cols-1"
+            : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
             }`}
         >
           {filteredCourses.map((course) => (
