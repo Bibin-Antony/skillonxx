@@ -16,12 +16,12 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
   const [preferredDate, setPreferredDate] = useState("");
   const [batchSize, setBatchSize] = useState("");
   const [error, setError] = useState("");
-  const [formState,setFormState] = useState("idle")
+  const [formState, setFormState] = useState("idle")
   const resetForm = () => {
     setUniversity("");
     setEmail("");
     setPhone("");
-    
+
     setWorkshopType("");
     setPreferredDate("");
     setBatchSize("");
@@ -51,16 +51,16 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       preferredDate,
       batchSize,
     };
-    const prodUrl = "https://skillonx-website.onrender.com"
-    const devUrl = "http://localhost:5000"
+    const prodUrl = "https://skillonx-server.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
-      const response = await axios.post("https://skillonx-website.onrender.com/workshop", enrollmentData);
+      const response = await axios.post("https://skillonx-server.onrender.com/workshop", enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
       setFormState("success")
-      setTimeout(()=>{
+      setTimeout(() => {
         setFormState("idle")
         onClose();
-      },2000)
+      }, 2000)
     } catch (error) {
       console.error("Error enrolling in workshop:", error);
       setError("An error occurred while enrolling. Please try again.");
@@ -74,23 +74,23 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
       <div className="relative w-full max-w-md transform transition-all animate-slideUp">
         <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden max-h-[90vh] overflow-y-auto">
           <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-br from-blue-500 via-blue-600 to-purple-600 opacity-10" />
-          {formState==="submitting"&&(
+          {formState === "submitting" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50">
-            <div className="w-48 h-48">
-              <Lottie animationData={wait} loop />
+              <div className="w-48 h-48">
+                <Lottie animationData={wait} loop />
+              </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
             </div>
-            <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
-          </div>
           )}
-          {formState==="success"&&(
+          {formState === "success" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center
             z-50">
               <div className="w-48 h-48">
                 <Lottie animationData={complete} loop={false} />
-                </div>
-                <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was
-                  successful!</p>
               </div>
+              <p className="text-lg font-medium text-gray-700 mt-4">Your enrollment was
+                successful!</p>
+            </div>
           )}
           <div className="relative px-6 pt-6 pb-4">
             <div className="flex items-center justify-between">
@@ -110,7 +110,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">University/Organization</label>
               <div className="relative">
@@ -140,9 +140,9 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose }) => {
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Type of Workshop</label>
-              <select className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"  value={workshopType}
+              <select className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white" value={workshopType}
                 onChange={(e) => { setWorkshopType(e.target.value); setError(""); }}
-               >
+              >
                 <option value="">Select a workshop</option>
                 <option>Web Development</option>
                 <option>React.js</option>
@@ -216,10 +216,10 @@ const WorkshopHero = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <div className="space-y-8">
             <div className="space-y-6">
-            <div className="flex items-center gap-2 text-blue-300 ">
-          <MapPin className="w-4 h-4" />
-          <span className="text-sm">For Colleges & Universities</span>
-        </div>
+              <div className="flex items-center gap-2 text-blue-300 ">
+                <MapPin className="w-4 h-4" />
+                <span className="text-sm">For Colleges & Universities</span>
+              </div>
               <motion.h1 className="text-xl md:text-5xl font-bold text-white leading-tight">
                 Transform Your Students with{" "}
                 <span className="block text-blue-400">Industry-Ready Skills</span>

@@ -85,13 +85,13 @@ const AdminUniversities = () => {
       const token = localStorage.getItem('token')
       setLoading(true);
       const response = await axios.get(
-        "https://skillonx-website.onrender.com/admin/universities",{
-          
-            headers: {
-              Authorization: `Bearer ${token}`
-          }
-          
+        "https://skillonx-server.onrender.com/admin/universities", {
+
+        headers: {
+          Authorization: `Bearer ${token}`
         }
+
+      }
       );
       console.log(response.data.universities);
       setUniversities(response.data.universities);
@@ -108,29 +108,29 @@ const AdminUniversities = () => {
     // console.log(university._id)
     setUniversityToDelete(university._id);
     setDeleteModalOpen(true);
-};
-const handleDelete = async () => {
-  try {
+  };
+  const handleDelete = async () => {
+    try {
       if (!universityToDelete) return;
       const token = localStorage.getItem('token')
       // Now universityToDelete is the ID directly, so use it without ._id
-      //http://localhost:5000/admin/universities/672d7346d4a09c8b46fdd1ca
+      //https://skillonx-server.onrender.com/admin/universities/672d7346d4a09c8b46fdd1ca
       await axios.delete(
-          `https://skillonx-website.onrender.com/admin/universities/${universityToDelete}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`
+        `https://skillonx-server.onrender.com/admin/universities/${universityToDelete}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-          }
+        }
       );
       setDeleteModalOpen(false);
       setUniversityToDelete(null);
       fetchUniversities();
-  } catch (err) {
+    } catch (err) {
       console.error("Error deleting university:", err);
       alert("Failed to delete university. Please try again.");
-  }
-};
+    }
+  };
 
   const filteredUniversities = universities.filter(
     (uni) =>
@@ -165,14 +165,14 @@ const handleDelete = async () => {
     <div className="min-h-screen pt-16 bg-gray-900 p-6">
       {/* Delete Modal */}
       <DeleteModal
-    isOpen={deleteModalOpen}
-    onClose={() => {
-        setDeleteModalOpen(false);
-        setUniversityToDelete(null);
-    }}
-    onConfirm={handleDelete}
-    universityName={universities.find(u => u._id === universityToDelete)?.universityName}
-/>
+        isOpen={deleteModalOpen}
+        onClose={() => {
+          setDeleteModalOpen(false);
+          setUniversityToDelete(null);
+        }}
+        onConfirm={handleDelete}
+        universityName={universities.find(u => u._id === universityToDelete)?.universityName}
+      />
       <Link
         to="/admin"
         className="mb-6 pl-24 inline-flex items-center text-cyan-600 hover:text-cyan-900"

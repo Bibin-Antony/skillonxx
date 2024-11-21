@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { Code, Brain, Target, Rocket } from "lucide-react";
 import "./App.css";
 import { Toaster } from 'react-hot-toast';
@@ -32,6 +32,8 @@ import AdminUniversities from "./componets/Dashboard/admindash/AdminUniversities
 import AdminStudents from "./componets/Dashboard/admindash/AdminStudents";
 import AdminAssessment from "./componets/Dashboard/admindash/AdminAssessment";
 import UniProfilePage from "./componets/Dashboard/UniProfilePage";
+import ForgotPassword from "./componets/LoginSignup/ForgetPassword";
+import AddCourses from "./componets/Dashboard/AddCourses";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -90,13 +92,24 @@ const AnimatedBackground = () => {
 
 // Layout Component to wrap all routes
 const Layout = ({ children }) => {
-  return (
-    <div className="relative min-h-screen">
-      <AnimatedBackground />
-      {children}
-      <BackToTopButton/>
-    </div>
-  );
+  const location = useLocation();
+  
+  // Check if the current route is a dashboard route
+  const isDashboardRoute = 
+    location.pathname.startsWith('/student-dashboard') ||
+    location.pathname.startsWith('/university-dashboard') ||
+    location.pathname.startsWith('/admin');
+    return (
+      <>
+        {!isDashboardRoute && <Navbar />}
+        <div className="relative min-h-screen">
+          <AnimatedBackground />
+          {children}
+          <BackToTopButton/>
+        </div>
+        {!isDashboardRoute && <Footer />}
+      </>
+    );
 };
 
 // Dashboard Layout Component
@@ -138,7 +151,7 @@ const App = () => {
   return (
     <Router>
       <AuthProvider>
-      <Navbar />
+      
       <Layout>
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
@@ -152,6 +165,7 @@ const App = () => {
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/LoginPage" element={<LoginPage />} />
             <Route path="/SignupPage" element={<SignupPage />} />
+            <Route path="/forgot-password" element={<ForgotPassword/>}/>
             <Route path="/courses/:courseId" element={<CourseDetails />} />
             
             {/* Survey Routes */}
@@ -182,6 +196,8 @@ const App = () => {
             <Route path="universities" element={<AdminUniversities/>} />
             <Route path="students" element={<AdminStudents/>} />
             <Route path="assessments" element={<AdminAssessment/>} />
+            <Route path="add-course" element={<AddCourses/>} />    
+
             {/* Other admin routes */}
           </Routes>
         </DashboardLayout>
@@ -197,6 +213,8 @@ const App = () => {
                       <Routes>
                         <Route index element={<StudentDashboard />} />
                         <Route path="courses-page" element={<CoursesPages />} />
+                        <Route path="courses-page/add-course" element={<AddCourses/>} />    
+
                         <Route path="workshops-page" element={<WorkshopsPage />} />
                         <Route path="test" element={<TestPage />} />
                         <Route path="check-assessment" element={<GiveAssessment/>}/>
@@ -242,7 +260,7 @@ const App = () => {
           </Routes>
         </Suspense>
       </Layout>
-      <Footer />
+      
       </AuthProvider>
     </Router>
   );

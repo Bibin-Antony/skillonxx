@@ -7,7 +7,7 @@ import {
   BookOpen,
   Trophy,
   Tag,
-   X, Mail, Phone, User, GraduationCap,Book
+  X, Mail, Phone, User, GraduationCap, Book
 } from "lucide-react";
 import axios from 'axios'
 import Lottie from 'lottie-react';
@@ -21,7 +21,7 @@ import english from "../../assets/Images/english.jpg";
 const courses = [
   {
     id: 1,
-    title: "Front End Development Bootcamp", 
+    title: "Front End Development Bootcamp",
     description: "Master modern front-end development with React and contemporary web technologies",
     startDate: "2024-11-01",
     maxStudents: 10,
@@ -30,7 +30,7 @@ const courses = [
     duration: "12 weeks",
     image: frontend,
     highlights: ["React Development", "Industry Projects", "Portfolio Building"]
-   },
+  },
   {
     id: 2,
     title: "Python Programming",
@@ -54,7 +54,7 @@ const courses = [
     duration: "3 weeks",
     image: english,
     highlights: ["Business Communication", "IELTS Preparation", "Interview Skills"]
-   },
+  },
 ];
 const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
   const [name, setName] = useState("");
@@ -95,13 +95,14 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
       education,
       featuredCourse: courseName,
     };
-    const devUrl = "http://localhost:5000"
-    const prodUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
+    const url = "https://skillonx-server.onrender.com"
+    // const prodUrl = "https://skillonx-server.onrender.com"
     try {
-      const response = await axios.post(`${prodUrl}/createenrollment`, enrollmentData);
+      const response = await axios.post(`${url}/createenrollment`, enrollmentData);
       console.log("Enrollment Successful:", response.data);
       setFormState("success");
-      
+
       // Close modal after showing success animation
       setTimeout(() => {
         resetForm()
@@ -113,7 +114,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
       setFormState("idle");
     }
   };
-  
+
   const handleClose = () => {
     resetForm();
     onClose();
@@ -195,7 +196,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                   value={email}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                  onChange={(e)=>{
+                  onChange={(e) => {
                     setEmail(e.target.value)
                     setError("")
                   }}
@@ -213,7 +214,8 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
                   value={phone}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                  onChange={(e) =>{ setPhone(e.target.value)
+                  onChange={(e) => {
+                    setPhone(e.target.value)
                     setError("")
                   }
                   }
@@ -254,7 +256,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
-                
+
                 id="terms"
                 className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
@@ -311,8 +313,8 @@ const FeaturedCourses = () => {
         percentageFilled > 80
           ? "bg-gradient-to-r from-red-500 to-red-600"
           : percentageFilled > 50
-          ? "bg-gradient-to-r from-yellow-500 to-yellow-600"
-          : "bg-gradient-to-r from-green-500 to-green-600",
+            ? "bg-gradient-to-r from-yellow-500 to-yellow-600"
+            : "bg-gradient-to-r from-green-500 to-green-600",
     };
   };
   const handleEnrollClick = (courseTitle) => {
@@ -326,7 +328,7 @@ const FeaturedCourses = () => {
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b "></div>
       <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t "></div>
 
-      
+
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
@@ -369,7 +371,7 @@ const FeaturedCourses = () => {
                       <Clock className="w-4 h-4" />
                       <span className="text-sm">{course.duration}</span>
                     </div>
-                    
+
                   </div>
                 </div>
 
@@ -438,23 +440,23 @@ const FeaturedCourses = () => {
             );
           })}
           <FeaturedCoursesEnrollmentModal
-        isVisible={isModalVisible}
-        onClose={() => setModalVisible(false)}
-        courseName={selectedCourse}
-      />
+            isVisible={isModalVisible}
+            onClose={() => setModalVisible(false)}
+            courseName={selectedCourse}
+          />
         </div>
 
         <div className="text-center mt-16">
-        <button 
-          onClick={() => window.location.href = '/courses'}
-          className="group relative px-8 py-4 rounded-xl text-lg font-semibold shadow-lg shadow-blue-600"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl transition-all duration-300"></div>
-          <span className="relative flex items-center justify-center gap-2 text-white">
-            Explore All Courses
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-          </span>
-        </button>
+          <button
+            onClick={() => window.location.href = '/courses'}
+            className="group relative px-8 py-4 rounded-xl text-lg font-semibold shadow-lg shadow-blue-600"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl transition-all duration-300"></div>
+            <span className="relative flex items-center justify-center gap-2 text-white">
+              Explore All Courses
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+            </span>
+          </button>
         </div>
       </div>
 

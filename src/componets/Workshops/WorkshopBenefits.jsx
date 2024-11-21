@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  GraduationCap, Target, Users, Building, Briefcase, 
-  Code, BookOpen, Award, Calendar, Laptop, MessageSquare, 
+  GraduationCap, Target, Users, Building, Briefcase,
+  Code, BookOpen, Award, Calendar, Laptop, MessageSquare,
   CheckCircle, X, Mail, Phone, User, ArrowRight
 } from "lucide-react";
 import axios from "axios";
@@ -17,7 +17,7 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
   const [phone, setPhone] = useState("");
   const [type, setType] = useState("");
   const [error, setError] = useState("");
-  const [formState,setFormState] = useState("idle")
+  const [formState, setFormState] = useState("idle")
   const resetForm = () => {
     setName("");
     setEmail("");
@@ -40,15 +40,15 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
     }
     setFormState("submitting")
     const consultationData = { name, email, phone, type };
-    const devUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
-      let res = await axios.post("https://skillonx-website.onrender.com/workshop/consultation", consultationData);
-      console.log("form submitted",res.data)
+      let res = await axios.post("https://skillonx-server.onrender.com/workshop/consultation", consultationData);
+      console.log("form submitted", res.data)
       setFormState("success")
-      setTimeout(()=>{
+      setTimeout(() => {
         setFormState("idle")
         onClose();
-      },2000)
+      }, 2000)
     } catch (error) {
       console.error("Error scheduling consultation:", error);
       setError("An error occurred. Please try again.");
@@ -66,21 +66,21 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
           {formState === "submitting" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={wait} 
-                  loop 
+                <Lottie
+                  animationData={wait}
+                  loop
                   className="w-full h-full"
                 />
               </div>
               <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
             </div>
           )}
-          
+
           {formState === "success" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={complete} 
+                <Lottie
+                  animationData={complete}
                   loop={false}
                   className="w-full h-full"
                 />
@@ -106,7 +106,7 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
@@ -121,7 +121,7 @@ const WorkShopBenefitModal = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="email"  placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
+                <input type="email" placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
                   onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
@@ -172,20 +172,20 @@ const BenefitCard = ({ icon: Icon, title, description, index }) => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-indigo-500/10 rounded-2xl transform group-hover:scale-105 transition-all duration-300" />
       <div className="relative bg-blue-950/40 backdrop-blur-sm border border-blue-800/30 p-8 rounded-2xl hover:shadow-2xl transition-all duration-300">
         <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl" />
-        
+
         <div className="relative">
           <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
             <Icon className="w-7 h-7 text-white" />
           </div>
-          
+
           <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">
             {title}
           </h3>
-          
+
           <p className="text-blue-100/70">
             {description}
           </p>
-          
+
           <div className="mt-6 flex items-center text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">
             <span className="text-sm font-semibold">Learn more</span>
             <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
@@ -294,7 +294,7 @@ const WorkshopBenefits = () => {
     ],
   };
 
-  
+
 
   return (
     <div className="relative bg-gradient-to-br from-blue-950 via-blue-900 to-indigo-950 py-24 overflow-hidden">
@@ -306,7 +306,7 @@ const WorkshopBenefits = () => {
 
       <div className="relative container mx-auto px-4 md:max-w-6xl">
         {/* Section Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -326,7 +326,7 @@ const WorkshopBenefits = () => {
           </p>
         </motion.div>
 
-      
+
 
         {/* Benefits Grid */}
         <div className="space-y-24">
@@ -368,7 +368,7 @@ const WorkshopBenefits = () => {
         </div>
 
         {/* CTA Section */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

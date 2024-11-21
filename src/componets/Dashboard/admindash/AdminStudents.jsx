@@ -19,7 +19,7 @@ const AdminStudents = () => {
       setLoading(true);
       const token = localStorage.getItem('token')
       const response = await axios.get(
-        "https://skillonx-website.onrender.com/admin/students",
+        "https://skillonx-server.onrender.com/admin/students",
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -39,9 +39,9 @@ const AdminStudents = () => {
 
   const filteredStudents = students.filter(student => {
     if (!searchTerm) return true;
-    
+
     const searchLower = searchTerm.toLowerCase();
-    
+
     return (
       (student?.firstName?.toLowerCase()?.includes(searchLower) || false) ||
       (student?.lastName?.toLowerCase()?.includes(searchLower) || false) ||
@@ -49,7 +49,7 @@ const AdminStudents = () => {
       (student?.universityName?.toLowerCase()?.includes(searchLower) || false) ||
       (student?.currentEducation?.toLowerCase()?.includes(searchLower) || false)
     );
-});
+  });
 
   // Loading State Component
   const LoadingState = () => (
@@ -125,12 +125,12 @@ const AdminStudents = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold text-white group-hover:text-teal-400 transition-colors duration-300">
-                      {`${student.firstName} ${student.lastName}`}
+                        {`${student.firstName} ${student.lastName}`}
                       </h3>
                       <p className="text-gray-400">{student.universityName}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-center gap-2 ml-16 md:ml-0">
                     <Link
                       to={`/admin/students/${student._id}`}
@@ -177,7 +177,7 @@ const AdminStudents = () => {
                 </div>
               </div>
             ))}
-            
+
             {filteredStudents.length === 0 && (
               <div className="text-center py-12 bg-gray-800 rounded-lg">
                 <p className="text-gray-400">No students found</p>

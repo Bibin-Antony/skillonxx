@@ -50,7 +50,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
   const [departmentSize, setDepartmentSize] = useState("");
   const [requirements, setRequirements] = useState("");
   const [error, setError] = useState("");
-  const [formState,setFormState] = useState("idle")
+  const [formState, setFormState] = useState("idle")
   const formRef = useRef(null);
   const resetForm = () => {
     setName("");
@@ -105,27 +105,27 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
       departmentSize,
       requirements,
     };
-    const prodUrl = "https://skillonx-website.onrender.com"
-    const devUrl = "http://localhost:5000"
+    const prodUrl = "https://skillonx-server.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
 
     try {
       const response = await axios.post(`${prodUrl}/workshop/workshop-enrollment`, enrollmentData);
       console.log("Workshop Enrollment Successful:", response.data);
       setFormState("success")
-      setTimeout(()=>{
+      setTimeout(() => {
         setFormState("idle")
         onClose();
-      },2000)
+      }, 2000)
     } catch (error) {
       console.error("Error enrolling in workshop:", error);
       setError("An error occurred while submitting. Please try again.");
       setFormState("idle")
     }
   };
-  return (  
+  return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn overflow-y-auto">
       {/* Backdrop */}
-      <div 
+      <div
         className="fixed absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
@@ -138,21 +138,21 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
           {formState === "submitting" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={wait} 
-                  loop 
+                <Lottie
+                  animationData={wait}
+                  loop
                   className="w-full h-full"
                 />
               </div>
               <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
             </div>
           )}
-          
+
           {formState === "success" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={complete} 
+                <Lottie
+                  animationData={complete}
                   loop={false}
                   className="w-full h-full"
                 />
@@ -173,7 +173,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
                   <p className="text-sm text-gray-500 mt-0.5">Fill in your details to enroll</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={onClose}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
               >
@@ -184,7 +184,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
             {/* Personal Information */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name of the person or organization</label>
@@ -206,7 +206,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
                 <input
                   type="email"
                   value={email}
-                  onChange={(e)=>setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                 />
@@ -219,7 +219,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
                 <input
                   type="tel"
                   value={phone}
-                  onChange={(e)=>setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   placeholder="Enter your phone number"
                   className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
                 />
@@ -241,16 +241,16 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="number"
                 value={batchSize}
-                onChange={(e)=>setBatchSize(e.target.value)}
+                onChange={(e) => setBatchSize(e.target.value)}
                 placeholder="Enter batch size"
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Preferred Mode</label>
-              <select 
+              <select
                 value={mode}
-                onChange={(e)=>setMode(e.target.value)}
+                onChange={(e) => setMode(e.target.value)}
                 className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
               >
                 <option value="">Select mode</option>
@@ -266,7 +266,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="date"
                 value={preferredDate}
-                onChange={(e)=>setPreferredDate(e.target.value)}
+                onChange={(e) => setPreferredDate(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -275,7 +275,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="time"
                 value={preferredTime}
-                onChange={(e)=>setPreferredTime(e.target.value)}
+                onChange={(e) => setPreferredTime(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -284,7 +284,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="date"
                 value={altDate}
-                onChange={(e)=>setAltDate(e.target.value)}
+                onChange={(e) => setAltDate(e.target.value)}
 
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
@@ -294,7 +294,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="time"
                 value={altTime}
-                onChange={(e)=>setAltTime(e.target.value)}
+                onChange={(e) => setAltTime(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
             </div>
@@ -305,7 +305,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="text"
                 value={institution}
-                onChange={(e)=>setInstitution(e.target.value)}
+                onChange={(e) => setInstitution(e.target.value)}
                 placeholder="Enter institution name"
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
@@ -315,7 +315,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <input
                 type="number"
                 value={departmentSize}
-                onChange={(e)=>setDepartmentSize(e.target.value)}
+                onChange={(e) => setDepartmentSize(e.target.value)}
                 placeholder="Enter team size"
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               />
@@ -325,7 +325,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
               <textarea
                 placeholder="Enter specific requirements"
                 value={requirements}
-                onChange={(e)=>setRequirements(e.target.value)}
+                onChange={(e) => setRequirements(e.target.value)}
                 className="w-full pl-4 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
               ></textarea>
             </div>
@@ -334,7 +334,7 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
             <div className="flex items-start gap-2">
               <input
                 type="checkbox"
-                
+
                 id="terms"
                 className="mt-1 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
               />
@@ -371,7 +371,7 @@ const WorkshopFilter = ({ label, options, value, onChange }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
@@ -394,7 +394,7 @@ const WorkshopFilter = ({ label, options, value, onChange }) => {
                   <p className="text-sm text-gray-500 mt-0.5">Fill in your details to enroll</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={onClose}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
               >
@@ -404,7 +404,7 @@ const WorkshopFilter = ({ label, options, value, onChange }) => {
           </div>
 
           {/* Form */}
-          <form  className="px-6 pb-6 space-y-5">
+          <form className="px-6 pb-6 space-y-5">
             {/* Personal Information */}
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name of the person or organization</label>
@@ -463,7 +463,7 @@ const WorkshopFilter = ({ label, options, value, onChange }) => {
             </div>
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Preferred Mode</label>
-              <select 
+              <select
                 required
                 className="w-full pl-4 pr-8 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
               >
@@ -566,7 +566,7 @@ const WorkshopFilter = ({ label, options, value, onChange }) => {
 };
 
 // Workshop Card Component
-const WorkshopCard = ({ workshop, isListView,onScheduleClick }) => {
+const WorkshopCard = ({ workshop, isListView, onScheduleClick }) => {
   const navigate = useNavigate();
 
   return (
@@ -575,9 +575,8 @@ const WorkshopCard = ({ workshop, isListView,onScheduleClick }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className={`bg-white rounded-xl shadow-lg overflow-hidden ${
-        isListView ? "flex" : "flex flex-col"
-      }`}
+      className={`bg-white rounded-xl shadow-lg overflow-hidden ${isListView ? "flex" : "flex flex-col"
+        }`}
     >
       <img
         src={workshop.image}
@@ -613,10 +612,10 @@ const WorkshopCard = ({ workshop, isListView,onScheduleClick }) => {
         </div>
 
         <div className="mt-auto flex gap-3">
-        <button onClick={() => onScheduleClick(workshop.title)} className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
+          <button onClick={() => onScheduleClick(workshop.title)} className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-3 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary">
             Schedule Now
           </button>
-          <button className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-1 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary"  onClick={() => navigate(`/workshops/${workshop.id}`)}>
+          <button className="flex-1 bg-custom text-white active:scale-90 transition-all duration-300 px-8 py-1 rounded-lg font-semibold hover:bg-gradient-to-br hover:from-custom hover:via-primary" onClick={() => navigate(`/workshops/${workshop.id}`)}>
             Learn More
           </button>
         </div>
@@ -637,15 +636,15 @@ const WorkshopListing = () => {
   const [isListView, setIsListView] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedWorkshop, setSelectedWorkshop] = useState("");
-  const[isDestop,setIsDesktop] = useState(window.innerWidth>=768);
-  useEffect(()=>{
+  const [isDestop, setIsDesktop] = useState(window.innerWidth >= 768);
+  useEffect(() => {
     const handleResize = () => {
-      setIsDesktop(window.innerWidth>=768);
-      if(window.innerWidth<768) return setIsListView(false)
-      }
+      setIsDesktop(window.innerWidth >= 768);
+      if (window.innerWidth < 768) return setIsListView(false)
+    }
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  },[])
+  }, [])
   const handleScheduleNowClick = (workshopName) => {
     setSelectedWorkshop(workshopName);
     setModalVisible(true);
@@ -864,23 +863,23 @@ const WorkshopListing = () => {
 
   return (
     <div className="min-h-screen relative overflow-hidden py-12 bg-gradient-to-br from-blue-50 via-white to-blue-50">
-    {/* Decorative background elements */}
-    <div className="absolute inset-0">
-      <div className="absolute -top-40 right-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl" />
-      <div className="absolute top-1/3 -left-20 w-72 h-72 bg-sky-200/40 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl" />
-      <div className="absolute inset-0 bg-grid-blue-500/[0.03] bg-[size:20px]" />
-    </div>
-  
-    {/* Content container */}
-    <div className="relative container mx-auto px-4 md:w-[75vw]">
-      {/* Rest of your content remains the same */}
-      <h1 className="text-4xl font-bold text-center text-gray-800 mb-2">
-        College Workshops
-      </h1>
-      <p className="text-center text-gray-600 mb-8">
-        Transform your students with industry-relevant skills
-      </p>
+      {/* Decorative background elements */}
+      <div className="absolute inset-0">
+        <div className="absolute -top-40 right-0 w-96 h-96 bg-blue-200/30 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 -left-20 w-72 h-72 bg-sky-200/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-grid-blue-500/[0.03] bg-[size:20px]" />
+      </div>
+
+      {/* Content container */}
+      <div className="relative container mx-auto px-4 md:w-[75vw]">
+        {/* Rest of your content remains the same */}
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-2">
+          College Workshops
+        </h1>
+        <p className="text-center text-gray-600 mb-8">
+          Transform your students with industry-relevant skills
+        </p>
 
         {/* Search and Filters Section */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
@@ -951,32 +950,29 @@ const WorkshopListing = () => {
           <div className="flex gap-2">
             <button
               onClick={() => setIsListView(false)}
-              className={`p-2 rounded-lg ${
-                !isListView ? "bg-custom text-white" : "bg-gray-200"
-              }`}
+              className={`p-2 rounded-lg ${!isListView ? "bg-custom text-white" : "bg-gray-200"
+                }`}
             >
               <Grid className="h-5 w-5" />
             </button>
             {isDestop && <button
               onClick={() => setIsListView(true)}
-              className={`p-2 rounded-lg ${
-                isListView ? "bg-primary text-white" : "bg-gray-200"
-              }`}
+              className={`p-2 rounded-lg ${isListView ? "bg-primary text-white" : "bg-gray-200"
+                }`}
             >
               <List className="h-5 w-5" />
-            </button> }
-            
+            </button>}
+
           </div>
         </div>
 
         {/* Workshop Cards */}
         <motion.div
           layout
-          className={`grid gap-6 ${
-            isListView
-              ? "grid-cols-1"
-              : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
-          }`}
+          className={`grid gap-6 ${isListView
+            ? "grid-cols-1"
+            : "grid-cols-1 md:grid-cols-2 xl:grid-cols-3"
+            }`}
         >
           {filteredWorkshops.map((workshop) => (
             <WorkshopCard
@@ -998,9 +994,9 @@ const WorkshopListing = () => {
           </div>
         )}
       </div>
-         {/* Workshop Enrollment Modal */}
-         <WorkshopEnrollmentModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} workshopName={selectedWorkshop} />
- 
+      {/* Workshop Enrollment Modal */}
+      <WorkshopEnrollmentModal isVisible={isModalVisible} onClose={() => setModalVisible(false)} workshopName={selectedWorkshop} />
+
     </div>
   );
 };

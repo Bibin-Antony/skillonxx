@@ -25,7 +25,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
-  const [formState,setFormState] = useState("idle")
+  const [formState, setFormState] = useState("idle")
   const resetForm = () => {
     setName("");
     setEmail("");
@@ -34,7 +34,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
     setDate("");
     setTime("");
 
-    
+
     setError("");
     setFormState("idle");
   };
@@ -47,21 +47,21 @@ const ScheduleModal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !scheduleTitle || !date || !time||!email||!phone) {
+    if (!name || !scheduleTitle || !date || !time || !email || !phone) {
       setError("All fields are required");
       return;
     }
     setFormState("submitting")
-    const scheduleData = { name, scheduleTitle, date, time,email,phone };
-    const devUrl = "https://skillonx-website.onrender.com"
+    const scheduleData = { name, scheduleTitle, date, time, email, phone };
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
-      const response = await axios.post("https://skillonx-website.onrender.com/scheduleconsultation", scheduleData);
+      const response = await axios.post("https://skillonx-server.onrender.com/scheduleconsultation", scheduleData);
       console.log("Schedule created successfully:", response.data);
       setFormState("success")
-      setTimeout(()=>{
+      setTimeout(() => {
         setFormState("idle")
         onClose();
-      },2000)
+      }, 2000)
     } catch (error) {
       console.error("Error creating schedule:", error);
       setError("An error occurred. Please try again.");
@@ -71,7 +71,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn">
       {/* Backdrop */}
-      <div 
+      <div
         className="absolute inset-0 bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
@@ -84,21 +84,21 @@ const ScheduleModal = ({ isOpen, onClose }) => {
           {formState === "submitting" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={wait} 
-                  loop 
+                <Lottie
+                  animationData={wait}
+                  loop
                   className="w-full h-full"
                 />
               </div>
               <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
             </div>
           )}
-          
+
           {formState === "success" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={complete} 
+                <Lottie
+                  animationData={complete}
                   loop={false}
                   className="w-full h-full"
                 />
@@ -118,7 +118,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                   <p className="text-sm text-gray-500 mt-0.5">Fill in the data below to add a schedule</p>
                 </div>
               </div>
-              <button 
+              <button
                 onClick={onClose}
                 className="p-1 rounded-full hover:bg-gray-100 transition-colors"
               >
@@ -187,11 +187,11 @@ const ScheduleModal = ({ isOpen, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">
                 Schedule Title
               </label>
-              <select 
+              <select
                 className="w-full px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all appearance-none bg-white"
                 value={scheduleTitle}
                 onChange={(e) => { setScheduleTitle(e.target.value); setError(""); }}
-                style={{ 
+                style={{
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e")`,
                   backgroundPosition: 'right 0.5rem center',
                   backgroundRepeat: 'no-repeat',
@@ -221,7 +221,7 @@ const ScheduleModal = ({ isOpen, onClose }) => {
                   <input
                     type="time"
                     className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
-                    onChange={(e)=>{setTime(e.target.value);setError("")}}
+                    onChange={(e) => { setTime(e.target.value); setError("") }}
                   />
                 </div>
               </div>
@@ -256,7 +256,7 @@ const RequestCallBck = ({ isVisible, onClose }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [error, setError] = useState("");
-  const [formState,setFormState] = useState("idle")
+  const [formState, setFormState] = useState("idle")
   const resettingForm = () => {
     setName("");
     setEmail("");
@@ -280,15 +280,15 @@ const RequestCallBck = ({ isVisible, onClose }) => {
     }
     setFormState("submitting")
     const requestData = { name, email, phone, date, time };
-    const devUrl = "https://skillonx-website.onrender.com"
+    const devUrl = "https://skillonx-server.onrender.com"
     try {
-      let res = await axios.post("https://skillonx-website.onrender.com/workshop/request-callback", requestData);
-      console.log("form submitted",res.data)
+      let res = await axios.post("https://skillonx-server.onrender.com/workshop/request-callback", requestData);
+      console.log("form submitted", res.data)
       setFormState("success")
-      setTimeout(()=>{
+      setTimeout(() => {
         setFormState("idle")
         onClose();
-      },2000)
+      }, 2000)
     } catch (error) {
       console.error("Error requesting callback:", error);
       setError("An error occurred. Please try again.");
@@ -306,21 +306,21 @@ const RequestCallBck = ({ isVisible, onClose }) => {
           {formState === "submitting" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={wait} 
-                  loop 
+                <Lottie
+                  animationData={wait}
+                  loop
                   className="w-full h-full"
                 />
               </div>
               <p className="text-lg font-medium text-gray-700 mt-4">Submitting your enrollment...</p>
             </div>
           )}
-          
+
           {formState === "success" && (
             <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 rounded-2xl">
               <div className="w-48 h-48 flex items-center justify-center">
-                <Lottie 
-                  animationData={complete} 
+                <Lottie
+                  animationData={complete}
                   loop={false}
                   className="w-full h-full"
                 />
@@ -346,13 +346,13 @@ const RequestCallBck = ({ isVisible, onClose }) => {
           </div>
 
           <form onSubmit={handleSubmit} className="px-6 pb-6 space-y-5">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">Name</label>
               <div className="relative">
                 <User className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="text"  placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
+                <input type="text" placeholder="Enter your name" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={name}
                   onChange={(e) => setName(e.target.value)} />
               </div>
             </div>
@@ -361,7 +361,7 @@ const RequestCallBck = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
                 <Mail className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="email"  placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
+                <input type="email" placeholder="Enter your email" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={email}
                   onChange={(e) => setEmail(e.target.value)} />
               </div>
             </div>
@@ -370,7 +370,7 @@ const RequestCallBck = ({ isVisible, onClose }) => {
               <label className="block text-sm font-medium text-gray-700">Phone</label>
               <div className="relative">
                 <Phone className="absolute inset-y-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
-                <input type="tel"  placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={phone}
+                <input type="tel" placeholder="Enter your phone number" className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all" value={phone}
                   onChange={(e) => setPhone(e.target.value)} />
               </div>
             </div>
