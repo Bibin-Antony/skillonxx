@@ -56,15 +56,15 @@ const AddCourses = () => {
       hasInternship: true,
     }
   ];
-  useEffect(() => {
-    console.log(auth.user._id)
-  })
+  // useEffect(() => {
+  //   console.log(auth.user._id)
+  // })
   const studentId = auth.user._id
   const handleApplyCourse = async (course) => {
     setIsLoading(true);
     try {
       setIsLoading(true);
-      console.log(course)
+      // console.log(course)
       // Send course details directly
       const response = await axios.post('https://skillonx-server.onrender.com/course-requests/submit', {
         title: course.title,
@@ -76,7 +76,7 @@ const AddCourses = () => {
         studentId: studentId
       });
 
-      console.log(response.data)
+      // console.log(response.data)
       // // Store pending course info in localStorage
       // const pendingCourses = JSON.parse(localStorage.getItem('pendingCourses') || '[]');
       // pendingCourses.push({

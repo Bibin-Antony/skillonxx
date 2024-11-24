@@ -36,14 +36,14 @@ const CTASectionCourses = () => {
       const devUrl = "https://skillonx-server.onrender.com"
       try {
         const response = await axios.post("https://skillonx-server.onrender.com/scheduleconsultation", scheduleData);
-        console.log("Schedule created successfully:", response.data);
+        // console.log("Schedule created successfully:", response.data);
         setFormState("success");
         setTimeout(() => {
           setFormState("idle")
           onClose();
         }, 2000)
       } catch (error) {
-        console.error("Error creating schedule:", error);
+        // console.error("Error creating schedule:", error);
         setError("An error occurred. Please try again.");
         setFormState("idle");
       }

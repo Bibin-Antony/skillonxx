@@ -110,14 +110,14 @@ const WorkshopEnrollmentModal = ({ isVisible, onClose, workshopName }) => {
 
     try {
       const response = await axios.post(`${prodUrl}/workshop/workshop-enrollment`, enrollmentData);
-      console.log("Workshop Enrollment Successful:", response.data);
+      // console.log("Workshop Enrollment Successful:", response.data);
       setFormState("success")
       setTimeout(() => {
         setFormState("idle")
         onClose();
       }, 2000)
     } catch (error) {
-      console.error("Error enrolling in workshop:", error);
+      // console.error("Error enrolling in workshop:", error);
       setError("An error occurred while submitting. Please try again.");
       setFormState("idle")
     }

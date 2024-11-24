@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, Calendar, Users, Clock,Signal, ArrowLeft, CheckCircle } from 'lucide-react';
+import { Plus, Search, Calendar, Users, Clock, Signal, ArrowLeft, CheckCircle, X } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 // Import your workshop images
@@ -13,6 +13,8 @@ import technical from '../../assets/Images/technical.jpg';
 import careerdev from '../../assets/Images/careerdev.jpg';
 import fullstack from '../../assets/Images/fullstack.jpg';
 import responsiveweb from '../../assets/Images/responsiveweb.jpg';
+import python from "../../assets/Images/python.jpg";
+import aptitude from '../../assets/Images/aptitude.webp'
 
 const workshops = [
   {
@@ -24,7 +26,6 @@ const workshops = [
     category: "Web Development",
     level: "Beginner",
     duration: "3 Days",
-    batchSize: "30-40 students",
     mode: "On Campus",
     highlights: [
       "HTML5 & CSS3 fundamentals",
@@ -42,7 +43,6 @@ const workshops = [
     category: "Web Development",
     level: "Advanced",
     duration: "4 Days",
-    batchSize: "25-30 students",
     mode: "Hybrid",
     highlights: [
       "Modern React concepts",
@@ -59,8 +59,7 @@ const workshops = [
     image: englishcomm,
     category: "English Communication",
     level: "Intermediate",
-    duration: "2 Days",
-    batchSize: "25-30 students",
+    duration: "3 Days",
     mode: "On Campus",
     highlights: [
       "Business communication",
@@ -78,7 +77,6 @@ const workshops = [
     category: "UI/UX Design",
     level: "Beginner",
     duration: "3 Days",
-    batchSize: "25-30 students",
     mode: "Hybrid",
     highlights: [
       "Design principles",
@@ -96,7 +94,6 @@ const workshops = [
     category: "Web Development",
     level: "Intermediate",
     duration: "3 Days",
-    batchSize: "30-35 students",
     mode: "On Campus",
     highlights: [
       "ES6+ features",
@@ -114,7 +111,6 @@ const workshops = [
     category: "Version Control",
     level: "Beginner",
     duration: "1 Day",
-    batchSize: "30-40 students",
     mode: "Online Live",
     highlights: [
       "Git fundamentals",
@@ -132,7 +128,6 @@ const workshops = [
     category: "English Communication",
     level: "Intermediate",
     duration: "2 Days",
-    batchSize: "25-30 students",
     mode: "Hybrid",
     highlights: [
       "Documentation skills",
@@ -150,7 +145,6 @@ const workshops = [
     category: "Career Development",
     level: "Beginner",
     duration: "2 Days",
-    batchSize: "30-40 students",
     mode: "On Campus",
     highlights: [
       "Resume building",
@@ -168,7 +162,6 @@ const workshops = [
     category: "Web Development",
     level: "Intermediate",
     duration: "5 Days",
-    batchSize: "25-30 students",
     mode: "Hybrid",
     highlights: [
       "Frontend technologies",
@@ -186,7 +179,6 @@ const workshops = [
     category: "Web Development",
     level: "Intermediate",
     duration: "2 Days",
-    batchSize: "30-35 students",
     mode: "On Campus",
     highlights: [
       "CSS frameworks",
@@ -195,6 +187,42 @@ const workshops = [
       "CSS Grid & Flexbox",
     ],
   },
+  {
+    id: 11,
+    title: "Aptitude Mastery Workshop",
+    description:
+      "Sharpen your problem-solving and logical reasoning skills with a comprehensive workshop on aptitude techniques and strategies.",
+    image: aptitude,
+    category: "Aptitude",
+    level: "Beginner",
+    duration: "3 Days",
+    mode: "On Campus",
+    highlights: [
+      "Quantitative Aptitude",
+      "Logical Reasoning",
+      "Data Interpretation",
+      "Verbal Ability",
+      "Mock Tests & Analysis",
+    ],
+  },
+  {
+    id: 12,
+    title: "Python Programming Bootcamp",
+    description:
+      "Dive into the world of Python programming and learn to build versatile applications with hands-on coding experience and real-world projects.",
+    image: python,
+    category: "Programming",
+    level: "Beginner",
+    duration: "3 Days", mode: "On Campus",
+    highlights: [
+      "Python fundamentals",
+      "Data structures",
+      "Object-Oriented Programming",
+      "File handling and modules",
+      "Project-based learning",
+    ],
+  }
+
 ];
 const Button = ({ children, className, variant = 'default', size = 'default', ...props }) => {
   const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
@@ -208,7 +236,7 @@ const Button = ({ children, className, variant = 'default', size = 'default', ..
     sm: "h-9 px-2 rounded-md",
     lg: "h-11 px-8 rounded-md",
   };
-  
+
   return (
     <button
       className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className}`}
@@ -225,8 +253,14 @@ const CreateWorkshopPage = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedLevel, setSelectedLevel] = useState('All');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [selectedWorkshop, setSelectedWorkshop] = useState(null);
+  const [formData, setFormData] = useState({
+    password: '',
+    confirmPassword: ''
+  });
   const universityId = auth.user._id; // Replace with actual university ID
-  console.log(universityId) // Replace with actual university ID
+  // console.log(universityId) // Replace with actual university ID
 
   const categories = ['All', ...new Set(workshops.map(w => w.category))];
   const levels = ['All', ...new Set(workshops.map(w => w.level))];
@@ -238,23 +272,34 @@ const CreateWorkshopPage = () => {
     const matchesLevel = selectedLevel === 'All' || workshop.level === selectedLevel;
     return matchesSearch && matchesCategory && matchesLevel;
   });
+  const devUrl = 'http://localhost:5000'
+  const prodUrl = 'https://skillonx-server.onrender.com'
 
-  const handleAddWorkshop = async (workshop) => {
+  const handlePasswordSubmit = async (e) => {
+    e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords don't match!");
+      return;
+    }
+
     try {
-      const response = await fetch('https://skillonx-server.onrender.com/workshops/add', {
+      const response = await fetch(`${prodUrl}/workshops/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...workshop,
-          universityId
+          ...selectedWorkshop,
+          universityId,
+          workshopPassword: formData.password
         })
       });
 
       if (response.ok) {
+        setShowPasswordForm(false);
         setShowSuccess(true);
-        console.log("added the workshop")
+        setFormData({ password: '', confirmPassword: '' });
         setTimeout(() => {
           setShowSuccess(false);
           navigate('/university-dashboard/workshops-page');
@@ -267,9 +312,74 @@ const CreateWorkshopPage = () => {
     }
   };
 
+  const handleAddWorkshop = (workshop) => {
+    setSelectedWorkshop(workshop);
+    setShowPasswordForm(true);
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 pt-16">
+      {/* Password Form Modal */}
+      {showPasswordForm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-xl font-semibold text-gray-100">Set Workshop Password</h3>
+              <button
+                onClick={() => setShowPasswordForm(false)}
+                className="text-gray-400 hover:text-gray-200"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handlePasswordSubmit}>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-200 mb-1">
+                    Workshop Password
+                  </label>
+                  <input
+                    type="password"
+                    value={formData.password}
+                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Enter password"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-200 mb-1">
+                    Confirm Password
+                  </label>
+                  <input
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Confirm password"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end space-x-3 mt-6">
+                <Button
+                  variant="outline"
+                  type="button"
+                  onClick={() => setShowPasswordForm(false)}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit">
+                  Add Workshop
+                </Button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
       <div className="max-w-7xl mx-auto p-6">
         {showSuccess && (
           <div className="mb-6 bg-gray-800 border border-teal-500 rounded-lg p-4 animate-in fade-in slide-in-from-top-5">
@@ -356,10 +466,7 @@ const CreateWorkshopPage = () => {
                     <Clock className="w-4 h-4 mr-2 text-teal-500" />
                     {workshop.duration}
                   </div>
-                  <div className="flex items-center text-sm text-gray-400">
-                    <Users className="w-4 h-4 mr-2 text-teal-500" />
-                    {workshop.batchSize}
-                  </div>
+
                   <div className="flex items-center text-sm text-gray-400">
                     <Calendar className="w-4 h-4 mr-2 text-teal-500" />
                     {workshop.mode}
@@ -372,7 +479,7 @@ const CreateWorkshopPage = () => {
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {workshop.highlights.map((highlight, index) => (
-                    <span 
+                    <span
                       key={index}
                       className="bg-gray-700 text-gray-300 px-2 py-1 rounded-full text-xs"
                     >

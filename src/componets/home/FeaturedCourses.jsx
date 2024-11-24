@@ -100,7 +100,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
     // const prodUrl = "https://skillonx-server.onrender.com"
     try {
       const response = await axios.post(`${url}/createenrollment`, enrollmentData);
-      console.log("Enrollment Successful:", response.data);
+      // console.log("Enrollment Successful:", response.data);
       setFormState("success");
 
       // Close modal after showing success animation
@@ -109,7 +109,7 @@ const FeaturedCoursesEnrollmentModal = ({ isVisible, onClose, courseName }) => {
         onClose();
       }, 2000);  // Close modal after submission
     } catch (error) {
-      console.error("Error enrolling in course:", error);
+      // console.error("Error enrolling in course:", error);
       setError("An error occurred while enrolling. Please try again.");
       setFormState("idle");
     }

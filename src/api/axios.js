@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "https://skillonx-server.onrender.com";
+const BASE_URL = "http://localhost:5000";
+const DevUrl = "https://skillonx-server.onrender.com";
 
 const api = axios.create({
-  baseURL: BASE_URL,
+  baseURL: DevUrl,
   headers: {
     "Content-Type": "application/json",
   },

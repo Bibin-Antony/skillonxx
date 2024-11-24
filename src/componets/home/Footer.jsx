@@ -13,7 +13,7 @@ const Footer = () => {
 
     try{
       const res = await axios.post('https://skillonx-server.onrender.com/stayconnected', newEmail)
-      console.log("Email Saved Successful:", res.data);
+      // console.log("Email Saved Successful:", res.data);
 
     }catch(e){
       console.error("Error  in email saving:", e);

@@ -36,20 +36,20 @@ const ConsultationModal = ({ isVisible, onClose }) => {
       return;
     }
     setFormState("submitting")
-    const devUral = "https://skillonx-server.onrender.com"
+    const devUral = "http://localhost:5000"
 
     const consultationData = { name, email, phone, type };
 
     try {
       let res = await axios.post("https://skillonx-server.onrender.com/workshop/consultation", consultationData);
-      console.log("form submitted", res.data)
+      // console.log("form submitted", res.data)
       setFormState("success")
       setTimeout(() => {
         setFormState("idle")
         onClose();
       }, 2000)
     } catch (error) {
-      console.error("Error scheduling consultation:", error);
+      // console.error("Error scheduling consultation:", error);
       setError("An error occurred. Please try again.");
       setFormState("idle")
     }

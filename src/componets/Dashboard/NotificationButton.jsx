@@ -122,7 +122,7 @@ const NotificationButton = () => {
   const navigate = useNavigate();
   const uniId = auth.user._id;
   const token = localStorage.getItem('token');
-  console.log(uniId)
+  // console.log(uniId)
   useEffect(() => {
     if (uniId) {
       fetchNotifications();

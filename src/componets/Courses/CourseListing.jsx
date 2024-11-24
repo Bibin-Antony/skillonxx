@@ -152,14 +152,14 @@ const EnrollmentModal = ({ isOpen, onClose, courseName }) => {
     const devUrl = "https://skillonx-server.onrender.com"
     try {
       const response = await axios.post("https://skillonx-server.onrender.com/createprofessionalcourse", enrollmentData);
-      console.log("Enrollment Successful:", response.data);
+      // console.log("Enrollment Successful:", response.data);
       setFormState("success");
       setTimeout(() => {
         resetForm()
         onClose();
       }, 2000); // Close the modal after submission
     } catch (error) {
-      console.error("Error enrolling in course:", error);
+      // console.error("Error enrolling in course:", error);
       setError("An error occurred while enrolling. Please try again.");
       setFormState("idle");
 
