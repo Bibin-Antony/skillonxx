@@ -26,12 +26,12 @@ const AdminStudents = () => {
           }
         }
       );
-      console.log(response.data.students)
+      // console.log(response.data.students)
       setStudents(response.data.students);
       setError(null);
     } catch (err) {
       setError("Failed to fetch students. Please try again later.");
-      console.error("Error fetching students:", err);
+      // console.error("Error fetching students:", err);
     } finally {
       setLoading(false);
     }

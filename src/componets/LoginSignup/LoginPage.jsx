@@ -37,7 +37,7 @@ const LoginPage = () => {
       email,
       password
     }
-    console.log(formdata)
+    // console.log(formdata)
     const devUrl = "https://skillonx-server.onrender.com"
     const prodUrl = "https://skillonx-server.onrender.com"
     // try {
@@ -87,7 +87,7 @@ const LoginPage = () => {
       });
 
     } catch (err) {
-      console.error("Login error:", err);
+      // console.error("Login error:", err);
       setError(err.response?.data?.message || "Invalid email or password");
     } finally {
       setLoading(false);

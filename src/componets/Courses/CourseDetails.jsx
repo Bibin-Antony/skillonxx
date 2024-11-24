@@ -22,7 +22,7 @@ const CourseEnrollmentModal = ({ isOpen, onClose, courseName }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Add your form submission logic here
-    console.log('Form submitted');
+    // console.log('Form submitted');
     onClose();
   };
 

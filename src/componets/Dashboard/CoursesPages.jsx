@@ -17,7 +17,7 @@ const CoursesPages = () => {
 
   useEffect(() => {
     const studentId = auth.user._id
-    console.log(studentId)
+    // console.log(studentId)
     const token = localStorage.getItem('token')
     // console.log(token)
     const fetchCourseRequests = async () => {
@@ -29,10 +29,10 @@ const CoursesPages = () => {
           }
         });
 
-        console.log('Course requests:', response.data);
+        // console.log('Course requests:', response.data);
         setCourseRequests(response.data.data);
       } catch (error) {
-        console.error('Error fetching course requests:', error);
+        // console.error('Error fetching course requests:', error);
         setError(error.response?.data?.message || 'Failed to fetch courses');
       } finally {
         setLoading(false);

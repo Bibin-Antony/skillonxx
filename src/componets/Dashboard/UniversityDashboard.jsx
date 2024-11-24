@@ -158,10 +158,10 @@ function UniversityDashboard() {
   const token = localStorage.getItem('token')
   useEffect(() => {
     const uniId = auth.user._id
-    console.log(uniId)
+    // console.log(uniId)
     const fetchDashboardData = async () => {
       setIsLoading(true);
-      console.log('request fetching')
+      // console.log('request fetching')
       try {
         const response = await axios.get(
           `https://skillonx-server.onrender.com/university/dashboard/${uniId}`,
@@ -171,7 +171,7 @@ function UniversityDashboard() {
             }
           }
         );
-        console.log(response.data.data)
+        // console.log(response.data.data)
         setDashboardData(response.data.data);
 
 
@@ -225,7 +225,7 @@ function UniversityDashboard() {
       logout(); // Clear local auth state
       navigate('/LoginPage'); // Redirect to login page
     } catch (error) {
-      console.error('Logout error:', error);
+      // console.error('Logout error:', error);
       // Still logout even if the server request fails
       logout();
       navigate('/LoginPage');

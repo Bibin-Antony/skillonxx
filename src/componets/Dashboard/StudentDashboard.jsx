@@ -66,6 +66,8 @@ import userImg from '../../assets/user/avatar-1.svg'
 import Navbar from '../home/Navbar'
 import Footer from '../home/Footer'
 import axios from 'axios'
+import WorkshopMaterials from './WorkshopMaterials';
+
 // Custom Button component
 // Custom Button component with dark theme
 const Button = ({ children, className, variant = 'default', size = 'default', ...props }) => {
@@ -149,10 +151,10 @@ function StudentDashboard() {
 
   useEffect(() => {
     const studentId = auth.user._id
-    console.log(studentId)
+    // console.log(studentId)
     const fetchDashboardData = async () => {
       setIsLoading(true);
-      console.log('request fetching')
+      // console.log('request fetching')
       try {
         const response = await axios.get(
           `https://skillonx-server.onrender.com/student/dashboard/${studentId}`,
@@ -162,9 +164,9 @@ function StudentDashboard() {
             }
           }
         );
-        console.log(response.data.data)
+        // console.log(response.data.data)
         setDashboardData(response.data.data);
-        console.log(dashboardData)
+        // console.log(dashboardData)
       } catch (err) {
         setError('Failed to load dashboard data');
       } finally {
@@ -239,7 +241,7 @@ function StudentDashboard() {
       logout(); // Clear local auth state
       navigate('/LoginPage'); // Redirect to login page
     } catch (error) {
-      console.error('Logout error:', error);
+      // console.error('Logout error:', error);
       // Still logout even if the server request fails
       logout();
       navigate('/LoginPage');
@@ -439,7 +441,10 @@ function StudentDashboard() {
                 <CardTitle>Applied Courses</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
+                {dashboardData.courseRequestDetails.length===0?(
+                    <div>There are no courses you've applied for</div>
+                ):(
+                  <div className="space-y-4">
                   {dashboardData.courseRequestDetails.map((course) => (
                     <div key={course.id} className="flex flex-col">
                       <div className="flex justify-between items-center mb-1">
@@ -450,6 +455,9 @@ function StudentDashboard() {
                     </div>
                   ))}
                 </div>
+
+                )}
+                
               </CardContent>
             </Card>
             <Card>
@@ -468,6 +476,30 @@ function StudentDashboard() {
               </CardContent>
             </Card>
           </div>
+          <Card>
+            <CardHeader>
+              <CardTitle>Applied Workshops</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {dashboardData.workshop.map((workshop) => (
+                  <div key={workshop._id} className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm font-medium text-gray-300">{workshop.title}</span>
+                      <span className="text-sm text-gray-400">{workshop.duration}</span>
+                    </div>
+
+                    {/* Add the WorkshopMaterials component here */}
+                    <WorkshopMaterials
+                      workshop={workshop}
+                      token={token} // Pass the auth token from localStorage
+                      studentId={auth.user._id}
+                    />
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Upcoming Tests */}
           <Card>

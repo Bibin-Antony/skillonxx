@@ -122,7 +122,7 @@ export default function StuProfilePage() {
 
       setTimeout(() => setSaveStatus(null), 3000)
     } catch (err) {
-      console.error('Error saving changes:', err)
+      // console.error('Error saving changes:', err)
       setSaveStatus('error')
       // Reset save status after 3 seconds
       setTimeout(() => setSaveStatus(null), 3000)
