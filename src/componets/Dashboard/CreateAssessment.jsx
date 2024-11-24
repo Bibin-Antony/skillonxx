@@ -11,9 +11,9 @@ const CreateAssessment = () => {
   const [loading, setLoading] = useState(true);
   const universityId = auth.user._id;
 
-  useEffect(() => {
-    console.log(auth.user);
-  }, [auth.user]);
+  // useEffect(() => {
+  //   console.log(auth.user);
+  // }, [auth.user]);
 
   useEffect(() => {
     fetchAssesments();
@@ -24,7 +24,7 @@ const CreateAssessment = () => {
       setLoading(true);
       const response = await fetch(`https://skillonx-server.onrender.com/assessments/university/${universityId}`);
       const { data } = await response.json();
-      console.log('Fetched assessment:', data);
+      // console.log('Fetched assessment:', data);
       setAssessments(data);
     } catch (error) {
       console.error('Error fetching workshops:', error);

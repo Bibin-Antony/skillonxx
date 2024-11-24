@@ -99,7 +99,7 @@ const AdminDashboard = () => {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
-        console.log(response.data)
+        // console.log(response.data)
         setPendingCourseRequests(response.data.data);
       } catch (err) {
         console.error('Error fetching pending requests:', err);

@@ -29,7 +29,7 @@ const AssessmentsQuestion = () => {
           setAssessmentTitle(response.data.data.title);
           setAssessmentDescription(response.data.data.description);
         } catch (error) {
-          console.error('Error fetching workshop:', error);
+          // console.error('Error fetching workshop:', error);
           setError('Failed to fetch workshop details');
         }
       } else if (workshop) {

@@ -18,11 +18,11 @@ const AdminCourseRequests = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      console.log(response.data)
+      // console.log(response.data)
       setCourseRequests(response.data.data);
     } catch (err) {
       setError('Failed to fetch course requests');
-      console.error(err);
+      // console.error(err);
     } finally {
       setLoading(false);
     }
@@ -38,7 +38,7 @@ const AdminCourseRequests = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      console.log("accepted", response.data)
+      // console.log("accepted", response.data)
       // Refresh requests list
       fetchCourseRequests();
     } catch (err) {

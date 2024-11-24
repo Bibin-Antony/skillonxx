@@ -18,6 +18,7 @@ const GiveAssessment = () => {
   const [universityName, setUniversityName] = useState('');
 
   useEffect(() => {
+    const devUrl = 'https://skillonx-server.onrender.com'
     const fetchAssessments = async () => {
       try {
         const response = await fetch(`https://skillonx-server.onrender.com/assessments/get-assessment/${stuId}`, {
@@ -27,13 +28,13 @@ const GiveAssessment = () => {
           },
           credentials: 'include'
         });
-        console.log(response)
+        // console.log(response)
         if (!response.ok) {
           throw new Error('Assessment not found');
         }
 
         const data = await response.json();
-        console.log(data)
+        // console.log(data)
 
         if (data.message === 'All assessments have been submitted') {
           setError(`No pending assessments from ${data.universityName || 'your university'}`);
@@ -114,11 +115,11 @@ const GiveAssessment = () => {
           selectedOption: value
         }));
 
-      console.log('\n1. Formatted Answers:', answers);
+      // console.log('\n1. Formatted Answers:', answers);
 
       // Calculate score
       const score = calculateScore(currentAssessment, selectedAnswers);
-      console.log('\n2. Calculated Score:', score);
+      // console.log('\n2. Calculated Score:', score);
 
       // Format submission payload according to schema
       const submissionPayload = {
@@ -132,7 +133,7 @@ const GiveAssessment = () => {
         }
       };
 
-      console.log('\n3. Submission Payload:', submissionPayload);
+      // console.log('\n3. Submission Payload:', submissionPayload);
 
       const response = await fetch(`https://skillonx-server.onrender.com/student/submit/${stuId}`, {
         method: 'POST',
@@ -148,17 +149,17 @@ const GiveAssessment = () => {
       // }
 
       const responseData = await response.json();
-      console.log('\n4. Server Response:', responseData);
+      // console.log('\n4. Server Response:', responseData);
 
       setResults(score);
       setShowResults(true);
 
     } catch (err) {
-      console.error('\nSubmission Error:', err);
+      // console.error('\nSubmission Error:', err);
       setError(err.message);
     } finally {
       setSubmitting(false);
-      console.log('\n=== End of Assessment Submission Debug Info ===\n');
+      // console.log('\n=== End of Assessment Submission Debug Info ===\n');
     }
   };
 

@@ -14,7 +14,8 @@ import {
   Circle,
   Home,
   User,
-  HelpCircle
+  HelpCircle,
+  X
 } from 'lucide-react';
 
 const scrollbarStyles = `
@@ -43,6 +44,22 @@ const scrollbarStyles = `
   }
 `;
 
+// Custom Alert Component
+const ErrorAlert = ({ message, onClose }) => (
+  <div className="fixed top-4 right-4 z-50 animate-[slideIn_0.3s_ease-out]">
+    <div className="bg-red-900/90 border border-red-500 rounded-lg shadow-lg p-4 text-white max-w-md backdrop-blur-sm">
+      <div className="flex items-center justify-between gap-2">
+        <p className="text-sm flex-1">{message}</p>
+        <button
+          onClick={onClose}
+          className="text-white/80 hover:text-white transition-colors p-1"
+        >
+          <X size={18} />
+        </button>
+      </div>
+    </div>
+  </div>
+);
 const SignupPage = () => {
   const [userType, setUserType] = useState('student');
   const [firstName, setFirstName] = useState('');
@@ -64,6 +81,9 @@ const SignupPage = () => {
   const [errorMessages, setErrorMessages] = useState({});
   const [universityNameDrop, setUniversityNameDrop] = useState('')
   const [universities, setUniversities] = useState([]);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
@@ -73,7 +93,7 @@ const SignupPage = () => {
     const fetchUniversityName = async () => {
       try {
         const response = await axios.get('https://skillonx-server.onrender.com/university/get-name')
-        console.log('Raw API Response:', response.data);
+        // console.log('Raw API Response:', response.data);
 
         // Combine both student and university arrays
         const studentUniversities = response.data.data.student.map(item => item.universityName);
@@ -86,7 +106,7 @@ const SignupPage = () => {
           .filter(name => name) // Remove any null/undefined/empty values
           .sort();
 
-        console.log('Unique universities:', uniqueUniversities);
+        // console.log('Unique universities:', uniqueUniversities);
         setUniversities(uniqueUniversities);
       } catch (error) {
         console.log(error, " there is error")
@@ -109,8 +129,11 @@ const SignupPage = () => {
     e.preventDefault();
 
     const errors = {};
+    setErrorMessages(errors);
 
-
+    if (!acceptedTerms) {
+      errors.terms = "You must accept the Terms and Conditions to continue";
+    }
 
     // Student-specific validation
     if (userType === 'student') {
@@ -154,12 +177,10 @@ const SignupPage = () => {
 
     // University-specific validation
     if (userType === 'university') {
-      if (!universityName && !universityNameDrop) {
-        errors.universityName = "Please either enter a university name or select one from the dropdown";
+      if (!universityName) {
+        errors.universityName = "Please  enter a university name";
       }
-      if (universityName && universityNameDrop) {
-        errors.universityName = "Please use either manual input or dropdown university name selection, not both";
-      }
+
       if (!recognizedBy) errors.recognizedBy = "Recognition (e.g., UGC, AICTE) is required";
       if (!universityAddress) errors.universityAddress = "University address is required";
       if (!email) {
@@ -186,7 +207,11 @@ const SignupPage = () => {
         email,
         gender,
         password,
-
+        termsAndConditions: {                // Change this structure
+          accepted: acceptedTerms,
+          acceptedDate: new Date().toISOString(),
+          version: '1.0'
+        },
         universityName: finalUniversityName,
         address: {
           doorNumber,
@@ -205,33 +230,59 @@ const SignupPage = () => {
           universityAddress
         })
       };
-      console.log(formData)
+      // console.log(formData)
       const baseUrl = 'https://skillonx-server.onrender.com';
-      const devUrl = "https://skillonx-server.onrender.com"
-      const url = userType === 'student' ? `${devUrl}/student` : `${devUrl}/university`;
-      console.log(url)
+      const prodUrl = "https://skillonx-server.onrender.com"
+      const devUrl = 'https://skillonx-server.onrender.com'
+      const url = userType === 'student' ? `${prodUrl}/student` : `${prodUrl}/university`;
+      // console.log(url)
       try {
         const response = await axios.post(url, formData, {
           headers: { 'Content-Type': 'application/json' },
         });
 
         if (response.status === 201) {
-          console.log("form submitted", response.data)
-          navigate('/LoginPage');
+          navigate('/verification-email', { state: { email: formData.email, accountType: formData.userType } });
         } else {
-          alert(response.data.error || 'Registration failed');
+          setErrorMessage(response.data.error || 'Registration failed. Please try again.');
+          setShowError(true);
+          // Auto-hide error after 5 seconds
+          setTimeout(() => setShowError(false), 3000);
         }
       } catch (error) {
-        console.error('Error details:', error);
-        alert(error.response?.data?.error || 'Registration failed');
+        setErrorMessage(error.response?.data?.error || 'Registration failed. Please try again.');
+        setShowError(true);
+        // Auto-hide error after 5 seconds
+        setTimeout(() => setShowError(false), 5000);
       }
     }
   };
 
   return (
     <>
-      <style>{scrollbarStyles}</style>
+      <style>
+        {`
+          ${scrollbarStyles}
+          @keyframes slideIn {
+            from {
+              transform: translateX(100%);
+              opacity: 0;
+            }
+            to {
+              transform: translateX(0);
+              opacity: 1;
+            }
+          }
+        `}
+      </style>
       <div className="min-h-screen bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f] relative overflow-hidden px-4 py-6 lg:p-0">
+        {/* Error Alert */}
+        {showError && (
+          <ErrorAlert
+            message={errorMessage}
+            onClose={() => setShowError(false)}
+          />
+        )}
         {/* Background Elements */}
         <FloatingElement className="top-20 left-20 text-blue-300/20 animate-bounce">
           <CircleDot size={24} />
@@ -328,7 +379,7 @@ const SignupPage = () => {
                               placeholder="Enter first name"
                               className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
                               onChange={(e) => {
-                                console.log(firstName)
+                                // console.log(firstName)
                                 setFirstName(e.target.value)
                               }}
 
@@ -546,7 +597,7 @@ const SignupPage = () => {
                           {errorMessages.universityName && <p className="text-red-500 text-xs mt-1">{errorMessages.universityName}</p>}
 
                         </div>
-                        <div className="space-y-2">
+                        {/* <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">University Name As Dropdown</label>
 
                           <select
@@ -562,7 +613,7 @@ const SignupPage = () => {
                             ))}
                           </select>
                           {errorMessages.universityNameDrop && <p className="text-red-500 text-xs mt-1">{errorMessages.universityNameDrop}</p>}
-                        </div>
+                        </div> */}
                         <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">Recognized By</label>
                           <input
@@ -629,8 +680,9 @@ const SignupPage = () => {
                       <input
                         type="checkbox"
                         id="terms"
+                        checked={acceptedTerms}
+                        onChange={(e) => setAcceptedTerms(e.target.checked)}
                         className="rounded border-blue-300/30 bg-[#0a192f]/50 text-blue-600 focus:ring-blue-400"
-
                       />
                       <label htmlFor="terms" className="text-blue-100 text-sm">
                         I agree to the{' '}
@@ -643,6 +695,9 @@ const SignupPage = () => {
                         </button>
                       </label>
                     </div>
+                    {errorMessages.terms && (
+                      <p className="text-red-500 text-xs mt-1">{errorMessages.terms}</p>
+                    )}
 
                     {/* Submit Button */}
                     <button

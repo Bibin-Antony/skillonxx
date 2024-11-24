@@ -34,6 +34,7 @@ import AdminAssessment from "./componets/Dashboard/admindash/AdminAssessment";
 import UniProfilePage from "./componets/Dashboard/UniProfilePage";
 import ForgotPassword from "./componets/LoginSignup/ForgetPassword";
 import AddCourses from "./componets/Dashboard/AddCourses";
+import VerifyEmail from "./componets/LoginSignup/VerifyEmail";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -178,6 +179,7 @@ const App = () => {
             <Route path='/ResumePage/offline' element={<ResumePageOff />} />
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
+            <Route path="/verification-email" element={<VerifyEmail/>}/>
             {/* <Route path="/coursespage" element={<CoursesPages/>}/>
             <Route path="/workshoppages" element={<WorkshopsPage/>}/>
             <Route path="/assesment" element={<AssessmentPage/>}/>

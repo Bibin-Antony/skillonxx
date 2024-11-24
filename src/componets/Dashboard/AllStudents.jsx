@@ -24,7 +24,7 @@ const AllStudents = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            console.log(response)
+            // console.log(response)
             const formattedStudents = response.data.data.map(student => ({
                 ...student,
                 fullName: `${student.firstName || ''} ${student.lastName || ''}`.trim() || 'N/A'

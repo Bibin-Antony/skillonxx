@@ -118,7 +118,7 @@ const TestPage = () => {
         throw new Error('No questions received from the server');
       }
     } catch (error) {
-      console.error("Failed to load questions:", error);
+      // console.error("Failed to load questions:", error);
       setError(error.message || 'Failed to load questions. Please try again.');
       setShowQuestions(false);
     } finally {
