@@ -83,7 +83,7 @@ const WorkshopEnrollmentModal = ({  onClose, workshopName }) => {
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-700">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute inset-y-0 left-0 left-0 top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
+                  <Mail className="absolute inset-y-0 left-0  top-2 h-8 w-8 text-gray-400 pl-3 pointer-events-none" />
                   <input
                     type="email"
                     required

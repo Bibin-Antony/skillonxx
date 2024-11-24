@@ -233,23 +233,27 @@ const SignupPage = () => {
       // console.log(formData)
       const baseUrl = 'https://skillonx-server.onrender.com';
       const prodUrl = "https://skillonx-server.onrender.com"
-      const devUrl = 'https://skillonx-server.onrender.com'
-      const url = userType === 'student' ? `${prodUrl}/student` : `${prodUrl}/university`;
+      const devUrl = 'http://localhost:5000'
+      const url = userType === 'student' ? `${prodUrl}/student` : `${prodUrl
+
+      }/university`;
       // console.log(url)
       try {
         const response = await axios.post(url, formData, {
           headers: { 'Content-Type': 'application/json' },
         });
-
+        console.log(response)
         if (response.status === 201) {
           navigate('/verification-email', { state: { email: formData.email, accountType: formData.userType } });
         } else {
+          console.log(response)
           setErrorMessage(response.data.error || 'Registration failed. Please try again.');
           setShowError(true);
           // Auto-hide error after 5 seconds
           setTimeout(() => setShowError(false), 3000);
         }
       } catch (error) {
+        console.log(error,"error")
         setErrorMessage(error.response?.data?.error || 'Registration failed. Please try again.');
         setShowError(true);
         // Auto-hide error after 5 seconds
