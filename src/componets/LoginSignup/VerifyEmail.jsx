@@ -10,6 +10,9 @@ const VerifyEmail = () => {
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleVerify = async () => {
+          const devUrl = 'http://localhost:5000'
+          const prodUrl = 'https://skillonx-server.onrender.com'
+
     try {
       const endpoint = accountType === 'university'
         ? 'https://skillonx-server.onrender.com/university/verify-email'
@@ -29,7 +32,7 @@ const VerifyEmail = () => {
         setErrorMessage(response.data.message);
       }
     } catch (error) {
-      // console.error('Error verifying email:', error);
+      console.error('Error verifying email:', error);
       setErrorMessage('An error occurred while verifying the email. Please try again later.');
     }
   };

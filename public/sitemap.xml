@@ -3,50 +3,59 @@
   <!-- Homepage -->
   <url>
     <loc>https://skillonx.com/</loc>
-    <lastmod>2024-10-30</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
-  <!-- Courses Page -->
+
+  <!-- Public Main Sections -->
   <url>
     <loc>https://skillonx.com/courses</loc>
-    <lastmod>2024-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-  <!-- Workshops Page -->
+
   <url>
     <loc>https://skillonx.com/workshops</loc>
-    <lastmod>2024-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
-   <!-- Internship Page -->
+
   <url>
     <loc>https://skillonx.com/internship</loc>
-    <lastmod>2024-10-30</lastmod>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Authentication Pages -->
+  <url>
+    <loc>https://skillonx.com/LoginPage</loc>
+    <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- About Us Page -->
+
+  <url>
+    <loc>https://skillonx.com/SignupPage</loc>
+    <lastmod>2024-11-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- About & Static Pages -->
   <url>
     <loc>https://skillonx.com/AboutUs</loc>
-    <lastmod>2024-10-30</lastmod>
+    <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
-   <!-- Contact Us Page -->
   <url>
     <loc>https://skillonx.com/contactus</loc>
-    <lastmod>2024-10-30</lastmod>
+    <lastmod>2024-11-27</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-    <!-- About Us Page -->
-  <url>
-    <loc>https://skillonx.com/AboutUs</loc>
-    <lastmod>2024-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.7</priority>
   </url>
 </urlset>

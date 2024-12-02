@@ -85,7 +85,7 @@ const Home = () => {
     <div className="relative">
       <Helmet>
         {/* Primary Meta Tags */}
-        <title>SkillonX - Professional Skill Development & Training Institute in Mysore</title>
+        <title>skillonx - Professional Skill Development & Training Institute in Mysore</title>
         <meta name="title" content="SkillonX - Professional Skill Development & Training Institute in Mysore" />
         <meta 
           name="description" 
@@ -99,7 +99,7 @@ const Home = () => {
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.skillonx.com/" />
-        <meta property="og:title" content="SkillonX - Professional Skill Development & Training Institute in Mysore" />
+        <meta property="og:title" content="Skillonx - Professional Skill Development & Training Institute in Mysore" />
         <meta 
           property="og:description" 
           content="Transform your career with industry-focused courses in web development, UI/UX design, graphics, and digital marketing. Featuring guaranteed internships and hands-on projects." 
@@ -109,7 +109,7 @@ const Home = () => {
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://www.skillonx.com/" />
-        <meta property="twitter:title" content="SkillonX - Professional Training Institute" />
+        <meta property="twitter:title" content="Skillonx - Professional Training Institute" />
         <meta 
           property="twitter:description" 
           content="Join SkillonX for industry-focused professional training with guaranteed internships." 

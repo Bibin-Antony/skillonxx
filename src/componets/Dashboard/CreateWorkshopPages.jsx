@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, Search, Calendar, Users, Clock, Signal, ArrowLeft, CheckCircle, X } from 'lucide-react';
+import { Plus, Search, Calendar, Users, Clock, Signal, ArrowLeft, CheckCircle, X,MapPin } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
 // Import your workshop images
@@ -257,7 +257,10 @@ const CreateWorkshopPage = () => {
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
   const [formData, setFormData] = useState({
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
+    batchSize: '',
+    location: '',
+    startDate: '' // Add startDate to form data
   });
   const universityId = auth.user._id; // Replace with actual university ID
   // console.log(universityId) // Replace with actual university ID
@@ -282,7 +285,19 @@ const CreateWorkshopPage = () => {
       alert("Passwords don't match!");
       return;
     }
-
+    if (!formData.batchSize || formData.batchSize <= 0) {
+      alert("Please enter a valid batch size!");
+      return;
+    }
+     // Validate start date is not in the past
+     const selectedDate = new Date(formData.startDate);
+     const today = new Date();
+     today.setHours(0, 0, 0, 0);
+     
+     if (selectedDate < today) {
+       alert("Workshop start date cannot be in the past!");
+       return;
+     }
     try {
       const response = await fetch(`${prodUrl}/workshops/add`, {
         method: 'POST',
@@ -292,14 +307,23 @@ const CreateWorkshopPage = () => {
         body: JSON.stringify({
           ...selectedWorkshop,
           universityId,
-          workshopPassword: formData.password
+          workshopPassword: formData.password,
+          batchSize: parseInt(formData.batchSize),
+          location: formData.location,
+          startDate: formData.startDate
         })
       });
 
       if (response.ok) {
         setShowPasswordForm(false);
         setShowSuccess(true);
-        setFormData({ password: '', confirmPassword: '' });
+        setFormData({ 
+          password: '', 
+          confirmPassword: '', 
+          batchSize: '',
+          location: '',
+          startDate: ''
+        });
         setTimeout(() => {
           setShowSuccess(false);
           navigate('/university-dashboard/workshops-page');
@@ -310,6 +334,10 @@ const CreateWorkshopPage = () => {
     } catch (error) {
       console.error('Failed to add workshop:', error);
     }
+  };
+  const getMinDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
   };
 
   const handleAddWorkshop = (workshop) => {
@@ -324,7 +352,7 @@ const CreateWorkshopPage = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-lg p-6 w-full max-w-md mx-4">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-xl font-semibold text-gray-100">Set Workshop Password</h3>
+              <h3 className="text-xl font-semibold text-gray-100">Set Workshop Details</h3>
               <button
                 onClick={() => setShowPasswordForm(false)}
                 className="text-gray-400 hover:text-gray-200"
@@ -335,6 +363,55 @@ const CreateWorkshopPage = () => {
 
             <form onSubmit={handlePasswordSubmit}>
               <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-200 mb-1">
+                    Batch Size
+                  </label>
+                  <input
+                    type="number"
+                    value={formData.batchSize}
+                    onChange={(e) => setFormData({ ...formData, batchSize: e.target.value })}
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                    placeholder="Enter maximum batch size"
+                    min="1"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-200 mb-1">
+                    Workshop Location
+                  </label>
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="text"
+                      value={formData.location}
+                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                      className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      placeholder="Enter workshop location"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-200 mb-1">
+                    Start Date
+                  </label>
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                    <input
+                      type="date"
+                      value={formData.startDate}
+                      onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                      min={getMinDate()}
+                      className="w-full pl-10 pr-4 py-2 bg-gray-700 border border-gray-600 rounded-md text-gray-100 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                      required
+                    />
+                  </div>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-200 mb-1">
                     Workshop Password

@@ -18,11 +18,9 @@ const AdminCourseRequests = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      // console.log(response.data)
       setCourseRequests(response.data.data);
     } catch (err) {
       setError('Failed to fetch course requests');
-      // console.error(err);
     } finally {
       setLoading(false);
     }
@@ -38,8 +36,6 @@ const AdminCourseRequests = () => {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
       });
-      // console.log("accepted", response.data)
-      // Refresh requests list
       fetchCourseRequests();
     } catch (err) {
       console.error('Error updating request:', err);
@@ -50,6 +46,15 @@ const AdminCourseRequests = () => {
     return (
       <div className="flex items-center justify-center h-48">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-teal-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-red-500/10 text-red-500 p-4 rounded-lg">
+        <AlertCircle className="w-6 h-6 mb-2" />
+        <p>{error}</p>
       </div>
     );
   }
@@ -85,12 +90,11 @@ const AdminCourseRequests = () => {
                     {request.courseDetails.title}
                   </h3>
                   <p className="text-sm text-gray-400 mb-2">
-                    Student: {request.studentId.firstName || 'Unknown'}
+                    Student: {request.studentId?.firstName || 'Unknown'}
                   </p>
                   <p className="text-sm text-gray-400">
                     Requested: {new Date(request.requestDate).toLocaleDateString()}
                   </p>
-
                 </div>
                 <div className="flex gap-2">
                   <button

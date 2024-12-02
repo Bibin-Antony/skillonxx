@@ -11,7 +11,8 @@ export const authService = {
       
       const response = await api.post(endpoint, {
         email: credentials.email,
-        password: credentials.password
+        password: credentials.password,
+        deviceInfo:credentials.deviceInfo
       });
 
       return {

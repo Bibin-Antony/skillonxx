@@ -15,7 +15,10 @@ import {
   Home,
   User,
   HelpCircle,
-  X
+  X,
+  Eye,
+  EyeOff
+
 } from 'lucide-react';
 
 const scrollbarStyles = `
@@ -84,6 +87,8 @@ const SignupPage = () => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
@@ -96,12 +101,12 @@ const SignupPage = () => {
         // console.log('Raw API Response:', response.data);
 
         // Combine both student and university arrays
-        const studentUniversities = response.data.data.student.map(item => item.universityName);
+        // const studentUniversities = response.data.data.student.map(item => item.universityName);
         const universityNames = response.data.data.university.map(item => item.universityName);
 
         // Combine arrays and get unique values
         const uniqueUniversities = Array.from(
-          new Set([...studentUniversities, ...universityNames])
+          new Set([ ...universityNames])
         )
           .filter(name => name) // Remove any null/undefined/empty values
           .sort();
@@ -234,9 +239,9 @@ const SignupPage = () => {
       const baseUrl = 'https://skillonx-server.onrender.com';
       const prodUrl = "https://skillonx-server.onrender.com"
       const devUrl = 'http://localhost:5000'
-      const url = userType === 'student' ? `${prodUrl}/student` : `${prodUrl
+      const url = userType === 'student' ? `${devUrl}/student` : `${devUrl
 
-      }/university`;
+        }/university`;
       // console.log(url)
       try {
         const response = await axios.post(url, formData, {
@@ -253,7 +258,7 @@ const SignupPage = () => {
           setTimeout(() => setShowError(false), 3000);
         }
       } catch (error) {
-        console.log(error,"error")
+        console.log(error, "error")
         setErrorMessage(error.response?.data?.error || 'Registration failed. Please try again.');
         setShowError(true);
         // Auto-hide error after 5 seconds
@@ -509,7 +514,7 @@ const SignupPage = () => {
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <label className="text-blue-100 text-sm font-medium">University Name</label>
+                          <label className="text-blue-100 text-sm font-medium">College Name</label>
                           <input
                             type="text"
                             placeholder="Ex: Mysore University"
@@ -522,7 +527,7 @@ const SignupPage = () => {
 
                         </div>
                         <div className="space-y-2">
-                          <label className="text-blue-100 text-sm font-medium">University Name As Dropdown</label>
+                          <label className="text-blue-100 text-sm font-medium">College Name As Dropdown</label>
 
                           <select
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
@@ -622,7 +627,7 @@ const SignupPage = () => {
                           <label className="text-blue-100 text-sm font-medium">Recognized By</label>
                           <input
                             type="text"
-                            placeholder="Ex: UGC, AICTE"
+                            placeholder="Ex:VTU, UGC, AICTE"
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
 
                             onChange={(e) => setRecognizedBy(e.target.value)}
@@ -653,30 +658,42 @@ const SignupPage = () => {
 
                     <div className="space-y-2">
                       <label className="text-blue-100 text-sm font-medium">Password</label>
-                      <input
-                        type="password"
-                        placeholder="Create password"
-                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-
-                        onChange={(e) => setPassword(e.target.value)}
-
-                      />
+                      <div className="relative">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Create password"
+                          className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                          onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+                        >
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
                       {errorMessages.password && <p className="text-red-500 text-xs mt-1">{errorMessages.password}</p>}
-
                     </div>
 
                     <div className="space-y-2">
                       <label className="text-blue-100 text-sm font-medium">Confirm Password</label>
-                      <input
-                        type="password"
-                        placeholder="Confirm password"
-                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-
-                      />
+                      <div className="relative">
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          placeholder="Confirm password"
+                          className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+                        >
+                          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
                       {errorMessages.confirmPassword && <p className="text-red-500 text-xs mt-1">{errorMessages.confirmPassword}</p>}
-
                     </div>
 
                     {/* Terms and Conditions */}
