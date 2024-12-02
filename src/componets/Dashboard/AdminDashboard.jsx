@@ -25,6 +25,7 @@ import { useAuth } from '../../auth/AuthContext';
 import { authService } from '../../services/authServices';
 import { Link, useNavigate } from 'react-router-dom';
 import AdminCourseRequests from '../Dashboard/admindash/AdminCourseRequest'
+import UniversityApprovals from './admindash/UniversityApprovals'
 import axios from 'axios'
 // Custom hook for fetching dashboard data
 const useDashboardData = () => {
@@ -47,7 +48,7 @@ const useDashboardData = () => {
         const token = localStorage.getItem('token')
 
         setLoading(true);
-        const response = await fetch('https://skillonx-server.onrender.com/admin/dashboard',
+        const response = await fetch('http://localhost:5000/admin/dashboard',
           {
             method: 'GET',
             headers: {
@@ -226,6 +227,12 @@ const AdminDashboard = () => {
             <ClipboardList className="h-5 w-5" />
             Courses
           </Link>
+          <Link to="/admin/check-course" onClick={() => setActiveTab('assessments')}
+            className={`flex items-center w-full px-4 py-3 rounded-lg mb-2 ${activeTab === 'assessments' ? 'bg-teal-500 text-white' : 'hover:bg-gray-700'
+              }`}>
+            <ClipboardList className="h-5 w-5" />
+            Course User
+          </Link>
 
 
         </nav>
@@ -251,12 +258,12 @@ const AdminDashboard = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="relative">
+            {/* <button className="relative">
               <Bell className="w-6 h-6" />
               <span className="absolute -top-1 -right-1 bg-red-500 text-xs w-4 h-4 rounded-full flex items-center justify-center">
                 3
               </span>
-            </button>
+            </button> */}
 
             <div className="relative">
               <button
@@ -272,10 +279,10 @@ const AdminDashboard = () => {
 
               {isProfileDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-2">
-                  <button className="flex items-center gap-2 px-4 py-2 hover:bg-gray-700 w-full">
+                  {/* <button className="flex items-center gap-2 px-4 py-2 hover:bg-gray-700 w-full">
                     <User className="w-4 h-4" />
                     Profile
-                  </button>
+                  </button> */}
                   <button className="flex items-center gap-2 px-4 py-2 hover:bg-gray-700 w-full text-red-400" onClick={handleLogout}>
                     <LogOut className="w-4 h-4" />
                     Logout
@@ -302,6 +309,8 @@ const AdminDashboard = () => {
               </div>
             ))}
           </div>
+          <UniversityApprovals />
+
           {pendingCourseRequests.length > 0 && (
             <div className="mb-6">
               <AdminCourseRequests />

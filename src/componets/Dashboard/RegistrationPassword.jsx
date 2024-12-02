@@ -161,7 +161,7 @@ const RegistrationPassword = ({ workshop, onClose, stuId }) => {
                     </div>
                     <div className="flex items-center text-gray-300">
                       <MapPin className="h-4 w-4 mr-2" />
-                      <span className="text-sm">{workshop.venue}</span>
+                      <span className="text-sm">{workshop.location}</span>
                     </div>
                   </div>
                 </div>

@@ -35,6 +35,8 @@ import UniProfilePage from "./componets/Dashboard/UniProfilePage";
 import ForgotPassword from "./componets/LoginSignup/ForgetPassword";
 import AddCourses from "./componets/Dashboard/AddCourses";
 import VerifyEmail from "./componets/LoginSignup/VerifyEmail";
+import StudentDetails from "./componets/Dashboard/admindash/StudentDetails";
+import CheckCourse from './componets/Dashboard/admindash/CheckCourse'
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -197,8 +199,10 @@ const App = () => {
             <Route index element={<AdminDashboard />} />
             <Route path="universities" element={<AdminUniversities/>} />
             <Route path="students" element={<AdminStudents/>} />
+            <Route path="students/:studentId" element={<StudentDetails/>}/>
             <Route path="assessments" element={<AdminAssessment/>} />
             <Route path="add-course" element={<AddCourses/>} />    
+            <Route path='check-course' element={<CheckCourse/>}/>
 
             {/* Other admin routes */}
           </Routes>

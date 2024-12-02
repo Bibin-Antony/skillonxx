@@ -305,6 +305,7 @@ function StudentDashboard() {
             <Settings className="h-5 w-5" />
             Settings
           </Link>
+          
 
         </nav>
 

@@ -38,6 +38,7 @@ const WorkshopManagement = () => {
   const [materialTitle, setMaterialTitle] = useState('');
   const universityId = auth.user._id;
   const [notification, setNotification] = useState(null);
+  const [updatingAttendance, setUpdatingAttendance] = useState(null);
 
   // Add styles for the animation
   const notificationStyles = `
@@ -63,7 +64,35 @@ const WorkshopManagement = () => {
     // Auto-hide notification after 5 seconds
     setTimeout(() => setNotification(null), 5000);
   };
+  const handleAttendanceToggle = async (workshopId, currentStatus) => {
+    try {
+      setUpdatingAttendance(workshopId);
+      const response = await fetch(`https://skillonx-server.onrender.com/workshops/${workshopId}/toggle-attendance`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ isAttendance: !currentStatus }),
+      });
 
+      if (response.ok) {
+        // Update the workshops state to reflect the change
+        setWorkshops(workshops.map(workshop => 
+          workshop._id === workshopId 
+            ? { ...workshop, isAttendance: !workshop.isAttendance }
+            : workshop
+        ));
+        showNotification('success', `Attendance ${!currentStatus ? 'started' : 'ended'} successfully!`);
+      } else {
+        showNotification('error', 'Failed to update attendance status');
+      }
+    } catch (error) {
+      console.error('Error toggling attendance:', error);
+      showNotification('error', 'Failed to update attendance status');
+    } finally {
+      setUpdatingAttendance(null);
+    }
+  };
   const devUrl = 'https://skillonx-server.onrender.com'
   const fetchWorkshops = async () => {
     try {
@@ -107,7 +136,7 @@ const WorkshopManagement = () => {
       });
 
       // console.log(formData)
-      const response = await fetch('https://skillonx-server.onrender.com/workshops/materials', {
+      const response = await fetch('http://localhost:5000/workshops/materials', {
         method: 'POST',
 
         body: formData,
@@ -238,22 +267,38 @@ const WorkshopManagement = () => {
                       </div>
                     )}
 
-                    <div className="flex gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                       <Link
                         to={`create-assessment/${workshop._id}`}
                         state={{ workshop }}
-                        className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+                        className="inline-flex items-center justify-center px-3 py-2 bg-teal-500 text-white text-sm rounded-lg hover:bg-teal-600 transition-colors"
                       >
-                        <Plus className="w-4 h-4 mr-2" />
-                        Create Assessment
+                        <Plus className="w-4 h-4 mr-1" />
+                        Assessment
                       </Link>
                       <button
                         onClick={() => handleAddMaterial(workshop)}
-                        className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors"
+                        className="inline-flex items-center justify-center px-3 py-2 bg-teal-500 text-white text-sm rounded-lg hover:bg-teal-600 transition-colors"
                       >
-                        <FileText className="w-4 h-4 mr-2" />
-                        Add Materials
+                        <FileText className="w-4 h-4 mr-1" />
+                        Materials
                       </button>
+                      <button
+                      onClick={() => handleAttendanceToggle(workshop._id, workshop.isAttendance)}
+                      disabled={updatingAttendance === workshop._id}
+                      className={`inline-flex items-center justify-center px-3 py-2 text-sm rounded-lg transition-colors ${
+                        workshop.isAttendance 
+                          ? 'bg-red-500 hover:bg-red-600' 
+                          : 'bg-teal-500 hover:bg-teal-600'
+                      } text-white`}
+                    >
+                      {updatingAttendance === workshop._id ? (
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-1" />
+                      ) : (
+                        <Users className="w-4 h-4 mr-1" />
+                      )}
+                      {workshop.isAttendance ? 'End' : 'Start'}
+                    </button>
                     </div>
                   </div>
                 </div>
