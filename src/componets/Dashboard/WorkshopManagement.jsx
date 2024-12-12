@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Calendar, Users, Clock, Trash2, Edit, ArrowLeft, FileText, X, Icon, CheckCircle2 } from 'lucide-react';
+import { Plus, Calendar, Users, Clock, Trash2, Edit, ArrowLeft, FileText, X, Icon, CheckCircle2,AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -53,7 +53,8 @@ const WorkshopManagement = () => {
       }
     }
   `;
-
+  const devUrl = 'http://localhost:5000'
+  const prodUrl ='https://skillonx-server.onrender.com'
 
   useEffect(() => {
     // console.log(auth.user);
@@ -67,7 +68,7 @@ const WorkshopManagement = () => {
   const handleAttendanceToggle = async (workshopId, currentStatus) => {
     try {
       setUpdatingAttendance(workshopId);
-      const response = await fetch(`https://skillonx-server.onrender.com/workshops/${workshopId}/toggle-attendance`, {
+      const response = await fetch(`${prodUrl}/workshops/${workshopId}/toggle-attendance`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -93,11 +94,11 @@ const WorkshopManagement = () => {
       setUpdatingAttendance(null);
     }
   };
-  const devUrl = 'https://skillonx-server.onrender.com'
+  
   const fetchWorkshops = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`https://skillonx-server.onrender.com/workshops/university/${universityId}`);
+      const response = await fetch(`${prodUrl}/workshops/university/${universityId}`);
       const { data } = await response.json();
       // console.log('Fetched workshops:', data);
       setWorkshops(data);
@@ -136,7 +137,7 @@ const WorkshopManagement = () => {
       });
 
       // console.log(formData)
-      const response = await fetch('http://localhost:5000/workshops/materials', {
+      const response = await fetch('https://skillonx-server.onrender.com/workshops/materials', {
         method: 'POST',
 
         body: formData,

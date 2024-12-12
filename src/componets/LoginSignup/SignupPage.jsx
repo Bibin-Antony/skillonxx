@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/logo.png";
 import Signup from "../../assets/illustrations/loginimage.png";
 import axios from 'axios';
+import { validatePassword, PasswordStrengthIndicator } from '../helper/passwordProtect'
 import {
   CircleDot,
   Boxes,
@@ -17,7 +18,8 @@ import {
   HelpCircle,
   X,
   Eye,
-  EyeOff
+  EyeOff,
+  Loader2
 
 } from 'lucide-react';
 
@@ -89,6 +91,7 @@ const SignupPage = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
@@ -106,7 +109,7 @@ const SignupPage = () => {
 
         // Combine arrays and get unique values
         const uniqueUniversities = Array.from(
-          new Set([ ...universityNames])
+          new Set([...universityNames])
         )
           .filter(name => name) // Remove any null/undefined/empty values
           .sort();
@@ -135,7 +138,16 @@ const SignupPage = () => {
 
     const errors = {};
     setErrorMessages(errors);
+    // console.log('Password before validation:', password);
+    const passwordValidation = validatePassword(password);
+    // console.log('Validation result:', passwordValidation);
+    if (!passwordValidation.isValid) {
+      errors.password = passwordValidation.errors[0];
+    }
 
+    if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
     if (!acceptedTerms) {
       errors.terms = "You must accept the Terms and Conditions to continue";
     }
@@ -169,10 +181,8 @@ const SignupPage = () => {
       } else if (!/^\d{6}$/.test(pincode)) {
         errors.pincode = "Pincode must be 6 digits";
       }
-      if (!password) errors.password = "Password is required";
-      if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
 
-      if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+
       if (!email) {
         errors.email = "Email is required";
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -193,15 +203,13 @@ const SignupPage = () => {
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errors.email = "Enter a valid email address";
       }
-      if (!password) errors.password = "Password is required";
-      if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
 
-      if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
     }
 
     setErrorMessages(errors);
 
     if (Object.keys(errors).length === 0) {
+      setIsLoading(true);
       const finalUniversityName = universityNameDrop || universityName;
 
       const formData = {
@@ -239,7 +247,7 @@ const SignupPage = () => {
       const baseUrl = 'https://skillonx-server.onrender.com';
       const prodUrl = "https://skillonx-server.onrender.com"
       const devUrl = 'http://localhost:5000'
-      const url = userType === 'student' ? `${devUrl}/student` : `${devUrl
+      const url = userType === 'student' ? `${baseUrl}/student` : `${baseUrl
 
         }/university`;
       // console.log(url)
@@ -259,10 +267,13 @@ const SignupPage = () => {
         }
       } catch (error) {
         console.log(error, "error")
-        setErrorMessage(error.response?.data?.error || 'Registration failed. Please try again.');
+        setErrorMessage(error.response?.data?.message || 'Registration failed. Please try again.');
         setShowError(true);
         // Auto-hide error after 5 seconds
         setTimeout(() => setShowError(false), 5000);
+      }
+      finally {
+        setIsLoading(false); // Stop loading regardless of outcome
       }
     }
   };
@@ -662,8 +673,13 @@ const SignupPage = () => {
                         <input
                           type={showPassword ? "text" : "password"}
                           placeholder="Create password"
+                          value={password}  // Add this line
                           className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-                          onChange={(e) => setPassword(e.target.value)}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // console.log('Password input changed:', value);
+                            setPassword(value);
+                          }}
                         />
                         <button
                           type="button"
@@ -673,6 +689,7 @@ const SignupPage = () => {
                           {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                         </button>
                       </div>
+                      <PasswordStrengthIndicator password={password} />
                       {errorMessages.password && <p className="text-red-500 text-xs mt-1">{errorMessages.password}</p>}
                     </div>
 
@@ -723,9 +740,17 @@ const SignupPage = () => {
                     {/* Submit Button */}
                     <button
                       type="submit"
-                      className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors mt-6 text-sm md:text-base font-medium"
+                      disabled={isLoading}
+                      className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors mt-6 text-sm md:text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      Sign Up
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Signing up...
+                        </>
+                      ) : (
+                        'Sign Up'
+                      )}
                     </button>
 
                     {/* Sign In Link */}
