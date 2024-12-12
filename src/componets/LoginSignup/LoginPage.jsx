@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle, Building2, GraduationCap, Eye,
-  EyeOff  } from 'lucide-react';
+import {
+  CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle, Building2, GraduationCap, Eye,
+  EyeOff,Loader2
+} from 'lucide-react';
 import googleicon from "../../assets/Icons/google.png";
 import logo from "../../assets/logo/logo.png";
 import loginimage from "../../assets/illustrations/loginimage.png";
@@ -51,7 +53,7 @@ const LoginPage = () => {
       password
     }
     // console.log(formdata)
-    
+
     const devUrl = 'http://localhost:5000'
     const prodUrl = "https://skillonx-server.onrender.com"
     // try {
@@ -78,14 +80,14 @@ const LoginPage = () => {
     //   setLoading(false);
     // }
     try {
-      const response = await authService.login({ email, password, userType,deviceInfo });
+      const response = await authService.login({ email, password, userType, deviceInfo });
       const { token, user, isNewDevice } = response;
       const userDetails = {
         ...user,
         userType,
         token,
         isAuthenticated: true,
-        
+
       };
       if (isNewDevice) {
         // You can implement a toast notification here
@@ -274,15 +276,29 @@ const LoginPage = () => {
                 </Link>
               </div>
 
-              <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                Sign In
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Signing in...</span>
+                  </>
+                ) : (
+                  'Sign In'
+                )}
               </button>
 
 
 
               <p className="text-center text-blue-100 text-sm">
                 Don't have an account?{' '}
-                <Link to="/SignupPage" className="text-blue-300 hover:text-blue-200">
+                <Link 
+                  to="/SignupPage" 
+                  className={`text-blue-300 hover:text-blue-200 ${loading ? 'pointer-events-none opacity-50' : ''}`}
+                >
                   Sign up
                 </Link>
               </p>

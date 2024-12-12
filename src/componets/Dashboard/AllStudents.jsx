@@ -16,7 +16,11 @@ const AllStudents = () => {
 
     const studentsPerPage = 9;
     const uniId = auth.user._id;
-
+    const paginate = (pageNumber) => {
+        if (pageNumber >= 1 && pageNumber <= Math.ceil(sortedStudents.length / studentsPerPage)) {
+            setCurrentPage(pageNumber);
+        }
+    };
     const fetchStudents = async () => {
         try {
             const response = await axios.get(`https://skillonx-server.onrender.com/university/get-students/${uniId}`, {

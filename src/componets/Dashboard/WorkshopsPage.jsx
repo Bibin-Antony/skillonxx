@@ -13,6 +13,8 @@ const WorkshopPage = () => {
   const [markingAttendance, setMarkingAttendance] = useState(null);
   const { auth } = useAuth();
   const stuId = auth.user._id;
+  const devUrl = 'http://localhost:5000'
+  const prodUrl ='https://skillonx-server.onrender.com'
 
   const isRegistered = (workshop) => {
     return workshop.registrations?.some(
@@ -49,9 +51,10 @@ const WorkshopPage = () => {
     });
   };
   const handleMarkAttendance = async (workshopId) => {
+    
     try {
       setMarkingAttendance(workshopId);
-      const response = await fetch(`https://skillonx-server.onrender.com/workshops/${workshopId}/mark-attendance`, {
+      const response = await fetch(`${prodUrl}/workshops/${workshopId}/mark-attendance`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -82,14 +85,14 @@ const WorkshopPage = () => {
   useEffect(() => {
     const fetchWorkshops = async () => {
       try {
-        const response = await fetch(`https://skillonx-server.onrender.com/workshops/get-workshops/${stuId}`, {
+        const response = await fetch(`${prodUrl}/workshops/get-workshops/${stuId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           },
           credentials: 'include'
         });
-
+        
         if (!response.ok) {
           throw new Error('Failed to fetch workshops');
         }

@@ -57,7 +57,7 @@
 
 // export default StudentDashboard;
 import { useEffect, useState } from 'react'
-import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users, Menu, X, PersonStanding, BookOpenCheck } from 'lucide-react'
+import { Bell, Book, Calendar, ChevronDown, FileText, GraduationCap, LayoutDashboard, LogOut, MessageSquare, Settings, User, Users, Menu, X, PersonStanding, BookOpenCheck ,Medal} from 'lucide-react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 import { BrowserRouter as Router, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/AuthContext';
@@ -67,6 +67,7 @@ import Navbar from '../home/Navbar'
 import Footer from '../home/Footer'
 import NotificationButton from './NotificationButton';
 import axios from 'axios'
+import StudentLeaderboard from './StudentLeaderboard'
 // Custom Button component
 const Button = ({ children, className, variant = 'default', size = 'default', ...props }) => {
   const baseStyle = "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
@@ -171,7 +172,7 @@ function UniversityDashboard() {
             }
           }
         );
-        // console.log(response.data.data)
+        console.log(response)
         setDashboardData(response.data.data);
 
 
@@ -285,6 +286,10 @@ function UniversityDashboard() {
           <Link to="/university-dashboard/students" className="flex items-center gap-2 text-gray-300 px-4 py-2 rounded hover:bg-gray-700">
             <PersonStanding className="h-5 w-5" />
             Students
+          </Link>
+          <Link to="/university-dashboard/check-rank" className="flex items-center gap-2 text-gray-300 px-4 py-2 rounded hover:bg-gray-700">
+            <PersonStanding className="h-5 w-5" />
+            Check Rank
           </Link>
           <Link to="/university-dashboard/profile" className="flex items-center gap-2 text-gray-300 px-4 py-2 rounded hover:bg-gray-700">
             <Settings className="h-5 w-5" />
@@ -411,23 +416,11 @@ function UniversityDashboard() {
           <Card className="mb-6">
             <CardHeader>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <CardTitle>Learning Progress</CardTitle>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm">
-                    This Year <ChevronDown className="h-4 w-4 ml-1" />
-                  </Button>
-                </div>
+                <CardTitle>Student Rankings</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="h-[300px] sm:h-[400px]">
-              <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="name" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <Area type="monotone" dataKey="value" stroke="#14B8A6" fill="#14B8A6" fillOpacity={0.2} />
-                </AreaChart>
-              </ResponsiveContainer>
+            <CardContent>
+            <StudentLeaderboard />
             </CardContent>
           </Card>
 
@@ -495,9 +488,9 @@ function UniversityDashboard() {
                     </div>
                     <div className="flex items-center gap-2">
                       <span className={`text-xs px-2 py-1 rounded-full ${registration.status === 'registered' ? 'bg-blue-500/20 text-blue-400' :
-                          registration.status === 'attended' ? 'bg-teal-500/20 text-teal-400' :
-                            registration.status === 'completed' ? 'bg-green-500/20 text-green-400' :
-                              'bg-red-500/20 text-red-400'
+                        registration.status === 'attended' ? 'bg-teal-500/20 text-teal-400' :
+                          registration.status === 'completed' ? 'bg-green-500/20 text-green-400' :
+                            'bg-red-500/20 text-red-400'
                         }`}>
                         {registration.status}
                       </span>
