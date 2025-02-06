@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Building2, GraduationCap } from 'lucide-react';
+import { Building2, GraduationCap,Eye,EyeOff } from 'lucide-react';
 import logo from "../../assets/logo/logo.png";
-
+import {validatePassword,PasswordStrengthIndicator} from '../helper/passwordProtect'
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [userType, setUserType] = useState('student');
@@ -11,10 +11,13 @@ const ForgotPassword = () => {
   const [resetToken, setResetToken] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [resending, setResending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
   const navigate = useNavigate();
 
   // Define your API URLs like in your LoginPage
-  const devUrl = "https://skillonx-server.onrender.com";
+  const devUrl = "http://localhost:5000";
   const prodUrl = "https://skillonx-server.onrender.com";
   const baseUrl = process.env.NODE_ENV === 'production' ? prodUrl : devUrl;
 
@@ -24,7 +27,7 @@ const ForgotPassword = () => {
     setStatus({ type: '', message: '' });
 
     try {
-      const response = await fetch(`${devUrl}/${userType}/forgot-password`, {
+      const response = await fetch(`${prodUrl}/${userType}/forgot-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -52,8 +55,14 @@ const ForgotPassword = () => {
     setLoading(true);
     setStatus({ type: '', message: '' });
 
+    const passwordValidation = validatePassword(newPassword);
+    if (!passwordValidation.isValid) {
+      setStatus({ type: 'error', message: passwordValidation.errors[0] });
+      setLoading(false);
+      return;
+    }
     try {
-      const response = await fetch(`${baseUrl}/${userType}/reset-password`, {
+      const response = await fetch(`${prodUrl}/${userType}/reset-password`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -81,7 +90,32 @@ const ForgotPassword = () => {
       setLoading(false);
     }
   };
+  const handleResendCode = async () => {
+    setResending(true);
+    setStatus({ type: '', message: '' });
 
+    try {
+      const response = await fetch(`${prodUrl}/${userType}/resend-reset-code`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus({ type: 'success', message: 'New reset code sent to your email' });
+      } else {
+        setStatus({ type: 'error', message: data.message || 'Failed to resend code' });
+      }
+    } catch (error) {
+      setStatus({ type: 'error', message: 'An error occurred. Please try again.' });
+    } finally {
+      setResending(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#0a192f] flex items-center justify-center p-4">
       <div className="bg-[#112240]/30 backdrop-blur-lg rounded-xl p-8 w-full max-w-md mx-auto shadow-2xl border border-blue-300/10">
@@ -184,16 +218,38 @@ const ForgotPassword = () => {
 
               <div className="space-y-2">
                 <label className="text-blue-100 text-sm font-medium">New Password</label>
-                <input
-                  type="password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  placeholder="Enter new password"
-                  className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter new password"
+                    className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+                <PasswordStrengthIndicator password={newPassword} />
               </div>
-
+              {resetSent && (
+                <p className='text-center text-blue-100 text-sm'>
+                  <span>Didn't get the code? </span>
+                  <button
+                    type="button"
+                    onClick={handleResendCode}
+                    disabled={resending}
+                    className='text-blue-600 hover:text-blue-500 disabled:text-blue-400 ml-1'
+                  >
+                    {resending ? 'Resending...' : 'Resend Code'}
+                  </button>
+                </p>
+              )}
               <button
                 type="submit"
                 disabled={loading}

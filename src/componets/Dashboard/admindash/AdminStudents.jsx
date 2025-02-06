@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Search, User, GraduationCap, Mail, Calendar, Phone, Eye, Edit, Trash, ArrowLeft } from 'lucide-react';
+import { Search, User, GraduationCap, Mail, Calendar, Phone, Eye, Edit, Trash, ArrowLeft,BookOpen} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios'
 
@@ -26,6 +26,7 @@ const AdminStudents = () => {
           }
         }
       );
+      console.log(response.data.students)
       // console.log(response.data.students)
       setStudents(response.data.students);
       setError(null);
@@ -138,12 +139,7 @@ const AdminStudents = () => {
                     >
                       <Eye className="w-5 h-5" />
                     </Link>
-                    <Link
-                      to={`/admin/students/${student._id}/edit`}
-                      className="p-2 hover:bg-gray-700 rounded-lg transition-colors duration-200 text-gray-400 hover:text-white"
-                    >
-                      <Edit className="w-5 h-5" />
-                    </Link>
+                    
                     <button
                       onClick={() => handleDelete(student._id)}
                       className="p-2 hover:bg-gray-700 rounded-lg transition-colors duration-200 text-gray-400 hover:text-red-400"
@@ -153,26 +149,30 @@ const AdminStudents = () => {
                   </div>
                 </div>
 
-                <div className="mt-4 grid grid-cols-1 md:grid-cols-4 gap-4 pl-16">
+                <div className="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pl-16">
                   <div className="flex items-center gap-2">
-                    <GraduationCap className="w-4 h-4 text-gray-400" />
-                    <span className="text-white">{student.currentEducation}</span>
+                    <GraduationCap className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <span className="text-white truncate">{student.currentEducation}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Mail className="w-4 h-4 text-gray-400" />
-                    <span className="text-white">{student.email}</span>
+                    <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <span className="text-white truncate">{student.email}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Phone className="w-4 h-4 text-gray-400" />
-                    <span className="text-white">{student.phone}</span>
+                    <Phone className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <span className="text-white truncate">{student.phone}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-gray-400" />
+                    <Calendar className="w-4 h-4 text-gray-400 flex-shrink-0" />
                     <span className="text-white">Passing Year: {student.passingYear}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-gray-400" />
+                    <User className="w-4 h-4 text-gray-400 flex-shrink-0" />
                     <span className="text-white">Gender: {student.gender}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <BookOpen className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <span className="text-white">Workshops: {student.workshops ? student.workshops.length : 0}</span>
                   </div>
                 </div>
               </div>

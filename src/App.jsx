@@ -35,6 +35,10 @@ import UniProfilePage from "./componets/Dashboard/UniProfilePage";
 import ForgotPassword from "./componets/LoginSignup/ForgetPassword";
 import AddCourses from "./componets/Dashboard/AddCourses";
 import VerifyEmail from "./componets/LoginSignup/VerifyEmail";
+import StudentDetails from "./componets/Dashboard/admindash/StudentDetails";
+import CheckCourse from './componets/Dashboard/admindash/CheckCourse'
+import CheckRank from "./componets/Dashboard/CheckRank";
+import StudentDetail from "./componets/Dashboard/StudentDetail";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -180,6 +184,8 @@ const App = () => {
             <Route path='/FinalPage/offline' element={<FinalPageOff />} />
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
             <Route path="/verification-email" element={<VerifyEmail/>}/>
+            <Route path="/verification-email/:code/:email" element={<VerifyEmail />} />
+
             {/* <Route path="/coursespage" element={<CoursesPages/>}/>
             <Route path="/workshoppages" element={<WorkshopsPage/>}/>
             <Route path="/assesment" element={<AssessmentPage/>}/>
@@ -197,8 +203,10 @@ const App = () => {
             <Route index element={<AdminDashboard />} />
             <Route path="universities" element={<AdminUniversities/>} />
             <Route path="students" element={<AdminStudents/>} />
+            <Route path="students/:studentId" element={<StudentDetails/>}/>
             <Route path="assessments" element={<AdminAssessment/>} />
             <Route path="add-course" element={<AddCourses/>} />    
+            <Route path='check-course' element={<CheckCourse/>}/>
 
             {/* Other admin routes */}
           </Routes>
@@ -221,6 +229,7 @@ const App = () => {
                         <Route path="test" element={<TestPage />} />
                         <Route path="check-assessment" element={<GiveAssessment/>}/>
                         <Route path="profile" element={<StuProfilePage />} />
+                        
                       </Routes>
                     </DashboardLayout>
                   </ProtectedRoute>
@@ -241,7 +250,9 @@ const App = () => {
 
                         <Route path="assessment-page" element={<CreateAssessment/>}/>
                         <Route path="students" element={<AllStudents/>}/>
-                        {/* <Route path="assessment-page/" element={<AssessmentsQuestion/>}/> */}
+                        <Route path='check-rank' element={<CheckRank/>}/>
+                        <Route path="student-detail/:studentId" element={<StudentDetail/>} />
+                         {/* <Route path="assessment-page/" element={<AssessmentsQuestion/>}/> */}
                         <Route path="profile" element={<UniProfilePage />} />
                       </Routes>
                     </DashboardLayout>

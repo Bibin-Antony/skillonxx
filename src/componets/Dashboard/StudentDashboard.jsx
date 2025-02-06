@@ -67,7 +67,7 @@ import Navbar from '../home/Navbar'
 import Footer from '../home/Footer'
 import axios from 'axios'
 import WorkshopMaterials from './WorkshopMaterials';
-
+import LeaderboardCard from './LeaderboardCard'
 // Custom Button component
 // Custom Button component with dark theme
 const Button = ({ children, className, variant = 'default', size = 'default', ...props }) => {
@@ -148,7 +148,8 @@ function StudentDashboard() {
   });
   const [error, setError] = useState(null);
   const token = localStorage.getItem('token')
-
+  const devUrl = 'http://localhost:5000';
+  const prodUrl = 'https://skillonx-server.onrender.com';
   useEffect(() => {
     const studentId = auth.user._id
     // console.log(studentId)
@@ -157,14 +158,14 @@ function StudentDashboard() {
       // console.log('request fetching')
       try {
         const response = await axios.get(
-          `https://skillonx-server.onrender.com/student/dashboard/${studentId}`,
+          `${prodUrl}/student/dashboard/${studentId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`
             }
           }
         );
-        // console.log(response.data.data)
+        console.log(response.data)
         setDashboardData(response.data.data);
         // console.log(dashboardData)
       } catch (err) {
@@ -305,6 +306,7 @@ function StudentDashboard() {
             <Settings className="h-5 w-5" />
             Settings
           </Link>
+          
 
         </nav>
 
@@ -414,23 +416,11 @@ function StudentDashboard() {
           <Card className="mb-6">
             <CardHeader>
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                <CardTitle>Learning Progress</CardTitle>
-                <div className="flex items-center gap-2">
-                  <Button variant="outline" size="sm">
-                    This Year <ChevronDown className="h-4 w-4 ml-1" />
-                  </Button>
-                </div>
+                <CardTitle>Student Rankings</CardTitle>
               </div>
             </CardHeader>
-            <CardContent className="h-[300px] sm:h-[400px]">
-              <ResponsiveContainer width="100%" height={300}>
-                <AreaChart data={chartData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="name" stroke="#9CA3AF" />
-                  <YAxis stroke="#9CA3AF" />
-                  <Area type="monotone" dataKey="value" stroke="#14B8A6" fill="#14B8A6" fillOpacity={0.2} />
-                </AreaChart>
-              </ResponsiveContainer>
+            <CardContent>
+            <LeaderboardCard/>
             </CardContent>
           </Card>
 

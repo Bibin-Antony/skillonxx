@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle, Building2, GraduationCap } from 'lucide-react';
+import {
+  CircleDot, Boxes, Stars, Cloud, Moon, Sun, Sparkles, Circle, Building2, GraduationCap, Eye,
+  EyeOff,Loader2
+} from 'lucide-react';
 import googleicon from "../../assets/Icons/google.png";
 import logo from "../../assets/logo/logo.png";
 import loginimage from "../../assets/illustrations/loginimage.png";
@@ -26,10 +29,22 @@ const LoginPage = () => {
   const [error, setError] = useState(""); // To store error messages
   const [loading, setLoading] = useState(false); // To manage loading state
   const [userType, setUserType] = useState("student");
+  const [showPassword, setShowPassword] = useState(false);
   // const navigate = useNavigate()
+  const getDeviceInfo = () => {
+    return {
+      userAgent: navigator.userAgent,
+      platform: navigator.platform,
+      language: navigator.language,
+      screenResolution: `${window.screen.width}x${window.screen.height}`,
+      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
+    };
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    const deviceInfo = getDeviceInfo();
+    console.log(deviceInfo)
     // Reset error on new attempt
     setError("");
     setLoading(true);
@@ -38,7 +53,8 @@ const LoginPage = () => {
       password
     }
     // console.log(formdata)
-    const devUrl = "https://skillonx-server.onrender.com"
+
+    const devUrl = 'http://localhost:5000'
     const prodUrl = "https://skillonx-server.onrender.com"
     // try {
     //   const response = await axios.post("https://skillonx-server.onrender.com/student/login", {
@@ -64,14 +80,22 @@ const LoginPage = () => {
     //   setLoading(false);
     // }
     try {
-      const response = await authService.login({ email, password, userType });
-      const { token, user } = response;
+      const response = await authService.login({ email, password, userType, deviceInfo });
+      const { token, user, isNewDevice } = response;
       const userDetails = {
         ...user,
         userType,
         token,
-        isAuthenticated: true
+        isAuthenticated: true,
+
       };
+      if (isNewDevice) {
+        // You can implement a toast notification here
+        console.log("New device login detected! A security email has been sent to your email address.");
+        // If you're using a toast library like react-toastify:
+        // toast.info("New device login detected! A security email has been sent.");
+      }
+
       login(token, userDetails);
       // console.log(userDetails)
       localStorage.setItem('userDetails', JSON.stringify(userDetails));
@@ -220,17 +244,28 @@ const LoginPage = () => {
 
               <div className="space-y-2">
                 <label className="text-blue-100 text-sm font-medium">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                />
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                    className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
               </div>
+
               {error && (
                 <p className="text-red-500 text-sm">{error}</p>
               )}
+
               <div className="flex items-center justify-between">
                 <label className="flex items-center space-x-2 text-sm text-blue-100">
                   <input type="checkbox" className="rounded border-blue-300/30 bg-[#0a192f]/50" />
@@ -241,15 +276,29 @@ const LoginPage = () => {
                 </Link>
               </div>
 
-              <button type="submit" className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
-                Sign In
+              <button 
+                type="submit" 
+                disabled={loading}
+                className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Signing in...</span>
+                  </>
+                ) : (
+                  'Sign In'
+                )}
               </button>
 
 
 
               <p className="text-center text-blue-100 text-sm">
                 Don't have an account?{' '}
-                <Link to="/SignupPage" className="text-blue-300 hover:text-blue-200">
+                <Link 
+                  to="/SignupPage" 
+                  className={`text-blue-300 hover:text-blue-200 ${loading ? 'pointer-events-none opacity-50' : ''}`}
+                >
                   Sign up
                 </Link>
               </p>

@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import MessageModal from './MessageModal'
 const DeleteModal = ({ isOpen, onClose, onConfirm, universityName }) => {
   if (!isOpen) return null;
 
@@ -76,6 +77,8 @@ const AdminUniversities = () => {
   const [error, setError] = useState(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [universityToDelete, setUniversityToDelete] = useState(null);
+  const [messageModalOpen, setMessageModalOpen] = useState(false);
+  const [selectedStudents, setSelectedStudents] = useState([]);
   useEffect(() => {
     fetchUniversities();
   }, []);
@@ -131,7 +134,32 @@ const AdminUniversities = () => {
       alert("Failed to delete university. Please try again.");
     }
   };
-
+  const handleSendWelcomeMessages = async (students, message) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.post(
+        `https://skillonx-server.onrender.com/admin/send-welcome-messages`,
+        { 
+          students: students,
+          message: message
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+      console.log(response.data)
+      if (response.data.success) {
+        alert(`Successfully sent welcome messages to ${response.data.summary.successful} students`);
+      } else {
+        alert('Some messages failed to send. Please check the logs.');
+      }
+    } catch (error) {
+      console.error('Error sending welcome messages:', error);
+      alert('Failed to send welcome messages. Please try again.');
+    }
+  };
   const filteredUniversities = universities.filter(
     (uni) =>
       uni.universityName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -279,10 +307,21 @@ const AdminUniversities = () => {
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="w-5 h-5 text-teal-500" />
                         <p className="text-gray-400">Students</p>
+
                       </div>
-                      <p className="text-2xl font-semibold text-white">
+                      <p className="text-2xl font-semibold text-white flex justify-around">
                         {university.students.length}
+                        <button
+                          onClick={() => {
+                            setSelectedStudents(university.students);
+                            setMessageModalOpen(true);
+                          }}
+                          className='text-xs bg-teal-400 px-3 py-2 rounded-md hover:bg-teal-500 transition-colors'
+                        >
+                          Send Message
+                        </button>
                       </p>
+
                     </div>
                     <div className="bg-gray-700/50 p-4 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
@@ -306,6 +345,19 @@ const AdminUniversities = () => {
                 </div>
               ))
             )}
+            <MessageModal
+              isOpen={messageModalOpen}
+              onClose={() => {
+                setMessageModalOpen(false);
+                setSelectedStudents([]);
+              }}
+              onSend={(message) => {
+                handleSendWelcomeMessages(selectedStudents, message);
+                setMessageModalOpen(false);
+                setSelectedStudents([]);
+              }}
+              studentCount={selectedStudents.length}
+            />
           </div>
         )}
       </div>

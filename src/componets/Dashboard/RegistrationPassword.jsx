@@ -8,7 +8,8 @@ const RegistrationPassword = ({ workshop, onClose, stuId }) => {
   const [success, setSuccess] = useState(false);
   const [password, setPassword] = useState('');
   const [step, setStep] = useState('password'); // 'password' or 'confirmation'
-
+  const devUrl = 'http://localhost:5000';
+  const prodUrl = 'https://skillonx-server.onrender.com';
   const handlePasswordVerification = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -54,8 +55,8 @@ const RegistrationPassword = ({ workshop, onClose, stuId }) => {
           workshopId: workshop._id,
           studentId: stuId,
           workshopTitle: workshop.title,
-          workshopDate: workshop.date,
-          workshopVenue: workshop.venue,
+          workshopDate: workshop.startDate,
+          location: workshop.location,
           workshopPassword: password
         }),
       });
@@ -161,7 +162,7 @@ const RegistrationPassword = ({ workshop, onClose, stuId }) => {
                     </div>
                     <div className="flex items-center text-gray-300">
                       <MapPin className="h-4 w-4 mr-2" />
-                      <span className="text-sm">{workshop.venue}</span>
+                      <span className="text-sm">{workshop.location}</span>
                     </div>
                   </div>
                 </div>

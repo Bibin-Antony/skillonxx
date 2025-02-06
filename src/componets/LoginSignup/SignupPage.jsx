@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo/logo.png";
 import Signup from "../../assets/illustrations/loginimage.png";
 import axios from 'axios';
+import { validatePassword, PasswordStrengthIndicator } from '../helper/passwordProtect'
 import {
   CircleDot,
   Boxes,
@@ -15,7 +16,11 @@ import {
   Home,
   User,
   HelpCircle,
-  X
+  X,
+  Eye,
+  EyeOff,
+  Loader2
+
 } from 'lucide-react';
 
 const scrollbarStyles = `
@@ -84,6 +89,9 @@ const SignupPage = () => {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
@@ -96,12 +104,12 @@ const SignupPage = () => {
         // console.log('Raw API Response:', response.data);
 
         // Combine both student and university arrays
-        const studentUniversities = response.data.data.student.map(item => item.universityName);
+        // const studentUniversities = response.data.data.student.map(item => item.universityName);
         const universityNames = response.data.data.university.map(item => item.universityName);
 
         // Combine arrays and get unique values
         const uniqueUniversities = Array.from(
-          new Set([...studentUniversities, ...universityNames])
+          new Set([...universityNames])
         )
           .filter(name => name) // Remove any null/undefined/empty values
           .sort();
@@ -130,7 +138,16 @@ const SignupPage = () => {
 
     const errors = {};
     setErrorMessages(errors);
+    // console.log('Password before validation:', password);
+    const passwordValidation = validatePassword(password);
+    // console.log('Validation result:', passwordValidation);
+    if (!passwordValidation.isValid) {
+      errors.password = passwordValidation.errors[0];
+    }
 
+    if (password !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+    }
     if (!acceptedTerms) {
       errors.terms = "You must accept the Terms and Conditions to continue";
     }
@@ -164,10 +181,8 @@ const SignupPage = () => {
       } else if (!/^\d{6}$/.test(pincode)) {
         errors.pincode = "Pincode must be 6 digits";
       }
-      if (!password) errors.password = "Password is required";
-      if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
 
-      if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
+
       if (!email) {
         errors.email = "Email is required";
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -188,15 +203,13 @@ const SignupPage = () => {
       } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         errors.email = "Enter a valid email address";
       }
-      if (!password) errors.password = "Password is required";
-      if (!confirmPassword) errors.confirmPassword = "Please confirm your password";
 
-      if (password !== confirmPassword) errors.confirmPassword = "Passwords do not match";
     }
 
     setErrorMessages(errors);
 
     if (Object.keys(errors).length === 0) {
+      setIsLoading(true);
       const finalUniversityName = universityNameDrop || universityName;
 
       const formData = {
@@ -233,27 +246,34 @@ const SignupPage = () => {
       // console.log(formData)
       const baseUrl = 'https://skillonx-server.onrender.com';
       const prodUrl = "https://skillonx-server.onrender.com"
-      const devUrl = 'https://skillonx-server.onrender.com'
-      const url = userType === 'student' ? `${prodUrl}/student` : `${prodUrl}/university`;
+      const devUrl = 'http://localhost:5000'
+      const url = userType === 'student' ? `${baseUrl}/student` : `${baseUrl
+
+        }/university`;
       // console.log(url)
       try {
         const response = await axios.post(url, formData, {
           headers: { 'Content-Type': 'application/json' },
         });
-
+        console.log(response)
         if (response.status === 201) {
           navigate('/verification-email', { state: { email: formData.email, accountType: formData.userType } });
         } else {
+          console.log(response)
           setErrorMessage(response.data.error || 'Registration failed. Please try again.');
           setShowError(true);
           // Auto-hide error after 5 seconds
           setTimeout(() => setShowError(false), 3000);
         }
       } catch (error) {
-        setErrorMessage(error.response?.data?.error || 'Registration failed. Please try again.');
+        console.log(error, "error")
+        setErrorMessage(error.response?.data?.message || 'Registration failed. Please try again.');
         setShowError(true);
         // Auto-hide error after 5 seconds
         setTimeout(() => setShowError(false), 5000);
+      }
+      finally {
+        setIsLoading(false); // Stop loading regardless of outcome
       }
     }
   };
@@ -505,7 +525,7 @@ const SignupPage = () => {
                           </div>
                         </div>
                         <div className="space-y-2">
-                          <label className="text-blue-100 text-sm font-medium">University Name</label>
+                          <label className="text-blue-100 text-sm font-medium">College Name</label>
                           <input
                             type="text"
                             placeholder="Ex: Mysore University"
@@ -518,7 +538,7 @@ const SignupPage = () => {
 
                         </div>
                         <div className="space-y-2">
-                          <label className="text-blue-100 text-sm font-medium">University Name As Dropdown</label>
+                          <label className="text-blue-100 text-sm font-medium">College Name As Dropdown</label>
 
                           <select
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
@@ -618,7 +638,7 @@ const SignupPage = () => {
                           <label className="text-blue-100 text-sm font-medium">Recognized By</label>
                           <input
                             type="text"
-                            placeholder="Ex: UGC, AICTE"
+                            placeholder="Ex:VTU, UGC, AICTE"
                             className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
 
                             onChange={(e) => setRecognizedBy(e.target.value)}
@@ -649,30 +669,48 @@ const SignupPage = () => {
 
                     <div className="space-y-2">
                       <label className="text-blue-100 text-sm font-medium">Password</label>
-                      <input
-                        type="password"
-                        placeholder="Create password"
-                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-
-                        onChange={(e) => setPassword(e.target.value)}
-
-                      />
+                      <div className="relative">
+                        <input
+                          type={showPassword ? "text" : "password"}
+                          placeholder="Create password"
+                          value={password}  // Add this line
+                          className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // console.log('Password input changed:', value);
+                            setPassword(value);
+                          }}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowPassword(!showPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+                        >
+                          {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
+                      <PasswordStrengthIndicator password={password} />
                       {errorMessages.password && <p className="text-red-500 text-xs mt-1">{errorMessages.password}</p>}
-
                     </div>
 
                     <div className="space-y-2">
                       <label className="text-blue-100 text-sm font-medium">Confirm Password</label>
-                      <input
-                        type="password"
-                        placeholder="Confirm password"
-                        className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
-
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-
-                      />
+                      <div className="relative">
+                        <input
+                          type={showConfirmPassword ? "text" : "password"}
+                          placeholder="Confirm password"
+                          className="w-full px-4 py-2 rounded-lg bg-[#0a192f]/50 border border-blue-300/30 text-blue-100 placeholder-blue-300/50 focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm md:text-base"
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-300 hover:text-blue-200"
+                        >
+                          {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
+                      </div>
                       {errorMessages.confirmPassword && <p className="text-red-500 text-xs mt-1">{errorMessages.confirmPassword}</p>}
-
                     </div>
 
                     {/* Terms and Conditions */}
@@ -702,9 +740,17 @@ const SignupPage = () => {
                     {/* Submit Button */}
                     <button
                       type="submit"
-                      className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors mt-6 text-sm md:text-base font-medium"
+                      disabled={isLoading}
+                      className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors mt-6 text-sm md:text-base font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                     >
-                      Sign Up
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Signing up...
+                        </>
+                      ) : (
+                        'Sign Up'
+                      )}
                     </button>
 
                     {/* Sign In Link */}

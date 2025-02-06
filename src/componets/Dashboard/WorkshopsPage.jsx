@@ -1,40 +1,107 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../auth/AuthContext';
-import { Calendar, MapPin, Clock, Users, ChevronRight, ArrowLeft, X } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, ChevronRight, ArrowLeft, X ,UserCheck,CheckCircle} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import RegistrationPassword from './RegistrationPassword';
-
 
 const WorkshopPage = () => {
   const [workshops, setWorkshops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedWorkshop, setSelectedWorkshop] = useState(null);
+  const [markingAttendance, setMarkingAttendance] = useState(null);
   const { auth } = useAuth();
   const stuId = auth.user._id;
+  const devUrl = 'http://localhost:5000'
+  const prodUrl ='https://skillonx-server.onrender.com'
 
+  const isRegistered = (workshop) => {
+    return workshop.registrations?.some(
+      reg => reg.student === stuId && reg.status === "registered"
+    );
+  };
+  const getAttendanceCount = (workshop, studentId) => {
+    const registration = workshop.registrations?.find(
+      reg => reg.student === studentId
+    );
+    return registration?.attendanceCount || 0;
+  };
+
+  
+  const hasMarkedAttendance = (workshop) => {
+    // Get the registration for this student
+    const registration = workshop.registrations?.find(
+      reg => reg.student === stuId
+    );
+
+    // If workshop's isAttendance was toggled off and on again,
+    // the student's attendance should be false to allow marking again
+    if (!registration) return false;
+
+    // Check if the workshop's attendance is enabled and if the student has marked attendance
+    return workshop.isAttendance && registration.attendance;
+  };
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+  const handleMarkAttendance = async (workshopId) => {
+    
+    try {
+      setMarkingAttendance(workshopId);
+      const response = await fetch(`${prodUrl}/workshops/${workshopId}/mark-attendance`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          studentId: stuId,
+          // Pass the current workshop attendance status
+          isWorkshopAttendanceEnabled: workshops.find(w => w._id === workshopId)?.isAttendance 
+        }),
+        credentials: 'include'
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to mark attendance');
+      }
+
+      const updatedWorkshop = await response.json();
+      setWorkshops(workshops.map(workshop => 
+        workshop._id === workshopId ? updatedWorkshop.data : workshop
+      ));
+
+    } catch (error) {
+      console.error('Error marking attendance:', error);
+    } finally {
+      setMarkingAttendance(null);
+    }
+  };
   useEffect(() => {
     const fetchWorkshops = async () => {
-      const devUrl = 'https://skillonx-server.onrender.com'
       try {
-        const response = await fetch(`https://skillonx-server.onrender.com/workshops/get-workshops/${stuId}`, {
+        const response = await fetch(`${prodUrl}/workshops/get-workshops/${stuId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json'
           },
           credentials: 'include'
         });
-
+        
         if (!response.ok) {
           throw new Error('Failed to fetch workshops');
         }
 
         const data = await response.json();
+        console.log(data.workshops)
         setWorkshops(data.workshops);
         setLoading(false);
       } catch (err) {
-        // console.log(err);
         setError(err.message);
         setLoading(false);
       }
@@ -123,14 +190,15 @@ const WorkshopPage = () => {
                   <div className="p-6">
                     <h3 className="text-xl font-semibold text-gray-100 mb-2">{workshop.title}</h3>
                     <div className="space-y-3 mb-4">
+                    {isRegistered(workshop) && (
+                        <div className="flex items-center text-gray-300">
+                          <UserCheck className="h-5 w-5 mr-3 text-teal-500" />
+                          <span>Attendance: {getAttendanceCount(workshop, stuId)} days</span>
+                        </div>
+                      )}
                       <div className="flex items-center text-gray-300">
                         <Calendar className="h-5 w-5 mr-3 text-teal-500" />
-                        <span>{new Date(workshop.date).toLocaleDateString('en-US', {
-                          weekday: 'long',
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric'
-                        })}</span>
+                        <span>{formatDate(workshop.startDate)}</span>
                       </div>
                       <div className="flex items-center text-gray-300">
                         <Clock className="h-5 w-5 mr-3 text-teal-500" />
@@ -138,24 +206,60 @@ const WorkshopPage = () => {
                       </div>
                       <div className="flex items-center text-gray-300">
                         <MapPin className="h-5 w-5 mr-3 text-teal-500" />
-                        <span>{workshop.venue}</span>
+                        <span>{workshop.location}</span>
                       </div>
                       <div className="flex items-center text-gray-300">
                         <Users className="h-5 w-5 mr-3 text-teal-500" />
-                        <span>{workshop.capacity} seats available</span>
+                        <span>{workshop.registrations?.length || 0} / {workshop.batchSize} seats filled</span>
                       </div>
                     </div>
                     <p className="text-gray-400 mb-6 line-clamp-3">
                       {workshop.description}
                     </p>
                     <div className="flex gap-4">
-                      <button
-                        onClick={() => setSelectedWorkshop(workshop)}
-                        className="flex-1 bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600 transition-colors duration-200 flex items-center justify-center"
-                      >
-                        Register Now
-                        <ChevronRight className="h-4 w-4 ml-2" />
-                      </button>
+                      
+                    {isRegistered(workshop) ? (
+                        workshop.isAttendance ? (
+                          hasMarkedAttendance(workshop) ? (
+                            <button
+                              disabled
+                              className="flex-1 bg-green-600 text-white py-2 px-4 rounded-md cursor-not-allowed flex items-center justify-center"
+                            >
+                              <CheckCircle className="h-4 w-4 mr-2" />
+                              Today's Attendance Marked
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleMarkAttendance(workshop._id)}
+                              disabled={markingAttendance === workshop._id}
+                              className="flex-1 bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600 transition-colors duration-200 flex items-center justify-center"
+                            >
+                              {markingAttendance === workshop._id ? (
+                                <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                              ) : (
+                                <UserCheck className="h-4 w-4 mr-2" />
+                              )}
+                              Mark Attendance
+                            </button>
+                          )
+                        ) : (
+                          <button
+                            disabled
+                            className="flex-1 bg-gray-600 text-gray-300 py-2 px-4 rounded-md cursor-not-allowed"
+                          >
+                            Already Registered
+                          </button>
+                        )
+                      ) : (
+                        <button
+                          onClick={() => setSelectedWorkshop(workshop)}
+                          className="flex-1 bg-teal-500 text-white py-2 px-4 rounded-md hover:bg-teal-600 transition-colors duration-200 flex items-center justify-center"
+                          disabled={workshop.registrations?.length >= workshop.batchSize}
+                        >
+                          {workshop.registrations?.length >= workshop.batchSize ? 'Batch Full' : 'Register Now'}
+                          {workshop.registrations?.length < workshop.batchSize && <ChevronRight className="h-4 w-4 ml-2" />}
+                        </button>
+                      )}
                       <button className="flex-1 border border-gray-600 text-gray-300 py-2 px-4 rounded-md hover:bg-gray-700 transition-colors duration-200">
                         Learn More
                       </button>
