@@ -39,6 +39,7 @@ import StudentDetails from "./componets/Dashboard/admindash/StudentDetails";
 import CheckCourse from './componets/Dashboard/admindash/CheckCourse'
 import CheckRank from "./componets/Dashboard/CheckRank";
 import StudentDetail from "./componets/Dashboard/StudentDetail";
+import HackathonPage from "./hackthon/HackathonPage";
 // Lazy load components
 const Home = React.lazy(() => import("./componets/home/Home"));
 const Courses = React.lazy(() => import("./componets/Courses/Courses"));
@@ -185,6 +186,10 @@ const App = () => {
             <Route path='/termsAndConditions' element={<TermsAndConditions />} />
             <Route path="/verification-email" element={<VerifyEmail/>}/>
             <Route path="/verification-email/:code/:email" element={<VerifyEmail />} />
+
+            {/* Hackthon */}
+            <Route path='/hackthon' element={<HackathonPage />} />
+
 
             {/* <Route path="/coursespage" element={<CoursesPages/>}/>
             <Route path="/workshoppages" element={<WorkshopsPage/>}/>
