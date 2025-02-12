@@ -36,7 +36,7 @@ const workshops = [
   },
   {
     id: 2,
-    title: "Advanced React.js Development",
+    title: "Basic React.js Development",
     description:
       "Deep dive into modern React.js development. Learn component architecture, hooks, state management, and build full-featured applications.",
     image: advreact,
