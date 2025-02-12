@@ -524,7 +524,7 @@ const SignupPage = () => {
 
                           </div>
                         </div>
-                        <div className="space-y-2">
+                        {/* <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">College Name</label>
                           <input
                             type="text"
@@ -536,7 +536,7 @@ const SignupPage = () => {
                           />
                           {errorMessages.universityName && <p className="text-red-500 text-xs mt-1">{errorMessages.universityName}</p>}
 
-                        </div>
+                        </div> */}
                         <div className="space-y-2">
                           <label className="text-blue-100 text-sm font-medium">College Name As Dropdown</label>
 
